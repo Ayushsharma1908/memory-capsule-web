@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 
@@ -150,7 +151,7 @@ function StarSparkle({ size = 14, color = "#1F2421" }: { size?: number; color?: 
 }
 
 /* ============================================================
-   CONNECTING LINES — subtle visual flow pointing toward center
+   CONNECTING LINES — subtle visual flow pointing toward center (~10% opacity)
    ============================================================ */
 function ConnectingLines() {
   return (
@@ -159,15 +160,15 @@ function ConnectingLines() {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       initial={{ opacity: 0 }}
-      animate={{ opacity: 0.25 }}
+      animate={{ opacity: 0.10 }}
       transition={{ delay: 1.45, duration: 0.8, ease: "easeOut" }}
     >
-      {/* Subtle dashed lines pointing from input cards toward center logo */}
-      <line x1="28%" y1="14%" x2="84%" y2="45%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="4 6" />
-      <line x1="30%" y1="42%" x2="84%" y2="48%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="4 6" />
-      <line x1="29%" y1="70%" x2="84%" y2="52%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="4 6" />
-      <line x1="68%" y1="26%" x2="84%" y2="46%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" />
-      <line x1="64%" y1="56%" x2="84%" y2="50%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" />
+      {/* Soft curved bezier paths pointing from input cards toward center logo */}
+      <path d="M 28% 14% Q 55% 25%, 84% 45%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
+      <path d="M 30% 38% Q 58% 42%, 84% 48%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
+      <path d="M 29% 66% Q 56% 60%, 84% 52%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
+      <path d="M 68% 24% Q 76% 35%, 84% 46%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="2 4" fill="none" />
+      <path d="M 64% 54% Q 74% 52%, 84% 50%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="2 4" fill="none" />
     </motion.svg>
   );
 }
@@ -203,7 +204,7 @@ const quotes = [
   { line1: "Knowledge shouldn't", line2: "disappear.", top: "88%", left: "58%", animClass: "anim-drift-4" },
 ];
 
-// Sparkle background accents
+// Sparkle background accents (Requirement 8: Extremely subtle)
 const sparkleDots = [
   { top: "16%", left: "44%", dur: "2.2s", delay: "0s" },
   { top: "36%", left: "78%", dur: "3.0s", delay: "0.8s" },
@@ -213,83 +214,108 @@ const sparkleDots = [
 ];
 
 /* ============================================================
-   MEMORY CAPSULE LOGO PLACEHOLDER
-   User can paste their exact Memory Capsule SVG icon inside this container!
+   MEMORY CAPSULE LOGO FALLBACK (Requirement 2)
+   Handcrafted luxury emblem icon — floating focal point
    ============================================================ */
 function PlaceholderIcon() {
   return (
     <div
       style={{
-        width: 180,
-        height: 180,
+        width: 216,
+        height: 216,
         borderRadius: "50%",
-        border: "2px dashed #1F2421",
         backgroundColor: "#FAF8F4",
         display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: "8px",
-        color: "#1F2421",
-        boxShadow: "0 12px 36px rgba(31, 36, 33, 0.08)",
+        boxShadow: "0 16px 40px rgba(31, 36, 33, 0.10)",
+        position: "relative",
       }}
-      aria-label="Memory Capsule Logo Container"
+      aria-label="Memory Capsule Logo"
     >
-      {/* 
-        ============================================================
-        PASTE YOUR MEMORY CAPSULE SVG LOGO HERE
-        Replace this <svg> or paste your logo code directly inside!
-        ============================================================
-      */}
       <svg
-        width="48"
-        height="48"
-        viewBox="0 0 24 24"
+        width="110"
+        height="110"
+        viewBox="0 0 100 100"
         fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <rect x="3" y="3" width="18" height="18" rx="4" />
-        <path d="M12 8v8" />
-        <path d="M8 12h8" />
+        <rect x="15" y="15" width="70" height="70" rx="22" fill="#1F2421" />
+        <rect x="25" y="25" width="50" height="50" rx="16" stroke="#D8C3A5" strokeWidth="2" strokeDasharray="3 3" opacity="0.6" />
+        <circle cx="50" cy="50" r="16" fill="#D8C3A5" />
+        <circle cx="50" cy="50" r="8" fill="#FAF8F4" />
+        <path d="M50 30V36M50 64V70M30 50H36M64 50H70" stroke="#FAF8F4" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
       </svg>
-      <span style={{ fontSize: "11px", fontWeight: 600, letterSpacing: "0.03em", opacity: 0.7 }}>
-        Your Logo SVG
-      </span>
     </div>
   );
 }
 
-/* ============================================================
-   INNER NAVBAR — Clean, Apple/Linear style navbar
-   ============================================================ */
-function InnerNavbar() {
-  return (
-    <div className="inner-navbar">
-      <div className="inner-navbar-container">
-        {/* Left: Brand */}
-        <a href="/" className="inner-navbar-brand" aria-label="Memory Capsule home">
-          <div className="inner-navbar-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <rect x="2" y="2" width="12" height="12" rx="3" fill="#FAF8F4" fillOpacity="0.2" stroke="#FAF8F4" strokeWidth="1.2" />
-              <circle cx="8" cy="8" r="2.5" fill="#D8C3A5" />
-            </svg>
-          </div>
-          <span className="inner-navbar-wordmark">Memory Capsule</span>
-        </a>
+// Sparkles around logo
+const sparklePositions = [
+  { top: "-10px", right: "20px", size: 14, color: "#D8C3A5", delay: 0 },
+  { bottom: "10px", left: "-12px", size: 12, color: "#1F2421", delay: 0.9 },
+  { top: "35px", left: "-18px", size: 10, color: "#D8C3A5", delay: 1.4 },
+  { bottom: "35px", right: "-16px", size: 15, color: "#D8C3A5", delay: 0.5 },
+];
 
-        {/* Right: Nav items */}
-        <div className="inner-navbar-right">
-          <a href="#features" className="inner-nav-link">Features</a>
-          <a href="#demo" className="inner-nav-link">Demo</a>
-          <a href="#roadmap" className="inner-nav-link">Roadmap</a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="inner-nav-link">GitHub</a>
-          <a href="#" className="inner-nav-cta" id="nav-add-to-chrome">Add to Chrome</a>
-        </div>
+/* ============================================================
+   CENTER ICON — Floating Logo Hero (Requirement 2)
+   ============================================================ */
+function CenterIcon() {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <motion.div
+      className="center-icon-wrap"
+      initial="hidden"
+      animate="visible"
+      variants={logoFloatUp}
+    >
+      <div className="center-icon-container">
+        {/* Soft beige ambient glow */}
+        <div className="center-icon-glow" aria-hidden="true" />
+
+        {/* Floating logo — 216px size (~20% increase) */}
+        <motion.div
+          className="center-icon-img"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          {!imgError ? (
+            <img
+              src="/logo.svg"
+              alt="Memory Capsule Logo"
+              onError={() => setImgError(true)}
+              style={{
+                width: 216,
+                height: 216,
+                objectFit: "contain",
+                filter: "drop-shadow(0 14px 32px rgba(31, 36, 33, 0.10))",
+              }}
+            />
+          ) : (
+            <PlaceholderIcon />
+          )}
+        </motion.div>
+
+        {/* Sparkles around logo */}
+        {sparklePositions.map((sp, i) => {
+          const { delay, size, color, ...posStyle } = sp;
+          return (
+            <motion.div
+              key={i}
+              className="icon-sparkle"
+              style={{ ...posStyle }}
+              animate={{ opacity: [0.2, 1, 0.2], scale: [0.75, 1.25, 0.75] }}
+              transition={{ duration: 2.6, delay, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden="true"
+            >
+              <StarSparkle size={size} color={color} />
+            </motion.div>
+          );
+        })}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -396,58 +422,7 @@ function LeftPanel() {
 }
 
 /* ============================================================
-   CENTER ICON — Floating Hero Logo
-   ============================================================ */
-const sparklePositions = [
-  { top: "-30px", right: "6px", delay: 0, size: 15, color: "#1F2421" },
-  { top: "-8px", left: "2px", delay: 1.2, size: 9, color: "#1F2421" },
-  { bottom: "-10px", right: "20px", delay: 0.6, size: 9, color: "#D8C3A5" },
-] as const;
-
-function CenterIcon() {
-  return (
-    <motion.div
-      className="center-icon-wrap"
-      initial="hidden"
-      animate="visible"
-      variants={logoFloatUp}
-    >
-      <div className="center-icon-container">
-        {/* Soft beige ambient glow */}
-        <div className="center-icon-glow" aria-hidden="true" />
-
-        {/* Floating icon with calm infinite bounce */}
-        <motion.div
-          className="center-icon-img"
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <PlaceholderIcon />
-        </motion.div>
-
-        {/* Sparkles around logo */}
-        {sparklePositions.map((sp, i) => {
-          const { delay, size, color, ...posStyle } = sp;
-          return (
-            <motion.div
-              key={i}
-              className="icon-sparkle"
-              style={{ ...posStyle }}
-              animate={{ opacity: [0.2, 1, 0.2], scale: [0.75, 1.25, 0.75] }}
-              transition={{ duration: 2.6, delay, repeat: Infinity, ease: "easeInOut" }}
-              aria-hidden="true"
-            >
-              <StarSparkle size={size} color={color} />
-            </motion.div>
-          );
-        })}
-      </div>
-    </motion.div>
-  );
-}
-
-/* ============================================================
-   RIGHT PANEL — Headline, Subheadline & CTAs
+   RIGHT PANEL — Headline, Subheadline & CTAs (Requirement 4 & 5)
    ============================================================ */
 function RightPanel() {
   return (
@@ -466,16 +441,17 @@ function RightPanel() {
         learn from <em>AI.</em>
       </motion.h1>
 
-      {/* Step 9: Subheadline & CTAs */}
+      {/* Requirement 4: Paragraph text */}
       <motion.p
         className="hero-subheadline"
         initial="hidden"
         animate="visible"
         variants={subheadlineAndCtaFade}
       >
-        Capture conversations, generate structured knowledge, and build a searchable memory across your AI chats.
+        {"Capture conversations.\nGenerate structured knowledge.\nSearch everything later."}
       </motion.p>
 
+      {/* Requirement 5: 56px CTAs */}
       <motion.div
         className="hero-cta-group"
         initial="hidden"
@@ -495,40 +471,60 @@ function RightPanel() {
 }
 
 /* ============================================================
-   EXPORTED HERO SECTION
+   EXPORTED HERO SECTION — Two independent main cards on dark bg
    ============================================================ */
 export default function HeroSection() {
   return (
     <section className="hero-stage" aria-label="Hero section" id="features">
-      <div className="hero-card">
-        {/* Inner navbar */}
-        <InnerNavbar />
+      <div className="hero-split-container">
+        {/* Step 1: Left Card — slides in from left */}
+        <motion.div
+          className="hero-left-card"
+          variants={slideFromLeft}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Header inside Left Card (Brand) */}
+          <div className="left-card-header">
+            <a href="/" className="inner-navbar-brand" aria-label="Memory Capsule home">
+              <div className="inner-navbar-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="2" y="2" width="12" height="12" rx="3" fill="#FAF8F4" fillOpacity="0.2" stroke="#FAF8F4" strokeWidth="1.2" />
+                  <circle cx="8" cy="8" r="2.5" fill="#D8C3A5" />
+                </svg>
+              </div>
+              <span className="inner-navbar-wordmark">Memory Capsule</span>
+            </a>
+          </div>
 
-        {/* Two-panel body */}
-        <div className="hero-body">
-          {/* Step 1: Left panel slides in from left */}
-          <motion.div
-            variants={slideFromLeft}
-            initial="hidden"
-            animate="visible"
-            style={{ overflow: "hidden", display: "flex", flexDirection: "column" }}
-          >
-            <LeftPanel />
-          </motion.div>
+          {/* Storytelling canvas inside Left Card */}
+          <LeftPanel />
+        </motion.div>
 
-          {/* Step 2: Right panel slides in from right */}
-          <motion.div
-            variants={slideFromRight}
-            initial="hidden"
-            animate="visible"
-            style={{ overflow: "hidden" }}
-          >
-            <RightPanel />
-          </motion.div>
+        {/* Step 2: Right Card — slides in from right */}
+        <motion.div
+          className="hero-right-card"
+          variants={slideFromRight}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Header inside Right Card (Nav links + CTA) */}
+          <div className="right-card-header">
+            <div className="inner-navbar-right">
+              <a href="#features" className="inner-nav-link">Features</a>
+              <a href="#demo" className="inner-nav-link">Demo</a>
+              <a href="#roadmap" className="inner-nav-link">Roadmap</a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="inner-nav-link">GitHub</a>
+              <a href="#" className="inner-nav-cta" id="nav-add-to-chrome">Add to Chrome</a>
+            </div>
+          </div>
 
-          {/* Step 3: Center logo rises from below */}
-          <CenterIcon />
-        </div>
+          {/* Headline, Subheadline & CTAs inside Right Card */}
+          <RightPanel />
+        </motion.div>
+
+        {/* Step 3: Center logo rises in middle gap between cards */}
+        <CenterIcon />
       </div>
     </section>
   );

@@ -121,43 +121,63 @@ body {
 /* ============================================================
    HERO CARD — the big rounded white card
    ============================================================ */
-.hero-card {
+/* ============================================================
+   HERO STAGE — Dark main background wrapper
+   ============================================================ */
+.hero-stage {
   width: 100%;
+  min-height: calc(100vh - 20px);
+  padding: 20px 20px 0 20px;
+  background: var(--bg-outer);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container splitting into two independent main cards */
+.hero-split-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: calc(100vh - 40px);
+}
+
+/* Optional subtle beige separator line in center gap (10% opacity) */
+.hero-split-container::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(216, 195, 165, 0.1), transparent);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   LEFT CARD — Independent main card on dark background
+   ============================================================ */
+.hero-left-card {
   background: var(--bg);
-  border-radius: 20px 20px 0 0;
+  border-radius: 28px 28px 0 0;
   border: 1px solid var(--border);
   border-bottom: none;
   display: flex;
   flex-direction: column;
+  position: relative;
   overflow: hidden;
-  position: relative;
-  /* Min height so it fills the viewport nicely */
-  min-height: calc(100vh - 20px);
+  height: 100%;
 }
 
-/* ============================================================
-   INNER NAVBAR — Apple / Linear / Raycast / Arc Browser feel
-   ============================================================ */
-.inner-navbar {
-  width: 100%;
-  height: 76px;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-  position: relative;
-  z-index: 20;
-  background: var(--bg);
+.left-card-header {
+  padding: 28px 36px 12px 36px;
   display: flex;
   align-items: center;
-}
-
-.inner-navbar-container {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding-inline: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  z-index: 10;
 }
 
 .inner-navbar-brand {
@@ -188,11 +208,33 @@ body {
   line-height: 1;
 }
 
-/* Right side nav links */
+/* ============================================================
+   RIGHT CARD — Independent main card on dark background
+   ============================================================ */
+.hero-right-card {
+  background: var(--bg);
+  border-radius: 28px 28px 0 0;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.right-card-header {
+  padding: 24px 36px 12px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 10;
+}
+
 .inner-navbar-right {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
 }
 
 .inner-nav-link {
@@ -224,10 +266,11 @@ body {
   font-family: var(--font-body);
   font-size: 13.5px;
   font-weight: 550;
-  padding: 14px 24px;
+  padding: 12px 22px;
   border-radius: 999px;
   text-decoration: none;
   box-shadow: 0 2px 10px rgba(31, 36, 33, 0.1);
+  margin-left: 32px; /* Requirement 6: 32px spacing before CTA button */
   transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
 }
 
@@ -238,37 +281,11 @@ body {
 }
 
 /* ============================================================
-   HERO BODY — two panel split
-   ============================================================ */
-.hero-body {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  position: relative;
-  min-height: 0;
-  height: 100%;
-  overflow: hidden;
-}
-
-/* Vertical center divider */
-.hero-body::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--border);
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ============================================================
-   LEFT PANEL — Editorial Storytelling
+   LEFT PANEL BODY — Storytelling canvas inside Left Card
    ============================================================ */
 .panel-left {
   position: relative;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -284,7 +301,7 @@ body {
   left: 15%;
   width: 55%;
   height: 45%;
-  background: radial-gradient(ellipse at center, rgba(216, 195, 165, 0.22) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(216, 195, 165, 0.16) 0%, transparent 70%);
   pointer-events: none;
   animation: glow-breathe 7s ease-in-out infinite;
 }
@@ -297,15 +314,16 @@ body {
 }
 
 /* ============================================================
-   RIGHT PANEL — Product Headline, Subheadline, CTAs
+   RIGHT PANEL BODY — Headline, Subheadline & CTAs inside Right Card
    ============================================================ */
 .panel-right {
   position: relative;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  padding: 56px 64px 64px 48px;
+  padding: 40px 64px 64px 48px;
   overflow: hidden;
   text-align: right;
 }
@@ -332,75 +350,83 @@ body {
 
 .hero-subheadline {
   font-family: var(--font-body);
-  font-size: clamp(14.5px, 1.35vw, 17px);
+  font-size: clamp(15px, 1.4vw, 17.5px);
   font-weight: 400;
   color: var(--text-secondary);
-  line-height: 1.65;
-  margin-top: 24px;
-  max-width: 420px;
+  line-height: 1.7;
+  margin-top: 28px;
+  max-width: 440px; /* Requirement 4: 420-460px width */
   letter-spacing: -0.01em;
+  white-space: pre-line;
 }
 
 .hero-cta-group {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 14px;
-  margin-top: 36px;
+  gap: 16px;
+  margin-top: 40px; /* Increased vertical breathing room */
 }
 
+/* Requirement 5: Primary CTA 56px height, 999px rounded, 18px 28px padding */
 .cta-button-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  height: 56px;
   background: var(--primary);
   color: var(--bg);
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 550;
-  padding: 13px 24px;
-  border-radius: 100px;
+  padding: 18px 28px;
+  border-radius: 999px;
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(31, 36, 33, 0.16);
+  box-shadow: 0 8px 24px rgba(31, 36, 33, 0.12);
   transition: transform var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
 }
 
 .cta-button-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(31, 36, 33, 0.22);
+  transform: translateY(-2px); /* Lift 2px */
+  box-shadow: 0 12px 32px rgba(31, 36, 33, 0.18);
   background: #2D3430;
 }
 
 .cta-button-primary .cta-icon {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1;
 }
 
+/* Requirement 5: Secondary CTA white background, thin beige border, subtle hover */
 .cta-button-secondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  background: var(--white);
+  height: 56px;
+  background: #FFFFFF;
   color: var(--primary);
-  border: 1px solid var(--border);
+  border: 1px solid #ECE6DC;
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
-  padding: 13px 22px;
-  border-radius: 100px;
+  padding: 18px 28px;
+  border-radius: 999px;
   text-decoration: none;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+  box-shadow: 0 2px 8px rgba(31, 36, 33, 0.04);
+  transition: transform var(--transition-base), border-color var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
 }
 
 .cta-button-secondary:hover {
   transform: translateY(-1px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-md);
+  background: #FAF8F4;
+  border-color: #D9D0C0;
+  box-shadow: 0 4px 14px rgba(31, 36, 33, 0.06);
 }
 
 /* ============================================================
-   CENTER ICON — Floating Logo Hero
+   CENTER ICON — Floating Logo Hero (20% Size Increase & Softer Glow)
    ============================================================ */
 .center-icon-wrap {
   position: absolute;
@@ -421,24 +447,24 @@ body {
   justify-content: center;
 }
 
-/* Ambient beige glow */
+/* Soft reduced ambient glow (Requirement 2) */
 .center-icon-glow {
   position: absolute;
   width: 320px;
   height: 320px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(216, 195, 165, 0.28) 0%, transparent 68%);
-  animation: glow-breathe 5s ease-in-out infinite;
+  background: radial-gradient(ellipse at center, rgba(216, 195, 165, 0.16) 0%, transparent 68%);
+  animation: glow-breathe 6s ease-in-out infinite;
   pointer-events: none;
 }
 
-/* Floating icon container */
+/* Floating icon container — 216px size (~20% increase) */
 .center-icon-img {
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 20px 48px rgba(31, 36, 33, 0.16)) drop-shadow(0 6px 16px rgba(31, 36, 33, 0.1));
-  width: 210px;
-  height: 210px;
+  filter: drop-shadow(0 14px 32px rgba(31, 36, 33, 0.10));
+  width: 216px;
+  height: 216px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -458,15 +484,16 @@ body {
 }
 
 /* ============================================================
-   LEFT PANEL — FLOATING EDITORIAL CARDS
+   LEFT PANEL — FLOATING EDITORIAL CARDS (Requirement 8 Micro Details)
    ============================================================ */
+/* Conversation cards: 12px radius, very soft shadow */
 .snippet-card {
   position: absolute;
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 12px; /* Requirement 8 */
   padding: 11px 15px;
-  box-shadow: 0 4px 16px rgba(31, 36, 33, 0.05);
+  box-shadow: 0 4px 16px rgba(31, 36, 33, 0.04); /* Very soft shadow */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -498,14 +525,15 @@ body {
   letter-spacing: -0.01em;
 }
 
+/* Summary cards: Slight beige tint (#F7F4EE) */
 .summary-card {
   position: absolute;
-  background: #FAF8F4;
+  background: #F7F4EE; /* Requirement 8: Slight beige tint */
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 10px 14px;
   max-width: 200px;
-  box-shadow: 0 3px 12px rgba(31, 36, 33, 0.04);
+  box-shadow: 0 3px 12px rgba(31, 36, 33, 0.03);
 }
 
 .summary-label {
@@ -526,20 +554,22 @@ body {
   line-height: 1.45;
 }
 
+/* Topic chips: Tiny shadow, rounded pill */
 .topic-chip {
   position: absolute;
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 100px;
+  border-radius: 999px; /* Requirement 8: Rounded pill */
   padding: 5px 13px;
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 500;
   color: var(--primary);
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(31, 36, 33, 0.04);
+  box-shadow: 0 2px 6px rgba(31, 36, 33, 0.03); /* Tiny shadow */
 }
 
+/* Quotes: Italic, 60% opacity */
 .left-quote {
   position: absolute;
   max-width: 180px;
@@ -551,16 +581,19 @@ body {
   font-weight: 500;
   color: var(--text-secondary);
   line-height: 1.45;
-  font-style: italic;
+  font-style: italic; /* Requirement 8 */
+  opacity: 0.6; /* Requirement 8: 60% opacity */
   letter-spacing: -0.01em;
 }
 
+/* Sparkles: Extremely subtle */
 .sparkle-dot {
   position: absolute;
   width: 4px;
   height: 4px;
   border-radius: 50%;
   background: var(--accent);
+  opacity: 0.25; /* Requirement 8: Extremely subtle */
   animation: sparkle-pulse var(--dur, 2.5s) ease-in-out infinite;
   animation-delay: var(--delay, 0s);
 }
@@ -578,12 +611,128 @@ body {
 .anim-chip-3  { animation: chip-drift 8.0s ease-in-out infinite 1.2s; }
 .anim-chip-4  { animation: chip-drift 6.5s ease-in-out infinite 1.8s; }
 
-/* SVG connecting lines */
+/* SVG connecting lines (~10% opacity) */
 .lines-svg {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none;
+  opacity: 0.10;
+}
+
+/* ============================================================
+   HOW MEMORY CAPSULE WORKS SECTION (Requirement 11)
+   ============================================================ */
+.how-it-works-section {
+  background: var(--bg-outer);
+  padding: 100px 24px 120px 24px;
+  color: var(--white);
+}
+
+.how-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.how-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 72px auto;
+}
+
+.how-eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.how-title {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  color: #FAF8F4;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.how-subtitle {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: rgba(250, 248, 244, 0.65);
+  margin-top: 16px;
+  line-height: 1.6;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.how-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(216, 195, 165, 0.12);
+  border-radius: 24px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.how-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(216, 195, 165, 0.28);
+}
+
+.how-step-num {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(216, 195, 165, 0.12);
+  padding: 6px 14px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-self: flex-start;
+  margin-bottom: 24px;
+  letter-spacing: 0.04em;
+}
+
+.how-card-title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: #FAF8F4;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.how-card-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(250, 248, 244, 0.6);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.how-visual-box {
+  margin-top: auto;
+  background: #FAF8F4;
+  border-radius: 16px;
+  padding: 20px;
+  color: var(--primary);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* ============================================================
@@ -591,7 +740,7 @@ body {
    ============================================================ */
 .bottom-strip {
   background: var(--bg-outer);
-  height: 60px;
+  height: 40px;
   flex-shrink: 0;
 }
 
@@ -708,29 +857,30 @@ body {
 }
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVENESS (Requirement 10)
    ============================================================ */
-@media (max-width: 960px) {
-  .hero-stage {
-    padding: 12px 12px 0 12px;
-  }
-
-  .hero-body {
+@media (max-width: 1024px) {
+  .hero-split-container {
     grid-template-columns: 1fr;
-    grid-template-rows: 420px auto;
+    min-height: auto;
+    gap: 24px;
   }
 
-  .hero-body::after {
-    display: none;
+  .hero-left-card, .hero-right-card {
+    border-radius: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .center-icon-wrap {
+    display: none; /* Hide center float on tablet/mobile stack to prevent overlap */
   }
 
   .panel-left {
-    border-bottom: 1px solid var(--border);
-    min-height: 420px;
+    min-height: 440px;
   }
 
   .panel-right {
-    padding: 48px 32px 56px 32px;
+    padding: 48px 36px 64px 36px;
     align-items: center;
     text-align: center;
   }
@@ -743,28 +893,30 @@ body {
     justify-content: center;
   }
 
-  .center-icon-wrap {
-    top: auto;
-    bottom: -60px;
-    left: 50%;
+  .how-grid {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 640px) {
   .hero-stage {
-    padding: 8px 8px 0 8px;
+    padding: 12px 12px 0 12px;
   }
 
-  .inner-navbar {
-    padding: 14px 18px;
+  .left-card-header, .right-card-header {
+    padding: 20px 24px 8px 24px;
   }
 
   .inner-navbar-right {
-    gap: 12px;
+    gap: 16px;
   }
 
   .inner-nav-link {
     display: none;
+  }
+
+  .inner-nav-cta {
+    margin-left: 0;
   }
 
   .hero-headline {
@@ -772,6 +924,16 @@ body {
   }
 
   .panel-right {
-    padding: 36px 20px 44px 20px;
+    padding: 32px 20px 48px 20px;
+  }
+
+  .cta-button-primary, .cta-button-secondary {
+    width: 100%;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
   }
 }
+

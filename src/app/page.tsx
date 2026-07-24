@@ -1,4 +1,5 @@
 import HeroSection from "./components/HeroSection";
+import HowItWorks from "./components/HowItWorks";
 import TrustStrip from "./components/TrustStrip";
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
     <div className="page-wrapper">
       <main>
         <HeroSection />
+        <HowItWorks />
         {/* Bottom black strip matching wireframe */}
         <div className="bottom-strip" aria-hidden="true" />
       </main>
