@@ -36,7 +36,7 @@ const slideFromRight: Variants = {
 };
 
 const logoFloatUp: Variants = {
-  hidden: { y: 70, opacity: 0, scale: 0.92 },
+  hidden: { y: 100, opacity: 0, scale: 0.92 },
   visible: {
     y: 0,
     opacity: 1,
@@ -157,6 +157,8 @@ function ConnectingLines() {
   return (
     <motion.svg
       className="lines-svg"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       initial={{ opacity: 0 }}
@@ -164,11 +166,11 @@ function ConnectingLines() {
       transition={{ delay: 1.45, duration: 0.8, ease: "easeOut" }}
     >
       {/* Soft curved bezier paths pointing from input cards toward center logo */}
-      <path d="M 28% 14% Q 55% 25%, 84% 45%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
-      <path d="M 30% 38% Q 58% 42%, 84% 48%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
-      <path d="M 29% 66% Q 56% 60%, 84% 52%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
-      <path d="M 68% 24% Q 76% 35%, 84% 46%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="2 4" fill="none" />
-      <path d="M 64% 54% Q 74% 52%, 84% 50%" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="2 4" fill="none" />
+      <path d="M 28 14 Q 55 25, 84 45" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
+      <path d="M 30 38 Q 58 42, 84 48" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
+      <path d="M 29 66 Q 56 60, 84 52" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="3 5" fill="none" />
+      <path d="M 68 24 Q 76 35, 84 46" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="2 4" fill="none" />
+      <path d="M 64 54 Q 74 52, 84 50" stroke="#D8C3A5" strokeWidth="1" strokeDasharray="2 4" fill="none" />
     </motion.svg>
   );
 }
@@ -263,6 +265,7 @@ const sparklePositions = [
    ============================================================ */
 function CenterIcon() {
   const [imgError, setImgError] = useState(false);
+  const iconSize = '22vh'; // Increased to 22% of viewport height for 20-25% range
 
   return (
     <motion.div
@@ -270,12 +273,13 @@ function CenterIcon() {
       initial="hidden"
       animate="visible"
       variants={logoFloatUp}
+      style={{ width: iconSize, height: iconSize }}
     >
-      <div className="center-icon-container">
+      <div className="center-icon-container" style={{ width: '100%', height: '100%' }}>
         {/* Soft beige ambient glow */}
         <div className="center-icon-glow" aria-hidden="true" />
 
-        {/* Floating logo — 216px size (~20% increase) */}
+        {/* Floating logo — responsive size (~22% of viewport height) */}
         <motion.div
           className="center-icon-img"
           animate={{ y: [0, -8, 0] }}
@@ -287,8 +291,8 @@ function CenterIcon() {
               alt="Memory Capsule Logo"
               onError={() => setImgError(true)}
               style={{
-                width: 216,
-                height: 216,
+                width: '100%',
+                height: '100%',
                 objectFit: "contain",
                 filter: "drop-shadow(0 14px 32px rgba(31, 36, 33, 0.10))",
               }}
@@ -410,9 +414,9 @@ function LeftPanel() {
             style={{
               top: sp.top,
               left: sp.left,
-              ["--dur" as string]: sp.dur,
-              ["--delay" as string]: sp.delay,
-            }}
+              '--dur': sp.dur,
+              '--delay': sp.delay,
+            } as React.CSSProperties}
             aria-hidden="true"
           />
         ))}
