@@ -122,9 +122,6 @@ body {
 }
 
 /* ============================================================
-   HERO CARD — the big rounded white card
-   ============================================================ */
-/* ============================================================
    HERO STAGE — Dark main background wrapper
    ============================================================ */
 .hero-stage {
@@ -145,6 +142,7 @@ body {
   flex: 1;
   width: 100%;
   min-height: calc(100vh - 40px);
+  overflow: visible;
 }
 
 /* Optional subtle beige separator line in center gap (10% opacity) */
@@ -174,6 +172,8 @@ body {
   position: relative;
   overflow: hidden;
   height: 100%;
+  /* Ensure content clips to card but z-index allows center icon to overlap */
+  isolation: isolate;
 }
 
 .left-card-header {
@@ -224,6 +224,7 @@ body {
   position: relative;
   overflow: hidden;
   height: 100%;
+  isolation: isolate;
 }
 
 .right-card-header {
@@ -234,30 +235,82 @@ body {
   z-index: 10;
 }
 
-.inner-navbar-right {
+/* ============================================================
+   PILL NAVBAR (Right Panel Header)
+   ============================================================ */
+.pill-navbar {
+  background: #1C1C1C;
+  border-radius: 40px;
   display: flex;
   align-items: center;
-  gap: 28px;
+  padding: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  cursor: pointer;
 }
 
-.inner-nav-link {
+.pill-nav-collapsible {
+  display: flex;
+  align-items: center;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  gap: 28px;
+  white-space: nowrap;
+  transition: max-width 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease 0.1s, padding 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pill-navbar:hover .pill-nav-collapsible {
+  max-width: 700px;
+  opacity: 1;
+  padding-left: 24px; 
+}
+
+.pill-nav-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pill-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px; 
+}
+
+.pill-nav-link {
+  font-family: var(--font-body);
+  font-size: 14px; 
+  font-weight: 500;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.pill-nav-link:hover {
+  opacity: 0.7;
+}
+
+.pill-nav-email {
+  background: #FFFFFF;
+  color: #1C1C1C;
   font-family: var(--font-body);
   font-size: 14px;
-  font-weight: 450;
-  color: #71717A;
+  font-weight: 600;
+  padding: 10px 20px; 
+  border-radius: 24px;
   text-decoration: none;
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  transition: color 250ms ease, opacity 250ms ease, transform 250ms ease;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
 }
 
-.inner-nav-link:hover {
-  color: var(--primary);
-  opacity: 1;
-  transform: translateY(-1.5px);
+.pill-nav-email:hover {
+  transform: scale(1.02);
 }
 
 .inner-nav-cta {
@@ -326,7 +379,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  padding: 40px 64px 64px 48px;
+  /* Shift entire content group upward ~30px by reducing top padding */
+  padding: 10px 64px 94px 48px;
   overflow: hidden;
   text-align: right;
 }
@@ -433,14 +487,19 @@ body {
    ============================================================ */
 .center-icon-wrap {
   position: absolute;
-  left: 50%;
+  left: calc(50% - 10px); /* horizontal center of the 20px gap */
   top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  transform: translate(-50%, -50%); /* CSS centers the wrapper — framer-motion is inside and doesn't touch this */
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* Inner motion div — only handles entry animation, no positioning */
+.center-icon-motion {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
 }
 
 .center-icon-container {
@@ -450,13 +509,13 @@ body {
   justify-content: center;
 }
 
-/* Soft reduced ambient glow (Requirement 2) */
+/* Ambient glow scaled up to match 25.3vh icon */
 .center-icon-glow {
   position: absolute;
-  width: 320px;
-  height: 320px;
+  width: 380px;
+  height: 380px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(216, 195, 165, 0.16) 0%, transparent 68%);
+  background: radial-gradient(ellipse at center, rgba(216, 195, 165, 0.20) 0%, transparent 68%);
   animation: glow-breathe 6s ease-in-out infinite;
   pointer-events: none;
 }
@@ -528,22 +587,22 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Summary cards: Slight beige tint (#F7F4EE) */
+/* Summary cards: Slight beige tint (#F7F4EE), raised contrast */
 .summary-card {
   position: absolute;
-  background: #F7F4EE; /* Requirement 8: Slight beige tint */
-  border: 1px solid var(--border);
+  background: #F2EEE6; /* Slightly richer beige for contrast */
+  border: 1px solid #CFC4B0; /* Stronger border — was var(--border) */
   border-radius: 12px;
   padding: 10px 14px;
   max-width: 200px;
-  box-shadow: 0 3px 12px rgba(31, 36, 33, 0.03);
+  box-shadow: 0 4px 16px rgba(31, 36, 33, 0.08); /* More presence */
 }
 
 .summary-label {
   font-family: var(--font-body);
   font-size: 9px;
   font-weight: 700;
-  color: var(--accent);
+  color: #B8945A; /* Richer warm tone vs faded #D8C3A5 */
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 3px;
@@ -552,27 +611,27 @@ body {
 .summary-text {
   font-family: var(--font-body);
   font-size: 11px;
-  font-weight: 420;
-  color: var(--text-secondary);
+  font-weight: 500; /* was 420, raise to 500 for contrast */
+  color: #4A4A47; /* Darker than var(--text-secondary)=#71717A */
   line-height: 1.45;
 }
 
-/* Topic chips: Tiny shadow, rounded pill */
+/* Topic chips: More visible pill with stronger border */
 .topic-chip {
   position: absolute;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 999px; /* Requirement 8: Rounded pill */
+  background: #FFFFFF;
+  border: 1px solid #C9BFA8; /* Stronger than var(--border)=#ECE6DC */
+  border-radius: 999px;
   padding: 5px 13px;
   font-family: var(--font-body);
   font-size: 11px;
-  font-weight: 500;
-  color: var(--primary);
+  font-weight: 600; /* was 500 */
+  color: #2E3330; /* Near-black for legibility */
   white-space: nowrap;
-  box-shadow: 0 2px 6px rgba(31, 36, 33, 0.03); /* Tiny shadow */
+  box-shadow: 0 2px 8px rgba(31, 36, 33, 0.07); /* Slightly more shadow */
 }
 
-/* Quotes: Italic, 60% opacity */
+/* Quotes: Italic, visible but not dominant */
 .left-quote {
   position: absolute;
   max-width: 180px;
@@ -582,10 +641,10 @@ body {
   font-family: var(--font-heading);
   font-size: 12.5px;
   font-weight: 500;
-  color: var(--text-secondary);
+  color: #5C5C58; /* Darker than var(--text-secondary) for readability */
   line-height: 1.45;
-  font-style: italic; /* Requirement 8 */
-  opacity: 0.6; /* Requirement 8: 60% opacity */
+  font-style: italic;
+  opacity: 0.85; /* was 0.6 — raise enough to read without dominating */
   letter-spacing: -0.01em;
 }
 
@@ -614,13 +673,75 @@ body {
 .anim-chip-3  { animation: chip-drift 8.0s ease-in-out infinite 1.2s; }
 .anim-chip-4  { animation: chip-drift 6.5s ease-in-out infinite 1.8s; }
 
-/* SVG connecting lines (~10% opacity) */
-.lines-svg {
+/* ============================================================
+  color: #71717A;
+  font-weight: 500;
+}
+
+/* ROW 02: Sequence */
+.mini-sequence {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-right: 20px;
+}
+
+.seq-step {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  color: #5C5C58;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #F4EFE6;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.seq-arrow {
+  font-size: 12px;
+  color: #B8A48A;
+  line-height: 1;
+}
+
+.seq-dots {
+  font-size: 12px;
+  color: #B8A48A;
+  line-height: 0.8;
+  text-align: center;
+}
+
+/* ROW 03: Topics & Paths */
+.mini-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  z-index: 2; /* above svg lines */
+  padding-right: 10px;
+}
+
+.mini-topic-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: #5C5C58;
+  background: #FFFFFF;
+  padding: 3px 8px;
+  border: 1px solid #E8E1D7;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.mini-paths-svg {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   pointer-events: none;
-  opacity: 0.10;
 }
 
 /* ============================================================
