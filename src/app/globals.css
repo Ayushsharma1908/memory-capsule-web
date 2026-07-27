@@ -346,8 +346,39 @@ body {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  padding: 0;
+  padding: 32px 24px; /* Elegant padding to align with white card */
   min-height: 520px;
+  box-sizing: border-box;
+}
+
+/* Left Panel Text Styles - Secondary to Right Panel */
+.left-hero-headline {
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 4.6vw, 58px); /* Slightly smaller for elegance */
+  font-weight: 600; /* Lighter than right panel's 700 */
+  color: var(--text-secondary); /* Secondary color instead of primary */
+  line-height: 1.15; /* Slightly more open for elegance */
+  letter-spacing: -0.025em; /* Refined letter spacing */
+  margin-bottom: 16px; /* Added bottom margin for breathing room */
+  max-width: 100%; /* Allow full width within padding */
+}
+
+.left-hero-headline em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.left-hero-subline {
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.2vw, 15px); /* Slightly smaller for secondary feel */
+  font-weight: 400;
+  color: var(--text-tertiary); /* More tertiary/secondary */
+  line-height: 1.7; /* Generous line height for readability */
+  margin-top: 0; /* Reset since we're using margin-bottom on headline */
+  max-width: 100%; /* Allow full width within padding */
+  letter-spacing: -0.005em;
+  white-space: pre-line;
 }
 
 .panel-left::before {

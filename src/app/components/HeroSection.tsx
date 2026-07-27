@@ -142,7 +142,7 @@ const sparklePositions = [
 
 function CenterIcon() {
   const [imgError, setImgError] = useState(false);
-  const iconSize = "35vh"; // Increased size for better visibility
+  const iconSize = "25.3vh";
 
   return (
     /* Static positioner — CSS handles centering, framer-motion stays out */
@@ -272,13 +272,15 @@ export default function HeroSection() {
         >
           <div className="left-card-header">
             <a href="/" className="inner-navbar-brand" aria-label="Memory Capsule home">
-              <div className="inner-navbar-icon" aria-hidden="true">.</div>
+              <div className="inner-navbar-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                  <rect x="2" y="2" width="12" height="12" rx="3" fill="#FAF8F4" fillOpacity="0.2" stroke="#FAF8F4" strokeWidth="1.2" />
+                  <circle cx="8" cy="8" r="2.5" fill="#D8C3A5" />
+                </svg>
+              </div>
               <span className="inner-navbar-wordmark">Memory Capsule</span>
             </a>
           </div>
-
-          {/* Storytelling canvas inside Left Card */}
-          <LeftPanel />
         </motion.div>
 
         {/* Right Card */}
