@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <div className="pill-navbar">
       <div className="pill-nav-icon">
-        <Menu size={18} strokeWidth={2.5} color="#1C1C1C" />
+        <Menu size={18} border-radius={24} strokeWidth={2.5} color="#1C1C1C" />
       </div>
       <div className="pill-nav-collapsible">
         <div className="pill-nav-links">

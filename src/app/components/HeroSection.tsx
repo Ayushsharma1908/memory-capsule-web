@@ -44,7 +44,11 @@ const quoteFadeIn: Variants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: 1.1 + i * 0.25, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    transition: {
+      delay: 1.1 + i * 0.25,
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+    },
   }),
 };
 
@@ -69,10 +73,25 @@ const subheadlineAndCtaFade: Variants = {
 /* ============================================================
    SPARKLE SVG
    ============================================================ */
-function StarSparkle({ size = 14, color = "#1F2421" }: { size?: number; color?: string }) {
+function StarSparkle({
+  size = 14,
+  color = "#1F2421",
+}: {
+  size?: number;
+  color?: string;
+}) {
   return (
-    <svg width={size} height={size} viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M7 0L8.2 5.8L14 7L8.2 8.2L7 14L5.8 8.2L0 7L5.8 5.8L7 0Z" fill={color} />
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 14 14"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M7 0L8.2 5.8L14 7L8.2 8.2L7 14L5.8 8.2L0 7L5.8 5.8L7 0Z"
+        fill={color}
+      />
     </svg>
   );
 }
@@ -87,10 +106,17 @@ function LeftPanel() {
           animate="visible"
           variants={headlineFade}
         >
-          Your best ideas<br />
-          shouldn't live<br />
-          in forgotten <em>chats.</em>
+          Your best ideas
+          <br />
+          shouldn't live
+          <br />
+          in forgotten{" "}
+          <span className="chat-placeholder">
+            chats.
+            <span className="chat-cursor" aria-hidden="true" />
+          </span>{" "}
         </motion.h1>
+
         <motion.p
           className="left-hero-subline"
           initial="hidden"
@@ -100,10 +126,57 @@ function LeftPanel() {
           Keep the knowledge. Lose the clutter.
         </motion.p>
       </div>
+
+      {/* Knowledge artifact */}
+      <motion.div
+        className="memory-artifact"
+        initial={{ opacity: 0, y: 24, rotate: -1 }}
+        animate={{ opacity: 1, y: 0, rotate: -1 }}
+        transition={{
+          delay: 2.8,
+          duration: 0.8,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      >
+        <div className="memory-artifact-top">
+          <span className="memory-artifact-icon">
+            <StarSparkle size={11} color="#D8C3A5" />
+          </span>
+
+          <span className="memory-artifact-label">SAVED MEMORY</span>
+
+          <span className="memory-artifact-status">CAPTURED</span>
+        </div>
+
+        <h3 className="memory-artifact-title">React Authentication</h3>
+
+        <p className="memory-artifact-description">
+          JWT authentication with protected routes, refresh tokens and secure
+          sessions.
+        </p>
+
+        <div className="memory-artifact-tags">
+          <span>React</span>
+          <span>JWT</span>
+          <span>Security</span>
+        </div>
+
+        <div className="memory-artifact-footer">
+          <span className="memory-source-dot" />
+          Captured from conversation
+        </div>
+      </motion.div>
+
+      {/* Decorative path toward capsule */}
+      <div className="memory-flow" aria-hidden="true">
+        <span className="memory-flow-line" />
+        <span className="memory-flow-dot memory-flow-dot-1" />
+        <span className="memory-flow-dot memory-flow-dot-2" />
+        <span className="memory-flow-dot memory-flow-dot-3" />
+      </div>
     </div>
   );
 }
-
 /* ============================================================
    MEMORY CAPSULE LOGO FALLBACK
    ============================================================ */
@@ -124,10 +197,26 @@ function PlaceholderIcon() {
     >
       <svg width="55%" height="55%" viewBox="0 0 100 100" fill="none">
         <rect x="15" y="15" width="70" height="70" rx="22" fill="#1F2421" />
-        <rect x="25" y="25" width="50" height="50" rx="16" stroke="#D8C3A5" strokeWidth="2" strokeDasharray="3 3" opacity="0.6" />
+        <rect
+          x="25"
+          y="25"
+          width="50"
+          height="50"
+          rx="16"
+          stroke="#D8C3A5"
+          strokeWidth="2"
+          strokeDasharray="3 3"
+          opacity="0.6"
+        />
         <circle cx="50" cy="50" r="16" fill="#D8C3A5" />
         <circle cx="50" cy="50" r="8" fill="#FAF8F4" />
-        <path d="M50 30V36M50 64V70M30 50H36M64 50H70" stroke="#FAF8F4" strokeWidth="2" strokeLinecap="round" opacity="0.8" />
+        <path
+          d="M50 30V36M50 64V70M30 50H36M64 50H70"
+          stroke="#FAF8F4"
+          strokeWidth="2"
+          strokeLinecap="round"
+          opacity="0.8"
+        />
       </svg>
     </div>
   );
@@ -179,7 +268,6 @@ function CenterIcon() {
           ) : (
             <PlaceholderIcon />
           )}
-
         </motion.div>
 
         {/* Sparkles */}
@@ -191,7 +279,12 @@ function CenterIcon() {
               className="icon-sparkle"
               style={{ ...posStyle }}
               animate={{ opacity: [0.2, 1, 0.2], scale: [0.75, 1.25, 0.75] }}
-              transition={{ duration: 2.6, delay, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 2.6,
+                delay,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             >
               <StarSparkle size={size} color={color} />
             </motion.div>
@@ -218,7 +311,7 @@ function RightPanel() {
         <br />
         what you
         <br />
-        learn from <em>AI.</em>
+        learn from <em className="quote-wiggle">AI.</em>
       </motion.h1>
 
       <motion.p
@@ -227,7 +320,9 @@ function RightPanel() {
         animate="visible"
         variants={subheadlineAndCtaFade}
       >
-        {"Capture conversations.\nGenerate structured knowledge.\nSearch everything later."}
+        {
+          "Capture conversations.\nGenerate structured knowledge.\nSearch everything later."
+        }
       </motion.p>
 
       <motion.div
@@ -239,11 +334,41 @@ function RightPanel() {
         <a href="#" className="cta-button-primary" id="hero-chrome-cta">
           <span className="cta-icon" aria-hidden="true">
             <svg width="17" height="17" viewBox="0 0 20 20" fill="none">
-              <circle cx="10" cy="10" r="8.5" stroke="#FAF8F4" strokeWidth="1.5" />
+              <circle
+                cx="10"
+                cy="10"
+                r="8.5"
+                stroke="#FAF8F4"
+                strokeWidth="1.5"
+              />
               <circle cx="10" cy="10" r="3.2" fill="#FAF8F4" />
-              <line x1="10" y1="1.5" x2="10" y2="6.8" stroke="#FAF8F4" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="1.5" y1="14" x2="6.1" y2="11.4" stroke="#FAF8F4" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="18.5" y1="14" x2="13.9" y2="11.4" stroke="#FAF8F4" strokeWidth="1.5" strokeLinecap="round" />
+              <line
+                x1="10"
+                y1="1.5"
+                x2="10"
+                y2="6.8"
+                stroke="#FAF8F4"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="1.5"
+                y1="14"
+                x2="6.1"
+                y2="11.4"
+                stroke="#FAF8F4"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="18.5"
+                y1="14"
+                x2="13.9"
+                y2="11.4"
+                stroke="#FAF8F4"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </span>
           <span>Add to Chrome</span>
@@ -271,16 +396,31 @@ export default function HeroSection() {
           animate="visible"
         >
           <div className="left-card-header">
-            <a href="/" className="inner-navbar-brand" aria-label="Memory Capsule home">
+            <a
+              href="/"
+              className="inner-navbar-brand"
+              aria-label="Memory Capsule home"
+            >
               <div className="inner-navbar-icon" aria-hidden="true">
                 <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
-                  <rect x="2" y="2" width="12" height="12" rx="3" fill="#FAF8F4" fillOpacity="0.2" stroke="#FAF8F4" strokeWidth="1.2" />
+                  <rect
+                    x="2"
+                    y="2"
+                    width="12"
+                    height="12"
+                    rx="3"
+                    fill="#FAF8F4"
+                    fillOpacity="0.2"
+                    stroke="#FAF8F4"
+                    strokeWidth="1.2"
+                  />
                   <circle cx="8" cy="8" r="2.5" fill="#D8C3A5" />
                 </svg>
               </div>
               <span className="inner-navbar-wordmark">Memory Capsule</span>
             </a>
           </div>
+          <LeftPanel />
         </motion.div>
 
         {/* Right Card */}
@@ -290,7 +430,13 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          <div className="right-card-header" style={{ justifyContent: "flex-end", padding: "28px 36px 12px 36px" }}>
+          <div
+            className="right-card-header"
+            style={{
+              justifyContent: "flex-end",
+              padding: "28px 36px 12px 36px",
+            }}
+          >
             <Navbar />
           </div>
           <RightPanel />

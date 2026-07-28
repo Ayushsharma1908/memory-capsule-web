@@ -63,6 +63,13 @@
   75%       { transform: translateY(3px) translateX(-2px); }
 }
 
+@keyframes quote-wiggle {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-2px); }
+  50%      { transform: translateX(2px); }
+  75%      { transform: translateX(-2px); }
+}
+
 @keyframes chip-drift {
   0%, 100% { transform: translateY(0px) translateX(0px); }
   33%       { transform: translateY(-3px) translateX(1px); }
@@ -231,6 +238,7 @@ body {
   padding: 24px 36px 12px 36px;
   display: flex;
   align-items: center;
+
   justify-content: flex-end;
   z-index: 10;
 }
@@ -240,7 +248,7 @@ body {
    ============================================================ */
 .pill-navbar {
   background: #1C1C1C;
-  border-radius: 40px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   padding: 6px;
@@ -306,11 +314,15 @@ body {
   text-decoration: none;
   display: flex;
   align-items: center;
-  transition: transform 0.2s ease;
+  /* transition: transform 0.2s ease; */
 }
 
 .pill-nav-email:hover {
-  transform: scale(1.02);
+  /* transform: scale(.02); */
+  color: #ffffff;
+  background: #D8C3A5;
+  transition: background 0.2s ease, color 0.2s ease;
+  
 }
 
 .inner-nav-cta {
@@ -356,7 +368,7 @@ body {
   font-family: var(--font-heading);
   font-size: clamp(36px, 4.6vw, 58px); /* Slightly smaller for elegance */
   font-weight: 600; /* Lighter than right panel's 700 */
-  color: var(--text-secondary); /* Secondary color instead of primary */
+  color: #252824; /* Secondary color instead of primary */
   line-height: 1.15; /* Slightly more open for elegance */
   letter-spacing: -0.025em; /* Refined letter spacing */
   margin-bottom: 16px; /* Added bottom margin for breathing room */
@@ -366,14 +378,14 @@ body {
 .left-hero-headline em {
   font-style: italic;
   font-weight: 400;
-  color: var(--text-secondary);
+  color: #8D7452;
 }
 
 .left-hero-subline {
   font-family: var(--font-body);
   font-size: clamp(13px, 1.2vw, 15px); /* Slightly smaller for secondary feel */
   font-weight: 400;
-  color: var(--text-tertiary); /* More tertiary/secondary */
+  color: var(--text-secondary);
   line-height: 1.7; /* Generous line height for readability */
   margin-top: 0; /* Reset since we're using margin-bottom on headline */
   max-width: 100%; /* Allow full width within padding */
@@ -400,6 +412,129 @@ body {
   height: 100%;
 }
 
+.panel-left-simple {
+  position: relative;
+  z-index: 3;
+}
+
+.memory-artifact {
+  position: absolute;
+  left: 54px;
+  bottom: 70px;
+  width: min(360px, calc(100% - 110px));
+  padding: 20px 22px 18px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--border-strong);
+  border-radius: 18px;
+  box-shadow:
+    0 18px 50px rgba(31, 36, 33, 0.06),
+    0 2px 8px rgba(31, 36, 33, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 4;
+}
+
+/* tiny header */
+.memory-artifact-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.memory-artifact-icon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  border-radius: 7px;
+  margin-right: 9px;
+}
+
+.memory-artifact-label {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+}
+
+/* CAPTURED badge */
+.memory-artifact-status {
+  margin-left: auto;
+  font-family: var(--font-body);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #8D7452;
+  background: rgba(216, 195, 165, 0.18);
+  border: 1px solid rgba(216, 195, 165, 0.4);
+  padding: 4px 7px;
+  border-radius: 999px;
+}
+
+/* memory title */
+.memory-artifact-title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 650;
+  color: var(--primary);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+
+/* description */
+.memory-artifact-description {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  max-width: 290px;
+  margin: 0;
+}
+
+/* tags */
+.memory-artifact-tags {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.memory-artifact-tags span {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  color: #5C5C58;
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+}
+
+/* bottom source */
+.memory-artifact-footer {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 17px;
+  padding-top: 13px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+.memory-source-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
 /* ============================================================
    RIGHT PANEL BODY — Headline, Subheadline & CTAs inside Right Card
    ============================================================ */
@@ -543,10 +678,10 @@ body {
 /* Ambient glow scaled up to match 25.3vh icon */
 .center-icon-glow {
   position: absolute;
-  width: 380px;
-  height: 380px;
+  width: 320px;
+  height: 320px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(216, 195, 165, 0.20) 0%, transparent 68%);
+  background: radial-gradient(ellipse at center, rgba(216, 195, 165, 0.15) 0%, transparent 70%);
   animation: glow-breathe 6s ease-in-out infinite;
   pointer-events: none;
 }
@@ -672,12 +807,50 @@ body {
   font-family: var(--font-heading);
   font-size: 12.5px;
   font-weight: 500;
-  color: #5C5C58; /* Darker than var(--text-secondary) for readability */
+  color: #5C5C58;
   line-height: 1.45;
   font-style: italic;
-  opacity: 0.85; /* was 0.6 — raise enough to read without dominating */
+  opacity: 0.85; 
   letter-spacing: -0.01em;
+  display: inline-block;
 }
+
+.chat-placeholder {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.04em 0.16em 0.08em;
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-style: italic;
+  border-radius: 24px;
+  color: var(--primary);
+  background: rgba(216, 195, 165, 0.12);
+  border-bottom: 2px solid rgba(216, 195, 165, 0.65);
+
+  white-space: nowrap;
+}
+
+.chat-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.78em;
+  margin-left: 4px;
+  background: var(--primary);
+  animation: chat-cursor-blink 0.9s steps(1) infinite;
+}
+
+@keyframes chat-cursor-blink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0;
+  }
+}
+
 
 /* Sparkles: Extremely subtle */
 .sparkle-dot {
@@ -704,10 +877,6 @@ body {
 .anim-chip-3  { animation: chip-drift 8.0s ease-in-out infinite 1.2s; }
 .anim-chip-4  { animation: chip-drift 6.5s ease-in-out infinite 1.8s; }
 
-/* ============================================================
-  color: #71717A;
-  font-weight: 500;
-}
 
 /* ROW 02: Sequence */
 .mini-sequence {
@@ -775,6 +944,91 @@ body {
   pointer-events: none;
 }
 
+
+/* ============================================================
+   KNOWLEDGE FLOW → CENTER CAPSULE
+   ============================================================ */
+
+.memory-flow {
+  position: absolute;
+
+  left: 395px;
+  bottom: 145px;
+
+  width: 220px;
+  height: 90px;
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+.memory-flow-line {
+  position: absolute;
+
+  left: 0;
+  top: 48px;
+
+  width: 100%;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    rgba(216, 195, 165, 0.55),
+    rgba(216, 195, 165, 0.18),
+    transparent
+  );
+
+  transform: rotate(-15deg);
+  transform-origin: left center;
+}
+
+.memory-flow-dot {
+  position: absolute;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  box-shadow: 0 0 10px rgba(216, 195, 165, 0.35);
+
+  animation: memory-particle 3.4s ease-in-out infinite;
+}
+
+.memory-flow-dot-1 {
+  left: 25px;
+  top: 39px;
+}
+
+.memory-flow-dot-2 {
+  left: 90px;
+  top: 24px;
+
+  animation-delay: 0.7s;
+}
+
+.memory-flow-dot-3 {
+  left: 155px;
+  top: 8px;
+
+  animation-delay: 1.4s;
+}
+
+@keyframes memory-particle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
 /* ============================================================
    HOW MEMORY CAPSULE WORKS SECTION (Requirement 11)
    ============================================================ */
@@ -1027,6 +1281,7 @@ body {
   }
 
   .center-icon-wrap {
+    top: 50%;
     display: none; /* Hide center float on tablet/mobile stack to prevent overlap */
   }
 
