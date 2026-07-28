@@ -171,7 +171,7 @@ body {
    ============================================================ */
 .hero-left-card {
   background: var(--bg);
-  border-radius: 28px 28px 0 0;
+  border-radius: 0 28px 28px 0;
   border: 1px solid var(--border);
   border-bottom: none;
   display: flex;
@@ -223,7 +223,7 @@ body {
    ============================================================ */
 .hero-right-card {
   background: var(--bg);
-  border-radius: 28px 28px 0 0;
+  border-radius:28px 0 0 28px;
   border: 1px solid var(--border);
   border-bottom: none;
   display: flex;
