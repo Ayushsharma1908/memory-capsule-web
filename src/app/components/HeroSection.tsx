@@ -419,6 +419,9 @@ export default function HeroSection() {
               </div>
               <span className="inner-navbar-wordmark">Memory Capsule</span>
             </a>
+            <div className="mobile-navbar-wrapper">
+              <Navbar />
+            </div>
           </div>
           <LeftPanel />
         </motion.div>
@@ -430,14 +433,10 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          <div
-            className="right-card-header"
-            style={{
-              justifyContent: "flex-end",
-              padding: "28px 36px 12px 36px",
-            }}
-          >
-            <Navbar />
+          <div className="right-card-header">
+            <div className="desktop-navbar-wrapper">
+              <Navbar />
+            </div>
           </div>
           <RightPanel />
         </motion.div>

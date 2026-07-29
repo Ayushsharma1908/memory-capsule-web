@@ -187,6 +187,7 @@ body {
   padding: 28px 36px 12px 36px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   z-index: 10;
 }
 
@@ -218,6 +219,25 @@ body {
   line-height: 1;
 }
 
+/* Navbar visibility wrappers */
+.mobile-navbar-wrapper {
+  display: none;
+}
+
+.desktop-navbar-wrapper {
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .mobile-navbar-wrapper {
+    display: block;
+  }
+
+  .desktop-navbar-wrapper {
+    display: none;
+  }
+}
+
 /* ============================================================
    RIGHT CARD — Independent main card on dark background
    ============================================================ */
@@ -238,39 +258,23 @@ body {
   padding: 24px 36px 12px 36px;
   display: flex;
   align-items: center;
-
   justify-content: flex-end;
   z-index: 10;
 }
 
 /* ============================================================
-   PILL NAVBAR (Right Panel Header)
+   PILL NAVBAR (Right Panel Header) — Responsive Landscape / Dropdown
    ============================================================ */
 .pill-navbar {
   background: #1C1C1C;
   border-radius: 14px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   padding: 6px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-}
-
-.pill-nav-collapsible {
-  display: flex;
-  align-items: center;
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
-  gap: 28px;
-  white-space: nowrap;
-  transition: max-width 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease 0.1s, padding 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.pill-navbar:hover .pill-nav-collapsible {
-  max-width: 700px;
-  opacity: 1;
-  padding-left: 24px; 
+  position: relative;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .pill-nav-icon {
@@ -282,17 +286,19 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.pill-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px; 
+.pill-nav-icon:hover {
+  transform: scale(1.05);
 }
 
 .pill-nav-link {
   font-family: var(--font-body);
-  font-size: 14px; 
+  font-size: 14px;
   font-weight: 500;
   color: #FFFFFF;
   text-decoration: none;
@@ -309,44 +315,114 @@ body {
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
-  padding: 10px 20px; 
+  padding: 10px 20px;
   border-radius: 24px;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  /* transition: transform 0.2s ease; */
-}
-
-.pill-nav-email:hover {
-  /* transform: scale(.02); */
-  color: #ffffff;
-  background: #D8C3A5;
-  transition: background 0.2s ease, color 0.2s ease;
-  
-}
-
-.inner-nav-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #1F2421;
-  color: #FFFFFF;
-  font-family: var(--font-body);
-  font-size: 13.5px;
-  font-weight: 550;
-  padding: 12px 22px;
-  border-radius: 999px;
-  text-decoration: none;
-  box-shadow: 0 2px 10px rgba(31, 36, 33, 0.1);
-  margin-left: 32px; /* Requirement 6: 32px spacing before CTA button */
-  transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
 }
 
-.inner-nav-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(31, 36, 33, 0.18);
-  background: #2D3430;
+.pill-nav-email:hover {
+  background: #D8C3A5;
+  color: #1C1C1C;
 }
+
+/* DESKTOP (1025px+): Horizontal / Landscape Expansion on Hover */
+@media (min-width: 1025px) {
+  .pill-nav-collapsible {
+    display: flex;
+    align-items: center;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    gap: 28px;
+    white-space: nowrap;
+    transition:
+      max-width 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.4s ease 0.1s,
+      padding 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .pill-navbar:hover .pill-nav-collapsible,
+  .pill-navbar.is-open .pill-nav-collapsible {
+    max-width: 700px;
+    opacity: 1;
+    padding-left: 24px;
+    padding-right: 4px;
+  }
+
+  .pill-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+}
+
+/* MOBILE & TABLET (<=1024px): Open Below as a Vertical Dropdown */
+@media (max-width: 1024px) {
+  .pill-nav-collapsible {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    background: #1C1C1C;
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 220px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+    z-index: 100;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    /* Smooth opening animation state when closed */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px) scale(0.94);
+    transform-origin: top right;
+    pointer-events: none;
+    transition:
+      opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.28s cubic-bezier(0.34, 1.4, 0.64, 1),
+      visibility 0s linear 0.28s;
+  }
+
+  /* Reveal with spring-like scale & slide animation on hover or open toggle */
+  .pill-navbar:hover .pill-nav-collapsible,
+  .pill-navbar.is-open .pill-nav-collapsible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    transition:
+      opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1),
+      visibility 0s linear 0s;
+  }
+
+  .pill-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .pill-nav-link {
+    font-size: 15px;
+    padding: 4px 0;
+  }
+
+  .pill-nav-email {
+    width: 100%;
+    font-size: 13.5px;
+    padding: 11px 16px;
+    margin-top: 4px;
+  }
+}
+
 
 /* ============================================================
    LEFT PANEL BODY — Storytelling canvas inside Left Card
@@ -1266,84 +1342,480 @@ body {
 }
 
 /* ============================================================
-   RESPONSIVENESS (Requirement 10)
+   RESPONSIVENESS — COMPREHENSIVE MULTI-BREAKPOINT SYSTEM
    ============================================================ */
+
+/* ── 1200px: Large tablet / small laptop ── */
+@media (max-width: 1200px) {
+  .panel-right {
+    padding: 10px 48px 80px 36px;
+  }
+
+  .hero-headline {
+    font-size: clamp(38px, 4.8vw, 60px);
+  }
+
+  .left-hero-headline {
+    font-size: clamp(32px, 4vw, 52px);
+  }
+
+  .memory-flow {
+    left: auto;
+    right: 0;
+    width: 160px;
+  }
+}
+
+/* ── 1024px: Tablet landscape — stack panels vertically ── */
 @media (max-width: 1024px) {
+  /* Hero layout: single column stack */
   .hero-split-container {
     grid-template-columns: 1fr;
     min-height: auto;
-    gap: 24px;
+    gap: 20px;
   }
 
-  .hero-left-card, .hero-right-card {
+  /* Fix border-radii: both cards get fully rounded corners */
+  .hero-left-card {
     border-radius: 24px;
     border-bottom: 1px solid var(--border);
   }
 
+  .hero-right-card {
+    border-radius: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Hide floating center icon — would overlap stacked cards */
   .center-icon-wrap {
-    top: 50%;
-    display: none; /* Hide center float on tablet/mobile stack to prevent overlap */
+    display: none;
   }
 
+  /* Also hide the memory-flow connector that points to center icon */
+  .memory-flow {
+    display: none;
+  }
+
+  /* Left panel */
   .panel-left {
-    min-height: 440px;
+    min-height: 380px;
+    padding: 28px 28px 32px;
   }
 
+  /* Memory artifact: switch from absolute to relative so it flows in the card */
+  .memory-artifact {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 32px;
+    rotate: 0deg;
+  }
+
+  /* Right panel: center content */
   .panel-right {
-    padding: 48px 36px 64px 36px;
+    padding: 36px 40px 60px 40px;
     align-items: center;
     text-align: center;
   }
 
   .hero-subheadline {
     text-align: center;
+    max-width: 100%;
   }
 
   .hero-cta-group {
     justify-content: center;
   }
 
+  /* HowItWorks: 2-column grid at tablet for better use of space */
   .how-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  /* Last card spans full width in a 2-col grid */
+  .how-card:last-child {
+    grid-column: 1 / -1;
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .how-it-works-section {
+    padding: 72px 24px 88px 24px;
+  }
+
+  /* Pill navbar: show as always-open on tablet */
+  .pill-nav-collapsible {
+    max-width: 700px;
+    opacity: 1;
+    padding-left: 20px;
   }
 }
 
-@media (max-width: 640px) {
+/* ── 768px: Tablet portrait ── */
+@media (max-width: 768px) {
   .hero-stage {
-    padding: 12px 12px 0 12px;
+    padding: 14px 14px 0 14px;
   }
 
-  .left-card-header, .right-card-header {
-    padding: 20px 24px 8px 24px;
+  .left-card-header,
+  .right-card-header {
+    padding: 20px 24px 10px 24px;
   }
 
-  .inner-navbar-right {
-    gap: 16px;
+  /* Left panel: reduce min-height further */
+  .panel-left {
+    min-height: 320px;
+    padding: 24px 20px 28px;
   }
 
-  .inner-nav-link {
-    display: none;
+  /* Memory artifact: ensure it doesn't overflow */
+  .memory-artifact {
+    padding: 16px 18px 14px;
   }
 
-  .inner-nav-cta {
-    margin-left: 0;
+  /* Right panel */
+  .panel-right {
+    padding: 28px 28px 48px 28px;
   }
 
   .hero-headline {
-    font-size: clamp(34px, 8vw, 48px);
+    font-size: clamp(36px, 7vw, 52px);
   }
 
+  .left-hero-headline {
+    font-size: clamp(28px, 6vw, 44px);
+  }
+
+  /* HowItWorks: single column on portrait tablet */
+  .how-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .how-card:last-child {
+    grid-column: auto;
+    max-width: 100%;
+  }
+
+  .how-it-works-section {
+    padding: 60px 20px 72px 20px;
+  }
+
+  .how-header {
+    margin-bottom: 48px;
+  }
+
+  /* Pill navbar on touch: hide collapsible, show only "Add to Chrome" button */
+  .pill-nav-collapsible {
+    max-width: 0;
+    opacity: 0;
+    padding-left: 0;
+    overflow: hidden;
+  }
+
+  .pill-navbar-mobile-cta {
+    display: flex !important;
+  }
+
+  /* Trust strip */
+  .trust-strip {
+    padding: 40px 24px;
+  }
+
+  .trust-strip-inner {
+    gap: 28px;
+  }
+}
+
+/* ── 640px: Large mobile ── */
+@media (max-width: 640px) {
+  .hero-stage {
+    padding: 10px 10px 0 10px;
+  }
+
+  .hero-split-container {
+    gap: 12px;
+  }
+
+  .hero-left-card,
+  .hero-right-card {
+    border-radius: 18px;
+  }
+
+  .left-card-header,
+  .right-card-header {
+    padding: 18px 20px 8px 20px;
+  }
+
+  /* Inner brand text */
+  .inner-navbar-wordmark {
+    font-size: 15px;
+  }
+
+  /* Left panel */
+  .panel-left {
+    min-height: 280px;
+    padding: 20px 16px 24px;
+  }
+
+  .left-hero-headline {
+    font-size: clamp(24px, 7.5vw, 36px);
+    margin-bottom: 12px;
+  }
+
+  .left-hero-subline {
+    font-size: 13px;
+  }
+
+  /* Memory artifact */
+  .memory-artifact {
+    margin-top: 24px;
+    padding: 14px 16px 12px;
+  }
+
+  .memory-artifact-title {
+    font-size: 17px;
+  }
+
+  .memory-artifact-description {
+    font-size: 11.5px;
+    max-width: 100%;
+  }
+
+  /* Right panel */
   .panel-right {
-    padding: 32px 20px 48px 20px;
+    padding: 28px 20px 44px 20px;
+    align-items: center;
+    text-align: center;
   }
 
-  .cta-button-primary, .cta-button-secondary {
+  .hero-headline {
+    font-size: clamp(32px, 8.5vw, 48px);
+  }
+
+  .hero-subheadline {
+    font-size: clamp(14px, 3.5vw, 16px);
+    margin-top: 20px;
+  }
+
+  /* CTAs: stack vertically on small screens */
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
     width: 100%;
+    margin-top: 28px;
+    gap: 12px;
+  }
+
+  .cta-button-primary,
+  .cta-button-secondary {
+    width: 100%;
+    justify-content: center;
+    height: 52px;
+    font-size: 14.5px;
+  }
+
+  /* HowItWorks section */
+  .how-it-works-section {
+    padding: 48px 16px 56px 16px;
+  }
+
+  .how-title {
+    font-size: clamp(26px, 7vw, 36px);
+  }
+
+  .how-subtitle {
+    font-size: 14.5px;
+  }
+
+  .how-header {
+    margin-bottom: 36px;
+  }
+
+  .how-card {
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+
+  .how-card-title {
+    font-size: 19px;
+  }
+
+  .how-visual-box {
+    min-height: 140px;
+    padding: 16px;
+  }
+
+  /* Pill navbar: compact button trigger */
+  .pill-navbar {
+    border-radius: 12px;
+    padding: 5px;
+  }
+
+  .pill-nav-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  /* Trust strip */
+  .trust-strip {
+    padding: 36px 16px;
+  }
+
+  .trust-badge {
+    padding: 8px 16px;
+  }
+
+  .trust-badge-label {
+    font-size: 12px;
+  }
+
+  .trust-footer {
+    gap: 16px;
+  }
+}
+
+/* ── 480px: Small mobile (iPhone SE, Galaxy A series) ── */
+@media (max-width: 480px) {
+  .hero-stage {
+    padding: 8px 8px 0 8px;
+  }
+
+  .hero-left-card,
+  .hero-right-card {
+    border-radius: 14px;
+  }
+
+  .left-card-header,
+  .right-card-header {
+    padding: 16px 16px 8px 16px;
+  }
+
+  .inner-navbar-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .inner-navbar-wordmark {
+    font-size: 14px;
+  }
+
+  /* Left panel */
+  .panel-left {
+    min-height: 240px;
+    padding: 16px 14px 20px;
+  }
+
+  .left-hero-headline {
+    font-size: clamp(22px, 7vw, 30px);
+    line-height: 1.2;
+  }
+
+  .left-hero-subline {
+    font-size: 12.5px;
+  }
+
+  .memory-artifact {
+    margin-top: 20px;
+    padding: 12px 14px 10px;
+    border-radius: 14px;
+  }
+
+  .memory-artifact-title {
+    font-size: 15px;
+  }
+
+  .memory-artifact-tags span {
+    font-size: 8px;
+    padding: 3px 7px;
+  }
+
+  /* Right panel */
+  .panel-right {
+    padding: 20px 16px 36px 16px;
+  }
+
+  .hero-headline {
+    font-size: clamp(28px, 9vw, 42px);
+    line-height: 1.1;
+  }
+
+  .hero-subheadline {
+    font-size: 13.5px;
+    margin-top: 16px;
   }
 
   .hero-cta-group {
-    flex-direction: column;
-    width: 100%;
+    margin-top: 24px;
+  }
+
+  .cta-button-primary,
+  .cta-button-secondary {
+    height: 48px;
+    font-size: 14px;
+    padding: 14px 20px;
+  }
+
+  /* HowItWorks */
+  .how-it-works-section {
+    padding: 36px 12px 48px 12px;
+  }
+
+  .how-title {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+
+  .how-subtitle {
+    font-size: 13.5px;
+  }
+
+  .how-card {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .how-card-title {
+    font-size: 17px;
+  }
+
+  .how-card-desc {
+    font-size: 13px;
+  }
+
+  .how-visual-box {
+    min-height: 120px;
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  /* Trust strip */
+  .trust-strip {
+    padding: 28px 12px;
+  }
+
+  .trust-strip-inner {
+    gap: 20px;
+  }
+
+  .trust-badges {
+    gap: 8px;
+  }
+
+  .trust-badge {
+    padding: 7px 12px;
+  }
+
+  .trust-footer {
+    gap: 10px;
+  }
+
+  .trust-footer-item {
+    font-size: 11px;
   }
 }
 
