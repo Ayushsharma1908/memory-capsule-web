@@ -1,112 +1,247 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const steps = [
+  {
+    id: 1,
+    stepNum: "01",
+    badge: "STEP 01 • CAPTURE",
+    title: "Capture what matters",
+    description:
+      "Save your important conversations and ideas before they disappear into your chat history.",
+    image: "/how-it-works-1.png",
+  },
+  {
+    id: 2,
+    stepNum: "02",
+    badge: "STEP 02 • ORGANIZE",
+    title: "Organize your knowledge",
+    description:
+      "Keep your saved conversations and insights organized inside your personal knowledge space.",
+    image: "/how-it-works-2.png",
+  },
+  {
+    id: 3,
+    stepNum: "03",
+    badge: "STEP 03 • RECALL",
+    title: "Recall it anytime",
+    description:
+      "Find that important idea again whenever you need it, without digging through old chats.",
+    image: "/how-it-works-3.png",
+  },
+];
 
 export default function HowItWorks() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % steps.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="how-it-works-section" id="how-it-works">
-      <div className="how-container">
-        {/* Section Header */}
-        <div className="how-header">
-          <div className="how-eyebrow">Seamless Knowledge Workflow</div>
-          <h2 className="how-title">How Memory Capsule Works</h2>
-          <p className="how-subtitle">
-            Turn fragmented AI chats across multiple platforms into an organized, searchable personal knowledge base.
+    <section
+      className="relative overflow-hidden px-6 pt-24 pb-24 md:px-10 md:pt-36 md:pb-28 lg:px-16 lg:pt-44 lg:pb-36"
+      style={{ background: "var(--bg-outer)" }}
+      id="how-it-works"
+    >
+      {/* Top Ambient Blend Glow */}
+      <div
+        className="pointer-events-none absolute -top-36 left-1/2 -translate-x-1/2 h-[480px] w-full max-w-6xl opacity-80"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 20%, rgba(216, 195, 165, 0.14) 0%, rgba(216, 195, 165, 0.03) 50%, transparent 80%)",
+          filter: "blur(36px)",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Central Flow Line connecting Hero into HowItWorks */}
+      <div
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center z-10"
+        aria-hidden="true"
+      >
+        <div className="h-28 w-[1px] bg-gradient-to-b from-transparent via-[rgba(216,195,165,0.4)] to-[rgba(216,195,165,0.15)]" />
+        <div className="h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)] animate-pulse" />
+      </div>
+
+      <div className="hiw-container">
+        {/* Section Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="relative z-20 mb-12 md:mb-16 pt-8 text-center md:text-left"
+        >
+          <p
+            className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
+            style={{ color: "var(--accent)" }}
+          >
+            Your knowledge journey
           </p>
-        </div>
 
-        {/* 3 Step Cards Grid */}
-        <div className="how-grid">
-          {/* Step 1 */}
-          <motion.div
-            className="how-card"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          <h2
+            className="text-4xl font-semibold tracking-[-0.03em] md:text-5xl lg:text-6xl"
+            style={{ color: "#FAF8F4", fontFamily: "var(--font-heading)" }}
           >
-            <div className="how-step-num">STEP 01</div>
-            <h3 className="how-card-title">Capture Conversations</h3>
-            <p className="how-card-desc">
-              Automatically save your prompts and AI answers from ChatGPT, Claude, Gemini, and Perplexity without friction.
-            </p>
+            How it works
+          </h2>
 
-            {/* Extension Popup Visual Mockup */}
-            <div className="how-visual-box">
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#10B981" }} />
-                  <span style={{ fontSize: 11, fontWeight: 600, color: "#1F2421", letterSpacing: "0.02em" }}>Extension Active</span>
+          <p
+            className="mt-4 max-w-lg text-base leading-7 md:text-lg"
+            style={{
+              color: "rgba(250, 248, 244, 0.55)",
+              fontFamily: "var(--font-body)",
+            }}
+          >
+            Turn your best conversations into memories you can actually return to.
+          </p>
+        </motion.div>
+
+        {/* Journey Area */}
+        <div className="hiw-wrap">
+          {/* Connector SVG — decorative sweeps + per-step dashed lines */}
+          <svg
+            viewBox="0 0 1000 600"
+            className="hiw-connector-svg"
+            preserveAspectRatio="none"
+            fill="none"
+          >
+            {/* decorative outer sweeps, purely ambient */}
+            <path
+              d="M -20 20 C 160 10, 260 90, 360 150"
+              className="hiw-dash-decorative"
+            />
+            <path
+              d="M 360 450 C 260 510, 160 590, -20 580"
+              className="hiw-dash-decorative"
+            />
+
+            {/* per-step connectors, drawn in on scroll */}
+            {[100, 300, 500].map((y, i) => (
+              <motion.path
+                key={i}
+                d={`M 430 300 C 500 ${300 - (300 - y) * 0.6}, 520 ${y}, 600 ${y}`}
+                stroke="rgba(216, 195, 165, 0.5)"
+                strokeWidth="2"
+                strokeDasharray="7 9"
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                whileInView={{ pathLength: 1, opacity: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.9, delay: 0.2 + i * 0.15, ease: "easeInOut" }}
+              />
+            ))}
+
+            {[100, 300, 500].map((y, i) => (
+              <circle
+                key={`dot-${i}`}
+                cx="600"
+                cy={y}
+                r="4"
+                fill={activeStep === i ? "var(--accent)" : "rgba(216,195,165,0.35)"}
+              />
+            ))}
+          </svg>
+
+          <div className="hiw-grid">
+            {/* Center floating circle */}
+            <motion.div
+              className="hiw-circle-wrap"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
+              <motion.div
+                className="hiw-circle-glow"
+                animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              <motion.div
+                className="hiw-circle"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <div className="hiw-circle-header">
+                  <span className="hiw-circle-badge">{steps[activeStep].badge}</span>
                 </div>
-                <span style={{ fontSize: 10, background: "#EAE0CE", padding: "2px 8px", borderRadius: 999, fontWeight: 600, color: "#1F2421" }}>Auto-Sync</span>
-              </div>
-              <div style={{ background: "#FFFFFF", borderRadius: 10, padding: 12, border: "1px solid #ECE6DC", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, fontWeight: 600, color: "#1F2421" }}>
-                  <span style={{ background: "#1F2421", color: "#FFF", borderRadius: 4, padding: "2px 6px", fontSize: 10 }}>ChatGPT</span>
-                  <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>React Component Performance</span>
+
+                <div className="hiw-circle-canvas">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={steps[activeStep].id}
+                      src={steps[activeStep].image}
+                      alt={steps[activeStep].title}
+                      initial={{ opacity: 0, scale: 0.92 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.92 }}
+                      transition={{ duration: 0.55, ease: "easeOut" }}
+                      className="hiw-circle-img"
+                      style={{ mixBlendMode: "multiply" }}
+                    />
+                  </AnimatePresence>
                 </div>
-                <div style={{ fontSize: 11, color: "#71717A", marginTop: 4 }}>Saved 4 key insights & 1 code snippet</div>
-              </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Right: numbered step list */}
+            <div className="hiw-steps">
+              {steps.map((step, index) => {
+                const active = activeStep === index;
+                return (
+                  <motion.button
+                    key={step.id}
+                    type="button"
+                    onClick={() => setActiveStep(index)}
+                    className={`hiw-step ${active ? "hiw-step-active" : ""}`}
+                    initial={{ opacity: 0, x: 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.5, delay: 0.15 * index, ease: "easeOut" }}
+                  >
+                    <div className="hiw-step-badge-wrap">
+                      <motion.div
+                        className="hiw-step-badge"
+                        animate={{ scale: active ? 1.05 : 1 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <span>{step.id}</span>
+                      </motion.div>
+
+                      {active && (
+                        <svg className="hiw-progress-ring" viewBox="0 0 66 66">
+                          <circle
+                            cx="33"
+                            cy="33"
+                            r="30"
+                            fill="none"
+                            stroke="rgba(216, 195, 165, 0.45)"
+                            strokeWidth="2"
+                            strokeDasharray="188"
+                            strokeDashoffset="188"
+                            strokeLinecap="round"
+                            className="how-step-progress"
+                          />
+                        </svg>
+                      )}
+                    </div>
+
+                    <div className="hiw-step-text">
+                      <h3 className="hiw-step-title">{step.title}</h3>
+                      <p className="hiw-step-desc">{step.description}</p>
+                    </div>
+                  </motion.button>
+                );
+              })}
             </div>
-          </motion.div>
-
-          {/* Step 2 */}
-          <motion.div
-            className="how-card"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="how-step-num">STEP 02</div>
-            <h3 className="how-card-title">Generate Memory Capsule</h3>
-            <p className="how-card-desc">
-              AI synthesizes lengthy threads into structured key takeaways, executive summaries, and searchable topic tags.
-            </p>
-
-            {/* Structured Capsule Visual Mockup */}
-            <div className="how-visual-box">
-              <div style={{ fontSize: 9, fontWeight: 700, color: "#D8C3A5", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>
-                CAPSULE GENERATED
-              </div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#1F2421", marginBottom: 8 }}>
-                Binary Search & Time Complexity
-              </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                <span style={{ background: "#F7F4EE", border: "1px solid #ECE6DC", padding: "3px 8px", borderRadius: 999, fontSize: 10, fontWeight: 500, color: "#1F2421" }}>#Algorithms</span>
-                <span style={{ background: "#F7F4EE", border: "1px solid #ECE6DC", padding: "3px 8px", borderRadius: 999, fontSize: 10, fontWeight: 500, color: "#1F2421" }}>#DSA</span>
-                <span style={{ background: "#F7F4EE", border: "1px solid #ECE6DC", padding: "3px 8px", borderRadius: 999, fontSize: 10, fontWeight: 500, color: "#1F2421" }}>#O(log n)</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Step 3 */}
-          <motion.div
-            className="how-card"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="how-step-num">STEP 03</div>
-            <h3 className="how-card-title">Search & Continue Anywhere</h3>
-            <p className="how-card-desc">
-              Instantly find any past solution with command-palette search and resume conversations seamlessly.
-            </p>
-
-            {/* Command Palette Visual Mockup */}
-            <div className="how-visual-box" style={{ padding: 14 }}>
-              <div style={{ background: "#FFFFFF", borderRadius: 10, padding: "8px 12px", border: "1px solid #D8C3A5", display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                <span style={{ color: "#71717A", fontSize: 12 }}>🔍</span>
-                <span style={{ fontSize: 12, fontWeight: 500, color: "#1F2421" }}>JWT Auth Implementation</span>
-                <span style={{ marginLeft: "auto", fontSize: 10, background: "#F7F4EE", padding: "2px 6px", borderRadius: 4, color: "#71717A" }}>⌘K</span>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 11, color: "#71717A" }}>
-                <span>Found in 2.4ms</span>
-                <span style={{ fontWeight: 600, color: "#1F2421", cursor: "pointer" }}>Continue Chat ➔</span>
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

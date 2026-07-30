@@ -444,6 +444,16 @@ export default function HeroSection() {
         {/* Center icon — floats in the gap, centered by CSS wrapper */}
         <CenterIcon />
       </div>
+
+      {/* Bottom section blend light aura */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-32 opacity-60"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 100%, rgba(216, 195, 165, 0.12) 0%, rgba(216, 195, 165, 0.02) 60%, transparent 80%)",
+        }}
+        aria-hidden="true"
+      />
     </section>
   );
 }
