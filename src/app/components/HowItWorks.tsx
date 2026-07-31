@@ -1,246 +1,207 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const steps = [
+/* ============================================================
+   STEPS DATA
+   ============================================================ */
+const STEPS = [
   {
     id: 1,
-    stepNum: "01",
-    badge: "STEP 01 • CAPTURE",
+    num: "01",
+    badge: "STEP 01 - CAPTURE",
     title: "Capture what matters",
-    description:
-      "Save your important conversations and ideas before they disappear into your chat history.",
-    image: "/how-it-works-1.png",
+    desc: "Save your important conversations and ideas before they disappear into your chat history.",
+    img: "/how-it-works-1.png",
   },
   {
     id: 2,
-    stepNum: "02",
-    badge: "STEP 02 • ORGANIZE",
+    num: "02",
+    badge: "STEP 02 - ORGANIZE",
     title: "Organize your knowledge",
-    description:
-      "Keep your saved conversations and insights organized inside your personal knowledge space.",
-    image: "/how-it-works-2.png",
+    desc: "Keep your saved conversations and insights organized inside your personal knowledge space.",
+    img: "/how-it-works-2.png",
   },
   {
     id: 3,
-    stepNum: "03",
-    badge: "STEP 03 • RECALL",
+    num: "03",
+    badge: "STEP 03 - RECALL",
     title: "Recall it anytime",
-    description:
-      "Find that important idea again whenever you need it, without digging through old chats.",
-    image: "/how-it-works-3.png",
+    desc: "Find that important idea again whenever you need it, without digging through old chats.",
+    img: "/how-it-works-3.png",
   },
-];
+] as const;
 
+const CYCLE_MS = 3000;
+
+/* ============================================================
+   COMPONENT
+   ============================================================ */
 export default function HowItWorks() {
-  const [activeStep, setActiveStep] = useState(0);
+  const [active, setActive] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length);
-    }, 4500);
-    return () => clearInterval(interval);
+  const startCycle = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setActive((prev) => (prev + 1) % STEPS.length);
+    }, CYCLE_MS);
   }, []);
 
-  return (
-    <section
-      className="relative overflow-hidden px-6 pt-24 pb-24 md:px-10 md:pt-36 md:pb-28 lg:px-16 lg:pt-44 lg:pb-36"
-      style={{ background: "var(--bg-outer)" }}
-      id="how-it-works"
-    >
-      {/* Top Ambient Blend Glow */}
-      <div
-        className="pointer-events-none absolute -top-36 left-1/2 -translate-x-1/2 h-[480px] w-full max-w-6xl opacity-80"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 20%, rgba(216, 195, 165, 0.14) 0%, rgba(216, 195, 165, 0.03) 50%, transparent 80%)",
-          filter: "blur(36px)",
-        }}
-        aria-hidden="true"
-      />
+  useEffect(() => {
+    startCycle();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [startCycle]);
 
-      {/* Central Flow Line connecting Hero into HowItWorks */}
-      <div
-        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center z-10"
-        aria-hidden="true"
-      >
-        <div className="h-28 w-[1px] bg-gradient-to-b from-transparent via-[rgba(216,195,165,0.4)] to-[rgba(216,195,165,0.15)]" />
-        <div className="h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)] animate-pulse" />
-      </div>
+  const handleClick = (index: number) => {
+    setActive(index);
+    startCycle();
+  };
+
+  return (
+    <section className="hiw-section" id="how-it-works" aria-label="How it works">
+      {/* Ambient hairline separator at top of section */}
+      <div className="hiw-separator" aria-hidden="true" />
 
       <div className="hiw-container">
-        {/* Section Heading */}
+        {/* Section heading */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          className="hiw-heading"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative z-20 mb-12 md:mb-16 pt-8 text-center md:text-left"
+          transition={{ duration: 0.65, ease: "easeOut" }}
         >
-          <p
-            className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
-            style={{ color: "var(--accent)" }}
-          >
-            Your knowledge journey
-          </p>
-
-          <h2
-            className="text-4xl font-semibold tracking-[-0.03em] md:text-5xl lg:text-6xl"
-            style={{ color: "#FAF8F4", fontFamily: "var(--font-heading)" }}
-          >
-            How it works
-          </h2>
-
-          <p
-            className="mt-4 max-w-lg text-base leading-7 md:text-lg"
-            style={{
-              color: "rgba(250, 248, 244, 0.55)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
+          <span className="hiw-eyebrow">Your knowledge journey</span>
+          <h2 className="hiw-title">How it works</h2>
+          <p className="hiw-subtitle">
             Turn your best conversations into memories you can actually return to.
           </p>
         </motion.div>
 
-        {/* Journey Area */}
-        <div className="hiw-wrap">
-          {/* Connector SVG — decorative sweeps + per-step dashed lines */}
-          <svg
-            viewBox="0 0 1000 600"
-            className="hiw-connector-svg"
-            preserveAspectRatio="none"
-            fill="none"
+        {/* Journey layout */}
+        <div className="hiw-journey">
+          {/* LEFT: Illustration column */}
+          <motion.div
+            className="hiw-illus-col"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            {/* decorative outer sweeps, purely ambient */}
-            <path
-              d="M -20 20 C 160 10, 260 90, 360 150"
-              className="hiw-dash-decorative"
-            />
-            <path
-              d="M 360 450 C 260 510, 160 590, -20 580"
-              className="hiw-dash-decorative"
-            />
-
-            {/* per-step connectors, drawn in on scroll */}
-            {[100, 300, 500].map((y, i) => (
-              <motion.path
-                key={i}
-                d={`M 430 300 C 500 ${300 - (300 - y) * 0.6}, 520 ${y}, 600 ${y}`}
-                stroke="rgba(216, 195, 165, 0.5)"
-                strokeWidth="2"
-                strokeDasharray="7 9"
-                strokeLinecap="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.9, delay: 0.2 + i * 0.15, ease: "easeInOut" }}
-              />
-            ))}
-
-            {[100, 300, 500].map((y, i) => (
-              <circle
-                key={`dot-${i}`}
-                cx="600"
-                cy={y}
-                r="4"
-                fill={activeStep === i ? "var(--accent)" : "rgba(216,195,165,0.35)"}
-              />
-            ))}
-          </svg>
-
-          <div className="hiw-grid">
-            {/* Center floating circle */}
-            <motion.div
-              className="hiw-circle-wrap"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-            >
-              <motion.div
-                className="hiw-circle-glow"
-                animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              />
-
-              <motion.div
-                className="hiw-circle"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div className="hiw-circle-header">
-                  <span className="hiw-circle-badge">{steps[activeStep].badge}</span>
-                </div>
-
-                <div className="hiw-circle-canvas">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={steps[activeStep].id}
-                      src={steps[activeStep].image}
-                      alt={steps[activeStep].title}
-                      initial={{ opacity: 0, scale: 0.92 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.92 }}
-                      transition={{ duration: 0.55, ease: "easeOut" }}
-                      className="hiw-circle-img"
-                      style={{ mixBlendMode: "multiply" }}
-                    />
-                  </AnimatePresence>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Right: numbered step list */}
-            <div className="hiw-steps">
-              {steps.map((step, index) => {
-                const active = activeStep === index;
-                return (
-                  <motion.button
-                    key={step.id}
-                    type="button"
-                    onClick={() => setActiveStep(index)}
-                    className={`hiw-step ${active ? "hiw-step-active" : ""}`}
-                    initial={{ opacity: 0, x: 40 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.5, delay: 0.15 * index, ease: "easeOut" }}
-                  >
-                    <div className="hiw-step-badge-wrap">
-                      <motion.div
-                        className="hiw-step-badge"
-                        animate={{ scale: active ? 1.05 : 1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <span>{step.id}</span>
-                      </motion.div>
-
-                      {active && (
-                        <svg className="hiw-progress-ring" viewBox="0 0 66 66">
-                          <circle
-                            cx="33"
-                            cy="33"
-                            r="30"
-                            fill="none"
-                            stroke="rgba(216, 195, 165, 0.45)"
-                            strokeWidth="2"
-                            strokeDasharray="188"
-                            strokeDashoffset="188"
-                            strokeLinecap="round"
-                            className="how-step-progress"
-                          />
-                        </svg>
-                      )}
-                    </div>
-
-                    <div className="hiw-step-text">
-                      <h3 className="hiw-step-title">{step.title}</h3>
-                      <p className="hiw-step-desc">{step.description}</p>
-                    </div>
-                  </motion.button>
-                );
-              })}
+            {/* Animated step badge chip */}
+            <div className="hiw-chip-wrap" aria-live="polite" aria-atomic="true">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={active}
+                  className="hiw-chip"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <span className="hiw-chip-dot" aria-hidden="true" />
+                  {STEPS[active].badge}
+                </motion.span>
+              </AnimatePresence>
             </div>
+
+            {/* Illustration stage — NO card, NO white background */}
+            <div className="hiw-illus-stage">
+              <div className="hiw-illus-glow" aria-hidden="true" />
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={STEPS[active].id}
+                  src={STEPS[active].img}
+                  alt={STEPS[active].title}
+                  className="hiw-illus-img"
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.55, ease: "easeOut" }}
+                />
+              </AnimatePresence>
+            </div>
+
+            {/* Step dot indicators */}
+            <div className="hiw-dots" role="tablist" aria-label="Navigate steps">
+              {STEPS.map((step, i) => (
+                <button
+                  key={step.id}
+                  role="tab"
+                  aria-selected={active === i}
+                  aria-label={`Go to step ${i + 1}: ${step.title}`}
+                  className={`hiw-dot${active === i ? " hiw-dot-active" : ""}`}
+                  onClick={() => handleClick(i)}
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* RIGHT: Steps column */}
+          <div className="hiw-steps-col">
+            {/* Vertical spine — desktop only */}
+            <div className="hiw-spine-wrap" aria-hidden="true">
+              <div className="hiw-spine-line" />
+              <div className="hiw-spine-traveler" />
+            </div>
+
+            {STEPS.map((step, i) => (
+              <div key={step.id} className="hiw-step-row">
+                <motion.button
+                  type="button"
+                  className={`hiw-step-btn${active === i ? " hiw-step-active" : ""}`}
+                  onClick={() => handleClick(i)}
+                  initial={{ opacity: 0, x: 28 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.55, delay: 0.1 * i, ease: "easeOut" }}
+                  aria-pressed={active === i}
+                >
+                  {/* Number badge */}
+                  <div className="hiw-badge-wrap">
+                    <div className="hiw-badge-num">{step.num}</div>
+                    {active === i && (
+                      <svg
+                        key={`ring-${active}`}
+                        className="hiw-progress-ring"
+                        viewBox="0 0 56 56"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <circle
+                          cx="28"
+                          cy="28"
+                          r="22"
+                          stroke="rgba(216,195,165,0.45)"
+                          strokeWidth="1.5"
+                          strokeDasharray="138.2"
+                          strokeDashoffset="138.2"
+                          strokeLinecap="round"
+                          className="hiw-progress-arc"
+                        />
+                      </svg>
+                    )}
+                  </div>
+
+                  {/* Step copy */}
+                  <div className="hiw-step-text">
+                    <h3 className="hiw-step-title">{step.title}</h3>
+                    <p className="hiw-step-desc">{step.desc}</p>
+                  </div>
+                </motion.button>
+
+                {/* Mobile connector between steps */}
+                {i < STEPS.length - 1 && (
+                  <div className="hiw-mobile-connector" aria-hidden="true">
+                    <div className="hiw-mobile-line" />
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

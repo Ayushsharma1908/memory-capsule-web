@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import {
+  Menu,
+  X,
+  Sparkles,
+  Play,
+  Map,
+  GitFork,
+  Download,
+} from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +24,7 @@ export default function Navbar() {
       role="navigation"
       aria-label="Site navigation"
     >
-      {/* Hamburger / Close icon button */}
+      {/* Menu / Close button */}
       <button
         type="button"
         className="pill-nav-icon"
@@ -25,24 +33,48 @@ export default function Navbar() {
         aria-expanded={isOpen}
       >
         {isOpen ? (
-          <X size={18} strokeWidth={2.5} color="#1C1C1C" />
+          <X size={19} strokeWidth={2.5} />
         ) : (
-          <Menu size={18} strokeWidth={2.5} color="#1C1C1C" />
+          <Menu size={19} strokeWidth={2.5} />
         )}
       </button>
 
-      {/* Nav Content: Horizontal landscape expansion on Desktop, Vertical dropdown below on Mobile/Tablet */}
+      {/* Navigation */}
       <div className="pill-nav-collapsible">
         <div className="pill-nav-links">
-          <a href="#features" className="pill-nav-link" onClick={() => setIsOpen(false)}>
-            Features
+          <a
+            href="#features"
+            className="pill-nav-link"
+            onClick={() => setIsOpen(false)}
+          >
+            <span className="pill-nav-link-icon">
+              <Sparkles size={17} strokeWidth={2} />
+            </span>
+            <span>Features</span>
           </a>
-          <a href="#demo" className="pill-nav-link" onClick={() => setIsOpen(false)}>
-            Demo
+
+          <a
+            href="#demo"
+            className="pill-nav-link"
+            onClick={() => setIsOpen(false)}
+          >
+            <span className="pill-nav-link-icon">
+              <Play size={17} strokeWidth={2} />
+            </span>
+            <span>Demo</span>
           </a>
-          <a href="#roadmap" className="pill-nav-link" onClick={() => setIsOpen(false)}>
-            Roadmap
+
+          <a
+            href="#roadmap"
+            className="pill-nav-link"
+            onClick={() => setIsOpen(false)}
+          >
+            <span className="pill-nav-link-icon">
+              <Map size={17} strokeWidth={2} />
+            </span>
+            <span>Roadmap</span>
           </a>
+
           <a
             href="https://github.com"
             target="_blank"
@@ -50,16 +82,21 @@ export default function Navbar() {
             className="pill-nav-link"
             onClick={() => setIsOpen(false)}
           >
-            GitHub
+            <span className="pill-nav-link-icon">
+              <GitFork size={17} strokeWidth={2} />
+            </span>
+            <span>GitHub</span>
           </a>
         </div>
+
         <a
           href="#"
           className="pill-nav-email"
           id="nav-add-to-chrome"
           onClick={() => setIsOpen(false)}
         >
-          Add to Chrome
+          <Download size={17} strokeWidth={2} />
+          <span>Add to Chrome</span>
         </a>
       </div>
     </div>
