@@ -110,14 +110,14 @@ export default function HowItWorks() {
             </div>
 
             {/* Illustration stage — NO card, NO white background */}
-            <div className="hiw-illus-stage">
+            <div className="hiw-illus-stage rounded-[28px]">
               <div className="hiw-illus-glow" aria-hidden="true" />
               <AnimatePresence mode="wait">
                 <motion.img
                   key={STEPS[active].id}
                   src={STEPS[active].img}
                   alt={STEPS[active].title}
-                  className="hiw-illus-img"
+                  className="hiw-illus-img rounded-[28px]"
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.97 }}
