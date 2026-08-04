@@ -496,7 +496,7 @@ export default function FeaturesSection() {
 
         {/* Section header */}
         <motion.div
-          className="mb-14 md:mb-16"
+          className="mb-14 md:mb-16 flex flex-col items-center text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -527,7 +527,7 @@ export default function FeaturesSection() {
             <span style={{ color: "var(--accent)" }}>amplified</span>
           </h2>
           <p
-            className="leading-relaxed"
+            className="leading-relaxed mx-auto"
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "clamp(14.5px, 1.5vw, 17px)",
@@ -541,7 +541,7 @@ export default function FeaturesSection() {
 
         {/* Outer rounded container */}
         <div
-          className="rounded-[32px] md:rounded-[40px] p-2 md:p-3"
+          className="rounded-[32px] md:rounded-[40px] p-2 md:p-3 max-w-5xl mx-auto"
           style={{ background: "var(--border)" }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
@@ -571,7 +571,7 @@ export default function FeaturesSection() {
                   }}
                 >
                   {card.visual}
-                  <div>
+                  <div className="text-center">
                     <h3
                       className="font-bold mb-2.5 leading-snug"
                       style={{
