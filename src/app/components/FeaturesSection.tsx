@@ -4,19 +4,15 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { FiSearch, FiFolder, FiTag, FiStar, FiDatabase, FiCheck } from "react-icons/fi";
 
-/* ============================================================
-   ANIMATION CONSTANTS
-   ============================================================ */
 const EASE_SMOOTH = [0.4, 0, 0.2, 1] as const;
 
 function floatTransition(duration: number, delay = 0) {
   return { duration, repeat: Infinity, ease: "easeInOut" as const, delay };
 }
 
-/* ============================================================
-   CARD 1: CAPTURE
-   Auto-loops: button pulses → click → toast → repeat every 4.5s
-   ============================================================ */
+/* ─────────────────────────────────────────────
+   VISUAL 1 — Capture
+   ───────────────────────────────────────────── */
 function CaptureVisual() {
   const [clicking, setClicking] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -30,8 +26,6 @@ function CaptureVisual() {
       }, 380);
       setTimeout(() => setShowToast(false), 2700);
     }
-
-    // Initial delay before first run
     const initialDelay = setTimeout(runCycle, 1000);
     const interval = setInterval(runCycle, 4500);
     return () => {
@@ -42,32 +36,32 @@ function CaptureVisual() {
 
   return (
     <div
-      className="relative w-full rounded-2xl border border-[#E0E0E0] overflow-hidden flex flex-col"
-      style={{ background: "#F7F7F8", height: 240, marginBottom: 28 }}
+      className="relative w-full rounded-2xl border overflow-hidden flex flex-col"
+      style={{ background: "#FDFCFA", borderColor: "var(--border)", height: 240, marginBottom: 28 }}
     >
       {/* Browser chrome */}
       <div
-        className="flex items-center gap-2 px-4 border-b border-[#E0E0E0] flex-shrink-0"
-        style={{ height: 32, background: "#EBEBEB" }}
+        className="flex items-center gap-2 px-4 border-b flex-shrink-0"
+        style={{ height: 32, background: "#F5F3EF", borderColor: "var(--border)" }}
       >
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F56" }} />
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#FFBD2E" }} />
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#27C93F" }} />
-        <div className="flex-1 mx-4 h-4 rounded-md" style={{ background: "#DCDCDC" }} />
+        <span className="w-2 h-2 rounded-full" style={{ background: "#E8E4DC" }} />
+        <span className="w-2 h-2 rounded-full" style={{ background: "#E8E4DC" }} />
+        <span className="w-2 h-2 rounded-full" style={{ background: "#E8E4DC" }} />
+        <div className="flex-1 mx-4 h-3 rounded-md" style={{ background: "#EDEAE4" }} />
       </div>
 
       {/* Chat skeleton */}
-      <div className="flex-1 p-4 flex flex-col gap-3 relative overflow-hidden">
+      <div className="flex-1 p-5 flex flex-col gap-3 relative overflow-hidden">
         <div className="flex gap-3 items-start">
-          <div className="w-6 h-6 rounded-full flex-shrink-0" style={{ background: "#C4C4C4" }} />
-          <div className="h-3 rounded-md mt-1.5" style={{ width: "70%", background: "#E5E5E5" }} />
+          <div className="w-6 h-6 rounded-full flex-shrink-0" style={{ background: "#E5E2DC" }} />
+          <div className="h-2.5 rounded-md mt-1.5" style={{ width: "65%", background: "#F0EDE6" }} />
         </div>
         <div className="flex gap-3 items-start">
-          <div className="w-6 h-6 rounded-md flex-shrink-0" style={{ background: "#10A37F" }} />
+          <div className="w-6 h-6 rounded-md flex-shrink-0" style={{ background: "#D8C3A5" }} />
           <div className="flex-1 space-y-2 mt-1">
-            <div className="h-2.5 rounded-md" style={{ width: "100%", background: "#E5E5E5" }} />
-            <div className="h-2.5 rounded-md" style={{ width: "85%", background: "#E5E5E5" }} />
-            <div className="h-2.5 rounded-md" style={{ width: "65%", background: "#E5E5E5" }} />
+            <div className="h-2 rounded-md" style={{ width: "100%", background: "#F0EDE6" }} />
+            <div className="h-2 rounded-md" style={{ width: "80%", background: "#F0EDE6" }} />
+            <div className="h-2 rounded-md" style={{ width: "60%", background: "#F0EDE6" }} />
           </div>
         </div>
 
@@ -84,24 +78,24 @@ function CaptureVisual() {
                 className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
                 style={{ background: "var(--primary)" }}
               >
-                <FiCheck size={11} style={{ color: "#10A37F" }} />
+                <FiCheck size={11} style={{ color: "#D8C3A5" }} />
                 Saved to Memory Capsule
               </motion.div>
             )}
           </AnimatePresence>
 
           <motion.div
-            className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium border select-none"
+            className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium border select-none cursor-default"
             style={{
               background: "white",
               borderColor: "var(--border-strong)",
               color: "var(--primary)",
-              boxShadow: "0 1px 4px rgba(31,36,33,0.06)",
+              boxShadow: "0 1px 4px rgba(31,36,33,0.04)",
             }}
             animate={
               clicking
                 ? { scale: 0.93, background: "var(--accent-light)" }
-                : { scale: [1, 1.045, 1] }
+                : { scale: [1, 1.03, 1] }
             }
             transition={
               clicking
@@ -109,7 +103,7 @@ function CaptureVisual() {
                 : { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
             }
           >
-            Save Memory ✨
+            Save Memory <span style={{ color: "var(--accent)" }}>✨</span>
           </motion.div>
         </div>
       </div>
@@ -117,10 +111,9 @@ function CaptureVisual() {
   );
 }
 
-/* ============================================================
-   CARD 2: ORGANIZE
-   Cards float continuously with stagger. Badge always pulses.
-   ============================================================ */
+/* ─────────────────────────────────────────────
+   VISUAL 2 — Organize
+   ───────────────────────────────────────────── */
 function OrganizeVisual() {
   const items = [
     { label: "Interview Prep", width: "75%" },
@@ -135,7 +128,8 @@ function OrganizeVisual() {
       style={{
         height: 240,
         marginBottom: 28,
-        background: "linear-gradient(135deg, var(--bg) 0%, var(--border) 100%)",
+        background: "linear-gradient(135deg, #FAF8F4 0%, #F5F1EA 100%)",
+        border: "1px solid var(--border)",
       }}
     >
       <div className="relative" style={{ width: 210, height: 170 }}>
@@ -145,17 +139,17 @@ function OrganizeVisual() {
             className="absolute w-full rounded-xl p-3 border"
             style={{
               background: "white",
-              borderColor: "var(--border-strong)",
+              borderColor: "var(--border)",
               top: 0,
               left: 0,
               zIndex: 10 - i,
               scale: 1 - i * 0.035,
-              boxShadow: "0 2px 10px rgba(31,36,33,0.08)",
+              boxShadow: "0 2px 10px rgba(31,36,33,0.05)",
             }}
             animate={{ y: [i * 28 - 2, i * 28 + 3, i * 28 - 2] }}
             transition={floatTransition(3.8 + i * 0.6, i * 0.4)}
           >
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-2.5">
               <FiFolder size={13} style={{ color: "var(--text-tertiary)" }} />
               <span className="text-xs font-semibold" style={{ color: "var(--primary)" }}>
                 {card.label}
@@ -163,12 +157,11 @@ function OrganizeVisual() {
             </div>
             <div
               className="h-1.5 rounded-full"
-              style={{ width: card.width, background: "var(--border)" }}
+              style={{ width: card.width, background: "var(--accent-light)" }}
             />
           </motion.div>
         ))}
 
-        {/* Always-visible, pulsing badge */}
         <motion.div
           className="absolute flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold shadow-lg"
           style={{
@@ -179,11 +172,11 @@ function OrganizeVisual() {
             zIndex: 30,
           }}
           animate={{
-            scale: [1, 1.09, 1],
+            scale: [1, 1.08, 1],
             boxShadow: [
-              "0 4px 14px rgba(31,36,33,0.18)",
-              "0 6px 22px rgba(31,36,33,0.32)",
-              "0 4px 14px rgba(31,36,33,0.18)",
+              "0 4px 14px rgba(31,36,33,0.10)",
+              "0 6px 22px rgba(31,36,33,0.18)",
+              "0 4px 14px rgba(31,36,33,0.10)",
             ],
           }}
           transition={floatTransition(2.6)}
@@ -195,10 +188,9 @@ function OrganizeVisual() {
   );
 }
 
-/* ============================================================
-   CARD 3: FIND
-   Cycles through 3 queries automatically. Cursor blinks forever.
-   ============================================================ */
+/* ─────────────────────────────────────────────
+   VISUAL 3 — Find
+   ───────────────────────────────────────────── */
 const QUERIES = [
   {
     text: "binary search interview",
@@ -259,7 +251,7 @@ function FindVisual() {
   return (
     <div
       className="relative w-full rounded-2xl flex flex-col gap-3 overflow-hidden"
-      style={{ height: 240, marginBottom: 28, background: "var(--bg)", padding: "18px 20px" }}
+      style={{ height: 240, marginBottom: 28, background: "var(--bg)", padding: "18px 20px", border: "1px solid var(--border)" }}
     >
       {/* Search bar */}
       <div
@@ -302,7 +294,7 @@ function FindVisual() {
               return (
                 <div
                   key={i}
-                  className="rounded-lg px-4 py-3"
+                  className="rounded-xl px-4 py-3"
                   style={{
                     background: "white",
                     border: "1px solid var(--border)",
@@ -320,9 +312,13 @@ function FindVisual() {
                         </span>
                         {parts[1]}
                       </>
-                    ) : r.title}
+                    ) : (
+                      r.title
+                    )}
                   </p>
-                  <p className="text-xs mt-0.5" style={{ color: "var(--text-secondary)" }}>{r.sub}</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--text-secondary)" }}>
+                    {r.sub}
+                  </p>
                 </div>
               );
             })}
@@ -333,11 +329,9 @@ function FindVisual() {
   );
 }
 
-/* ============================================================
-   CARD 4: BUILD
-   Numbers count up once on viewport entry. Graph breathes.
-   Glow sweeps across bars.
-   ============================================================ */
+/* ─────────────────────────────────────────────
+   VISUAL 4 — Build (Redesigned with light theme)
+   ───────────────────────────────────────────── */
 function useCountUp(target: number, inView: boolean) {
   const [val, setVal] = useState(0);
   const done = useRef(false);
@@ -376,7 +370,13 @@ function BuildVisual() {
     <div
       ref={ref}
       className="relative w-full rounded-2xl flex flex-col overflow-hidden"
-      style={{ height: 240, marginBottom: 28, background: "var(--bg-outer)", padding: "18px" }}
+      style={{
+        height: 240,
+        marginBottom: 28,
+        background: "var(--bg)",
+        border: "1px solid var(--border)",
+        padding: "16px",
+      }}
     >
       {/* Stats grid */}
       <div className="grid grid-cols-2 gap-2 mb-3">
@@ -384,18 +384,22 @@ function BuildVisual() {
           <div
             key={s.label}
             className="rounded-xl flex flex-col gap-1 border"
-            style={{ background: "#252523", borderColor: "#3A3A38", padding: "10px 12px" }}
+            style={{
+              background: "white",
+              borderColor: "var(--border)",
+              padding: "10px 12px",
+            }}
           >
-            <div className="flex items-center gap-1.5" style={{ color: "var(--accent)" }}>
+            <div className="flex items-center gap-1.5" style={{ color: "var(--text-tertiary)" }}>
               <s.icon size={11} />
               <span
                 className="uppercase tracking-wider font-medium"
-                style={{ fontSize: 9, color: "#8A8A88" }}
+                style={{ fontSize: 9, color: "var(--text-tertiary)" }}
               >
                 {s.label}
               </span>
             </div>
-            <span className="font-bold text-white" style={{ fontSize: 20 }}>
+            <span className="font-bold" style={{ fontSize: 20, color: "var(--primary)" }}>
               {s.value}
             </span>
           </div>
@@ -405,9 +409,16 @@ function BuildVisual() {
       {/* Growth bar */}
       <div
         className="flex-1 rounded-xl border relative overflow-hidden"
-        style={{ background: "#252523", borderColor: "#3A3A38", padding: "8px 12px 10px" }}
+        style={{
+          background: "white",
+          borderColor: "var(--border)",
+          padding: "8px 12px 10px",
+        }}
       >
-        <span className="uppercase tracking-wider font-medium" style={{ fontSize: 9, color: "#8A8A88" }}>
+        <span
+          className="uppercase tracking-wider font-medium"
+          style={{ fontSize: 9, color: "var(--text-tertiary)" }}
+        >
           Knowledge Growth
         </span>
         <div className="flex items-end gap-1 w-full mt-2" style={{ height: 44 }}>
@@ -415,7 +426,7 @@ function BuildVisual() {
             <motion.div
               key={i}
               className="flex-1 rounded-t-sm"
-              style={{ background: "var(--accent)", opacity: 0.8 }}
+              style={{ background: "var(--accent)", opacity: 0.85 }}
               animate={{ height: [`${h * 3}%`, `${h * 5}%`, `${h * 3}%`] }}
               transition={floatTransition(3.5 + i * 0.18, i * 0.12)}
             />
@@ -428,7 +439,7 @@ function BuildVisual() {
           style={{
             height: 36,
             width: "35%",
-            background: "linear-gradient(to top, rgba(216,195,165,0.4), transparent)",
+            background: "linear-gradient(to top, rgba(216,195,165,0.25), transparent)",
             filter: "blur(10px)",
           }}
           animate={{ left: ["-5%", "70%", "-5%"] }}
@@ -439,9 +450,9 @@ function BuildVisual() {
   );
 }
 
-/* ============================================================
-   FEATURES SECTION — main export
-   ============================================================ */
+/* ─────────────────────────────────────────────
+   DATA
+   ───────────────────────────────────────────── */
 const CARDS = [
   {
     visual: <CaptureVisual />,
@@ -473,11 +484,14 @@ const CARDS = [
   },
 ];
 
+/* ─────────────────────────────────────────────
+   SECTION
+   ───────────────────────────────────────────── */
 export default function FeaturesSection() {
   return (
     <section
-      className="relative w-full overflow-hidden"
-      style={{ background: "var(--bg-outer)", paddingTop: 80, paddingBottom: 96 }}
+      className="relative w-full overflow-hidden flex justify-center"
+      style={{ background: "var(--bg-outer)", paddingTop: 100, paddingBottom: 120 }}
       id="features"
       aria-label="Features"
     >
@@ -491,12 +505,11 @@ export default function FeaturesSection() {
         }}
       />
 
-      {/* ── Centered content ── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
-
+      {/* Centered content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col items-center">
         {/* Section header */}
         <motion.div
-          className="mb-14 md:mb-16 flex flex-col items-center text-center"
+          className="mb-16 md:mb-20 flex flex-col items-center text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -505,7 +518,7 @@ export default function FeaturesSection() {
           <span
             className="block uppercase font-semibold mb-4"
             style={{
-              fontSize: 10.5,
+              fontSize: 11,
               letterSpacing: "0.22em",
               color: "var(--accent)",
               fontFamily: "var(--font-body)",
@@ -520,7 +533,7 @@ export default function FeaturesSection() {
               fontSize: "clamp(36px, 5vw, 62px)",
               color: "#FAF8F4",
               letterSpacing: "-0.03em",
-              marginBottom: 16,
+              marginBottom: 18,
             }}
           >
             Your knowledge,{" "}
@@ -532,37 +545,42 @@ export default function FeaturesSection() {
               fontFamily: "var(--font-body)",
               fontSize: "clamp(14.5px, 1.5vw, 17px)",
               color: "rgba(250,248,244,0.48)",
-              maxWidth: 420,
+              maxWidth: 440,
             }}
           >
             From capturing to recalling — Memory Capsule handles the entire lifecycle of your knowledge.
           </p>
         </motion.div>
 
-        {/* Outer rounded container */}
+        {/* Outer rounded container — acts as a subtle frame */}
         <div
-          className="rounded-[32px] md:rounded-[40px] p-2 md:p-3 max-w-5xl mx-auto"
-          style={{ background: "var(--border)" }}
+          className="w-full max-w-5xl mx-auto rounded-[32px] md:rounded-[44px] p-3 md:p-4"
+          style={{ background: "rgba(236, 230, 220, 0.35)", border: "1px solid rgba(236, 230, 220, 0.15)" }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {CARDS.map((card, i) => (
-              /* Entry wrapper — animates once on viewport enter */
               <motion.div
                 key={card.title}
+                className="h-full"
                 initial={{ opacity: 0, y: 28, scale: 0.97 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.12 }}
                 transition={{ duration: 0.55, delay: i * 0.1, ease: EASE_SMOOTH }}
               >
-                {/* Float wrapper — continuous, independent of entry */}
                 <motion.div
-                  className="relative flex flex-col overflow-hidden bg-white rounded-[22px] p-8 h-full"
+                  className="relative flex flex-col overflow-hidden h-full"
+                  style={{
+                    background: "white",
+                    borderRadius: 24,
+                    padding: "36px 32px 40px",
+                    border: "1px solid var(--border)",
+                  }}
                   animate={{
-                    y: [-3, 3, -3],
+                    y: [-2, 2, -2],
                     boxShadow: [
-                      "0 2px 8px rgba(31,36,33,0.04), 0 1px 3px rgba(31,36,33,0.03)",
-                      "0 10px 28px rgba(31,36,33,0.10), 0 4px 10px rgba(31,36,33,0.06)",
-                      "0 2px 8px rgba(31,36,33,0.04), 0 1px 3px rgba(31,36,33,0.03)",
+                      "0 2px 8px rgba(31,36,33,0.03), 0 1px 3px rgba(31,36,33,0.02)",
+                      "0 12px 32px rgba(31,36,33,0.08), 0 4px 12px rgba(31,36,33,0.04)",
+                      "0 2px 8px rgba(31,36,33,0.03), 0 1px 3px rgba(31,36,33,0.02)",
                     ],
                   }}
                   transition={{
@@ -571,9 +589,9 @@ export default function FeaturesSection() {
                   }}
                 >
                   {card.visual}
-                  <div className="text-center">
+                  <div className="text-center mt-auto">
                     <h3
-                      className="font-bold mb-2.5 leading-snug"
+                      className="font-bold mb-3 leading-snug"
                       style={{
                         fontFamily: "var(--font-heading)",
                         fontSize: "clamp(18px, 2vw, 22px)",
