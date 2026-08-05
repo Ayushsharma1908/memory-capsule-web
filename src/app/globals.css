@@ -1366,9 +1366,6 @@ body {
   background: var(--accent);
 }
 
-/* ============================================================
-   RIGHT PANEL BODY — Headline, Subheadline & CTAs inside Right Card
-   ============================================================ */
 .panel-right {
   position: relative;
   flex: 1;
@@ -1376,7 +1373,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  /* Shift entire content group upward ~30px by reducing top padding */
   padding: 10px 64px 94px 48px;
   overflow: hidden;
   text-align: right;
