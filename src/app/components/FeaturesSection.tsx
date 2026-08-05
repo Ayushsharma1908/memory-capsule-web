@@ -24,10 +24,10 @@ function CaptureVisual() {
         setClicking(false);
         setShowToast(true);
       }, 380);
-      setTimeout(() => setShowToast(false), 2700);
+      setTimeout(() => setShowToast(false), 2400);
     }
-    const initialDelay = setTimeout(runCycle, 1000);
-    const interval = setInterval(runCycle, 4500);
+    const initialDelay = setTimeout(runCycle, 800);
+    const interval = setInterval(runCycle, 4200);
     return () => {
       clearTimeout(initialDelay);
       clearInterval(interval);
@@ -37,70 +37,73 @@ function CaptureVisual() {
   return (
     <div
       className="relative w-full rounded-2xl border overflow-hidden flex flex-col"
-      style={{ background: "#FDFCFA", borderColor: "var(--border)", height: 240, marginBottom: 28 }}
+      style={{ background: "#FDFCFA", borderColor: "var(--border)", height: 220 }}
     >
       {/* Browser chrome */}
       <div
-        className="flex items-center gap-2 px-4 border-b flex-shrink-0"
-        style={{ height: 32, background: "#F5F3EF", borderColor: "var(--border)" }}
+        className="flex items-center gap-2 px-3 border-b flex-shrink-0"
+        style={{ height: 28, background: "#F5F3EF", borderColor: "var(--border)" }}
       >
-        <span className="w-2 h-2 rounded-full" style={{ background: "#E8E4DC" }} />
-        <span className="w-2 h-2 rounded-full" style={{ background: "#E8E4DC" }} />
-        <span className="w-2 h-2 rounded-full" style={{ background: "#E8E4DC" }} />
-        <div className="flex-1 mx-4 h-3 rounded-md" style={{ background: "#EDEAE4" }} />
+        <span className="w-2 h-2 rounded-full" style={{ background: "#DDD8CF" }} />
+        <span className="w-2 h-2 rounded-full" style={{ background: "#DDD8CF" }} />
+        <span className="w-2 h-2 rounded-full" style={{ background: "#DDD8CF" }} />
+        <div className="flex-1 mx-3 h-2 rounded" style={{ background: "#E8E4DC" }} />
       </div>
 
       {/* Chat skeleton */}
-      <div className="flex-1 p-5 flex flex-col gap-3 relative overflow-hidden">
-        <div className="flex gap-3 items-start">
-          <div className="w-6 h-6 rounded-full flex-shrink-0" style={{ background: "#E5E2DC" }} />
-          <div className="h-2.5 rounded-md mt-1.5" style={{ width: "65%", background: "#F0EDE6" }} />
+      <div className="flex-1 p-4 flex flex-col gap-2.5 relative overflow-hidden">
+        <div className="flex gap-2.5 items-start">
+          <div className="w-5 h-5 rounded-full flex-shrink-0 mt-0.5" style={{ background: "#E5E2DC" }} />
+          <div className="flex-1 space-y-1.5">
+            <div className="h-2 rounded" style={{ width: "55%", background: "#F0EDE6" }} />
+            <div className="h-2 rounded" style={{ width: "40%", background: "#F0EDE6" }} />
+          </div>
         </div>
-        <div className="flex gap-3 items-start">
-          <div className="w-6 h-6 rounded-md flex-shrink-0" style={{ background: "#D8C3A5" }} />
-          <div className="flex-1 space-y-2 mt-1">
-            <div className="h-2 rounded-md" style={{ width: "100%", background: "#F0EDE6" }} />
-            <div className="h-2 rounded-md" style={{ width: "80%", background: "#F0EDE6" }} />
-            <div className="h-2 rounded-md" style={{ width: "60%", background: "#F0EDE6" }} />
+        <div className="flex gap-2.5 items-start">
+          <div className="w-5 h-5 rounded-md flex-shrink-0 mt-0.5" style={{ background: "#D8C3A5" }} />
+          <div className="flex-1 space-y-1.5">
+            <div className="h-2 rounded" style={{ width: "90%", background: "#F0EDE6" }} />
+            <div className="h-2 rounded" style={{ width: "75%", background: "#F0EDE6" }} />
+            <div className="h-2 rounded" style={{ width: "50%", background: "#F0EDE6" }} />
           </div>
         </div>
 
         {/* Toast + button */}
-        <div className="absolute right-4 bottom-4 flex flex-col items-end gap-2">
+        <div className="absolute right-3 bottom-3 flex flex-col items-end gap-2">
           <AnimatePresence>
             {showToast && (
               <motion.div
                 key="toast"
-                initial={{ opacity: 0, y: 8, scale: 0.9 }}
+                initial={{ opacity: 0, y: 6, scale: 0.92 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -6, scale: 0.94 }}
-                transition={{ duration: 0.22 }}
-                className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-white shadow-lg"
+                exit={{ opacity: 0, y: -4, scale: 0.96 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold text-white shadow-md"
                 style={{ background: "var(--primary)" }}
               >
-                <FiCheck size={11} style={{ color: "#D8C3A5" }} />
+                <FiCheck size={10} style={{ color: "#D8C3A5" }} />
                 Saved to Memory Capsule
               </motion.div>
             )}
           </AnimatePresence>
 
           <motion.div
-            className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium border select-none cursor-default"
+            className="flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-medium border select-none cursor-default"
             style={{
               background: "white",
               borderColor: "var(--border-strong)",
               color: "var(--primary)",
-              boxShadow: "0 1px 4px rgba(31,36,33,0.04)",
+              boxShadow: "0 1px 3px rgba(31,36,33,0.04)",
             }}
             animate={
               clicking
-                ? { scale: 0.93, background: "var(--accent-light)" }
-                : { scale: [1, 1.03, 1] }
+                ? { scale: 0.94, background: "var(--accent-light)" }
+                : { scale: [1, 1.02, 1] }
             }
             transition={
               clicking
-                ? { duration: 0.14, ease: "easeOut" }
-                : { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
+                ? { duration: 0.12, ease: "easeOut" }
+                : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
             }
           >
             Save Memory <span style={{ color: "var(--accent)" }}>✨</span>
@@ -126,13 +129,12 @@ function OrganizeVisual() {
     <div
       className="relative w-full rounded-2xl flex items-center justify-center overflow-hidden"
       style={{
-        height: 240,
-        marginBottom: 28,
+        height: 220,
         background: "linear-gradient(135deg, #FAF8F4 0%, #F5F1EA 100%)",
         border: "1px solid var(--border)",
       }}
     >
-      <div className="relative" style={{ width: 210, height: 170 }}>
+      <div className="relative" style={{ width: 200, height: 160 }}>
         {items.map((card, i) => (
           <motion.div
             key={card.label}
@@ -143,43 +145,43 @@ function OrganizeVisual() {
               top: 0,
               left: 0,
               zIndex: 10 - i,
-              scale: 1 - i * 0.035,
-              boxShadow: "0 2px 10px rgba(31,36,33,0.05)",
+              scale: 1 - i * 0.03,
+              boxShadow: "0 1px 6px rgba(31,36,33,0.04)",
             }}
-            animate={{ y: [i * 28 - 2, i * 28 + 3, i * 28 - 2] }}
-            transition={floatTransition(3.8 + i * 0.6, i * 0.4)}
+            animate={{ y: [i * 26 - 1, i * 26 + 2, i * 26 - 1] }}
+            transition={floatTransition(3.2 + i * 0.5, i * 0.35)}
           >
-            <div className="flex items-center gap-2 mb-2.5">
-              <FiFolder size={13} style={{ color: "var(--text-tertiary)" }} />
-              <span className="text-xs font-semibold" style={{ color: "var(--primary)" }}>
+            <div className="flex items-center gap-2 mb-2">
+              <FiFolder size={12} style={{ color: "var(--text-tertiary)" }} />
+              <span className="text-[11px] font-semibold" style={{ color: "var(--primary)" }}>
                 {card.label}
               </span>
             </div>
             <div
-              className="h-1.5 rounded-full"
+              className="h-1 rounded-full"
               style={{ width: card.width, background: "var(--accent-light)" }}
             />
           </motion.div>
         ))}
 
         <motion.div
-          className="absolute flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold shadow-lg"
+          className="absolute flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold shadow-md"
           style={{
             background: "var(--primary)",
             color: "var(--accent)",
-            top: -22,
-            right: -30,
+            top: -18,
+            right: -24,
             zIndex: 30,
           }}
           animate={{
-            scale: [1, 1.08, 1],
+            scale: [1, 1.06, 1],
             boxShadow: [
-              "0 4px 14px rgba(31,36,33,0.10)",
-              "0 6px 22px rgba(31,36,33,0.18)",
-              "0 4px 14px rgba(31,36,33,0.10)",
+              "0 3px 10px rgba(31,36,33,0.08)",
+              "0 5px 18px rgba(31,36,33,0.14)",
+              "0 3px 10px rgba(31,36,33,0.08)",
             ],
           }}
-          transition={floatTransition(2.6)}
+          transition={floatTransition(2.4)}
         >
           ✨ Auto Tagged
         </motion.div>
@@ -228,15 +230,15 @@ function FindVisual() {
 
     if (phase === "typing") {
       if (shown.length < full.length) {
-        t = setTimeout(() => setShown(full.slice(0, shown.length + 1)), 72);
+        t = setTimeout(() => setShown(full.slice(0, shown.length + 1)), 65);
       } else {
-        t = setTimeout(() => setPhase("holding"), 1500);
+        t = setTimeout(() => setPhase("holding"), 1200);
       }
     } else if (phase === "holding") {
-      t = setTimeout(() => setPhase("deleting"), 700);
+      t = setTimeout(() => setPhase("deleting"), 600);
     } else {
       if (shown.length > 0) {
-        t = setTimeout(() => setShown(full.slice(0, shown.length - 1)), 40);
+        t = setTimeout(() => setShown(full.slice(0, shown.length - 1)), 35);
       } else {
         setQIdx((q) => (q + 1) % QUERIES.length);
         setPhase("typing");
@@ -250,30 +252,30 @@ function FindVisual() {
 
   return (
     <div
-      className="relative w-full rounded-2xl flex flex-col gap-3 overflow-hidden"
-      style={{ height: 240, marginBottom: 28, background: "var(--bg)", padding: "18px 20px", border: "1px solid var(--border)" }}
+      className="relative w-full rounded-2xl flex flex-col gap-2.5 overflow-hidden"
+      style={{ height: 220, background: "var(--bg)", padding: "16px 18px", border: "1px solid var(--border)" }}
     >
       {/* Search bar */}
       <div
-        className="flex items-center gap-3 rounded-xl border px-4 flex-shrink-0"
+        className="flex items-center gap-2.5 rounded-xl border px-3 flex-shrink-0"
         style={{
-          height: 44,
+          height: 40,
           background: "white",
           borderColor: "var(--border-strong)",
           boxShadow: "var(--shadow-sm)",
         }}
       >
-        <FiSearch size={16} style={{ color: "var(--text-tertiary)", flexShrink: 0 }} />
+        <FiSearch size={14} style={{ color: "var(--text-tertiary)", flexShrink: 0 }} />
         <div
-          className="flex items-center flex-1 h-5 font-mono text-sm overflow-hidden"
+          className="flex items-center flex-1 h-5 font-mono text-xs overflow-hidden"
           style={{ color: "var(--primary)" }}
         >
           <span>{shown}</span>
           <motion.span
             className="inline-block rounded-sm ml-px flex-shrink-0"
-            style={{ width: 2, height: 15, background: "var(--primary)" }}
+            style={{ width: 2, height: 14, background: "var(--primary)" }}
             animate={{ opacity: [1, 0, 1] }}
-            transition={{ repeat: Infinity, duration: 0.75, ease: "linear" }}
+            transition={{ repeat: Infinity, duration: 0.7, ease: "linear" }}
           />
         </div>
       </div>
@@ -284,17 +286,17 @@ function FindVisual() {
           <motion.div
             key={`${qIdx}-${showResults}`}
             className="flex flex-col gap-2"
-            initial={{ opacity: 0, y: -6 }}
+            initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: 3 }}
+            transition={{ duration: 0.18 }}
           >
             {q.results.map((r, i) => {
               const parts = r.hl ? r.title.split(r.hl) : [r.title];
               return (
                 <div
                   key={i}
-                  className="rounded-xl px-4 py-3"
+                  className="rounded-xl px-3.5 py-2.5"
                   style={{
                     background: "white",
                     border: "1px solid var(--border)",
@@ -303,7 +305,7 @@ function FindVisual() {
                     boxShadow: "var(--shadow-sm)",
                   }}
                 >
-                  <p className="text-sm font-semibold" style={{ color: "var(--primary)" }}>
+                  <p className="text-xs font-semibold" style={{ color: "var(--primary)" }}>
                     {r.hl ? (
                       <>
                         {parts[0]}
@@ -316,7 +318,7 @@ function FindVisual() {
                       r.title
                     )}
                   </p>
-                  <p className="text-xs mt-0.5" style={{ color: "var(--text-secondary)" }}>
+                  <p className="text-[11px] mt-0.5" style={{ color: "var(--text-secondary)" }}>
                     {r.sub}
                   </p>
                 </div>
@@ -330,7 +332,7 @@ function FindVisual() {
 }
 
 /* ─────────────────────────────────────────────
-   VISUAL 4 — Build (Redesigned with light theme)
+   VISUAL 4 — Build
    ───────────────────────────────────────────── */
 function useCountUp(target: number, inView: boolean) {
   const [val, setVal] = useState(0);
@@ -339,8 +341,8 @@ function useCountUp(target: number, inView: boolean) {
   useEffect(() => {
     if (!inView || done.current) return;
     done.current = true;
-    const steps = 38;
-    const stepMs = 1100 / steps;
+    const steps = 30;
+    const stepMs = 1000 / steps;
     let i = 0;
     const id = setInterval(() => {
       i++;
@@ -371,19 +373,18 @@ function BuildVisual() {
       ref={ref}
       className="relative w-full rounded-2xl flex flex-col overflow-hidden"
       style={{
-        height: 240,
-        marginBottom: 28,
+        height: 220,
         background: "var(--bg)",
         border: "1px solid var(--border)",
-        padding: "16px",
+        padding: "14px",
       }}
     >
       {/* Stats grid */}
-      <div className="grid grid-cols-2 gap-2 mb-3">
+      <div className="grid grid-cols-2 gap-2 mb-2.5">
         {stats.map((s) => (
           <div
             key={s.label}
-            className="rounded-xl flex flex-col gap-1 border"
+            className="rounded-xl flex flex-col gap-0.5 border"
             style={{
               background: "white",
               borderColor: "var(--border)",
@@ -391,15 +392,15 @@ function BuildVisual() {
             }}
           >
             <div className="flex items-center gap-1.5" style={{ color: "var(--text-tertiary)" }}>
-              <s.icon size={11} />
+              <s.icon size={10} />
               <span
                 className="uppercase tracking-wider font-medium"
-                style={{ fontSize: 9, color: "var(--text-tertiary)" }}
+                style={{ fontSize: 8, color: "var(--text-tertiary)" }}
               >
                 {s.label}
               </span>
             </div>
-            <span className="font-bold" style={{ fontSize: 20, color: "var(--primary)" }}>
+            <span className="font-bold" style={{ fontSize: 18, color: "var(--primary)" }}>
               {s.value}
             </span>
           </div>
@@ -417,18 +418,18 @@ function BuildVisual() {
       >
         <span
           className="uppercase tracking-wider font-medium"
-          style={{ fontSize: 9, color: "var(--text-tertiary)" }}
+          style={{ fontSize: 8, color: "var(--text-tertiary)" }}
         >
           Knowledge Growth
         </span>
-        <div className="flex items-end gap-1 w-full mt-2" style={{ height: 44 }}>
+        <div className="flex items-end gap-[3px] w-full mt-2" style={{ height: 40 }}>
           {bars.map((h, i) => (
             <motion.div
               key={i}
               className="flex-1 rounded-t-sm"
-              style={{ background: "var(--accent)", opacity: 0.85 }}
-              animate={{ height: [`${h * 3}%`, `${h * 5}%`, `${h * 3}%`] }}
-              transition={floatTransition(3.5 + i * 0.18, i * 0.12)}
+              style={{ background: "var(--accent)", opacity: 0.8 }}
+              animate={{ height: [`${h * 3}%`, `${h * 4.5}%`, `${h * 3}%`] }}
+              transition={floatTransition(3 + i * 0.15, i * 0.1)}
             />
           ))}
         </div>
@@ -437,13 +438,13 @@ function BuildVisual() {
         <motion.div
           className="absolute bottom-0 pointer-events-none"
           style={{
-            height: 36,
-            width: "35%",
-            background: "linear-gradient(to top, rgba(216,195,165,0.25), transparent)",
-            filter: "blur(10px)",
+            height: 32,
+            width: "30%",
+            background: "linear-gradient(to top, rgba(216,195,165,0.2), transparent)",
+            filter: "blur(8px)",
           }}
-          animate={{ left: ["-5%", "70%", "-5%"] }}
-          transition={floatTransition(5, 0)}
+          animate={{ left: ["-5%", "75%", "-5%"] }}
+          transition={floatTransition(4.5, 0)}
         />
       </div>
     </div>
@@ -457,30 +458,30 @@ const CARDS = [
   {
     visual: <CaptureVisual />,
     title: "Capture what matters",
-    body: "Save meaningful ChatGPT conversations with one click. Whether it's coding solutions, career advice, project ideas, or research — never lose valuable knowledge again.",
-    floatDur: 7,
+    body: "One click saves your most valuable ChatGPT conversations. Code snippets, career advice, project ideas — everything stays forever.",
+    floatDur: 6,
     floatDelay: 0,
   },
   {
     visual: <OrganizeVisual />,
     title: "Organized automatically",
-    body: "Every saved conversation is intelligently categorized using AI. Generate titles, summaries, collections, and tags automatically without manual effort.",
-    floatDur: 8,
-    floatDelay: 0.5,
+    body: "AI categorizes every saved chat into collections with smart titles, summaries, and tags. Zero manual sorting required.",
+    floatDur: 7,
+    floatDelay: 0.4,
   },
   {
     visual: <FindVisual />,
     title: "Find anything instantly",
-    body: "Search memories using keywords, natural language, tags, or topics. Your knowledge is always just seconds away.",
-    floatDur: 6.5,
-    floatDelay: 0.3,
+    body: "Search by keyword, topic, or natural language. Your entire knowledge base is accessible in seconds, not minutes.",
+    floatDur: 5.5,
+    floatDelay: 0.2,
   },
   {
     visual: <BuildVisual />,
     title: "Build your second brain",
-    body: "Memory Capsule grows into your personal knowledge hub where your conversations become searchable, long-term knowledge instead of disappearing forever.",
-    floatDur: 7.5,
-    floatDelay: 0.7,
+    body: "Transform fleeting chat history into a permanent, searchable knowledge hub that grows smarter with every save.",
+    floatDur: 6.5,
+    floatDelay: 0.6,
   },
 ];
 
@@ -491,7 +492,7 @@ export default function FeaturesSection() {
   return (
     <section
       className="relative w-full overflow-hidden flex justify-center"
-      style={{ background: "var(--bg-outer)", paddingTop: 100, paddingBottom: 120 }}
+      style={{ background: "var(--bg-outer)", paddingTop: 96, paddingBottom: 112 }}
       id="features"
       aria-label="Features"
     >
@@ -501,39 +502,43 @@ export default function FeaturesSection() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(216,195,165,0.055) 0%, transparent 70%)",
+            "radial-gradient(ellipse 55% 45% at 50% 0%, rgba(216,195,165,0.06) 0%, transparent 70%)",
         }}
       />
 
       {/* Centered content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-5 lg:px-8 flex flex-col items-center">
         {/* Section header */}
         <motion.div
-          className="mb-16 md:mb-20 flex flex-col items-center text-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-14 md:mb-18 flex flex-col items-center text-center"
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: EASE_SMOOTH }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, ease: EASE_SMOOTH }}
         >
-          <span
+          <motion.span
             className="block uppercase font-semibold mb-4"
             style={{
               fontSize: 11,
-              letterSpacing: "0.22em",
+              letterSpacing: "0.2em",
               color: "var(--accent)",
               fontFamily: "var(--font-body)",
             }}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1, ease: EASE_SMOOTH }}
           >
             Everything you need
-          </span>
+          </motion.span>
           <h2
-            className="font-bold leading-[1.07]"
+            className="font-bold leading-[1.08]"
             style={{
               fontFamily: "var(--font-heading)",
-              fontSize: "clamp(36px, 5vw, 62px)",
+              fontSize: "clamp(34px, 4.5vw, 58px)",
               color: "#FAF8F4",
               letterSpacing: "-0.03em",
-              marginBottom: 18,
+              marginBottom: 16,
             }}
           >
             Your knowledge,{" "}
@@ -543,58 +548,67 @@ export default function FeaturesSection() {
             className="leading-relaxed mx-auto"
             style={{
               fontFamily: "var(--font-body)",
-              fontSize: "clamp(14.5px, 1.5vw, 17px)",
-              color: "rgba(250,248,244,0.48)",
-              maxWidth: 440,
+              fontSize: "clamp(14px, 1.4vw, 16px)",
+              color: "rgba(250,248,244,0.45)",
+              maxWidth: 420,
             }}
           >
             From capturing to recalling — Memory Capsule handles the entire lifecycle of your knowledge.
           </p>
         </motion.div>
 
-        {/* Outer rounded container — acts as a subtle frame */}
-        <div
-          className="w-full max-w-5xl mx-auto rounded-[32px] md:rounded-[44px] p-3 md:p-4"
-          style={{ background: "rgba(236, 230, 220, 0.35)", border: "1px solid rgba(236, 230, 220, 0.15)" }}
+        {/* Outer rounded container */}
+        <motion.div
+          className="w-full max-w-5xl mx-auto rounded-[28px] md:rounded-[40px] p-2.5 md:p-3.5"
+          style={{ background: "rgba(236, 230, 220, 0.25)", border: "1px solid rgba(236, 230, 220, 0.12)" }}
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.6, ease: EASE_SMOOTH }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 md:gap-3.5">
             {CARDS.map((card, i) => (
               <motion.div
                 key={card.title}
                 className="h-full"
-                initial={{ opacity: 0, y: 28, scale: 0.97 }}
+                initial={{ opacity: 0, y: 32, scale: 0.96 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.12 }}
-                transition={{ duration: 0.55, delay: i * 0.1, ease: EASE_SMOOTH }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: i * 0.12, ease: EASE_SMOOTH }}
               >
                 <motion.div
                   className="relative flex flex-col overflow-hidden h-full"
                   style={{
                     background: "white",
-                    borderRadius: 24,
-                    padding: "36px 32px 40px",
+                    borderRadius: 22,
+                    padding: "28px 26px 32px",
                     border: "1px solid var(--border)",
                   }}
                   animate={{
-                    y: [-2, 2, -2],
+                    y: [-1.5, 1.5, -1.5],
                     boxShadow: [
-                      "0 2px 8px rgba(31,36,33,0.03), 0 1px 3px rgba(31,36,33,0.02)",
-                      "0 12px 32px rgba(31,36,33,0.08), 0 4px 12px rgba(31,36,33,0.04)",
-                      "0 2px 8px rgba(31,36,33,0.03), 0 1px 3px rgba(31,36,33,0.02)",
+                      "0 1px 4px rgba(31,36,33,0.03), 0 1px 2px rgba(31,36,33,0.02)",
+                      "0 10px 28px rgba(31,36,33,0.07), 0 3px 10px rgba(31,36,33,0.03)",
+                      "0 1px 4px rgba(31,36,33,0.03), 0 1px 2px rgba(31,36,33,0.02)",
                     ],
                   }}
                   transition={{
                     y: floatTransition(card.floatDur, card.floatDelay),
                     boxShadow: floatTransition(card.floatDur, card.floatDelay),
                   }}
+                  whileHover={{
+                    y: -4,
+                    boxShadow: "0 16px 40px rgba(31,36,33,0.1), 0 6px 16px rgba(31,36,33,0.05)",
+                    transition: { duration: 0.3, ease: EASE_SMOOTH },
+                  }}
                 >
                   {card.visual}
-                  <div className="text-center mt-auto">
+                  <div className="text-center mt-auto pt-2">
                     <h3
-                      className="font-bold mb-3 leading-snug"
+                      className="font-bold mb-2 leading-snug"
                       style={{
                         fontFamily: "var(--font-heading)",
-                        fontSize: "clamp(18px, 2vw, 22px)",
+                        fontSize: "clamp(17px, 1.8vw, 20px)",
                         color: "var(--primary)",
                       }}
                     >
@@ -604,7 +618,7 @@ export default function FeaturesSection() {
                       className="leading-relaxed"
                       style={{
                         fontFamily: "var(--font-body)",
-                        fontSize: "clamp(13.5px, 1.1vw, 15px)",
+                        fontSize: "clamp(13px, 1vw, 14.5px)",
                         color: "var(--text-secondary)",
                       }}
                     >
@@ -615,7 +629,7 @@ export default function FeaturesSection() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
