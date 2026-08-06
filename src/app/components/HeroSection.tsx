@@ -195,29 +195,7 @@ function PlaceholderIcon() {
       }}
       aria-label="Memory Capsule Logo"
     >
-      <svg width="55%" height="55%" viewBox="0 0 100 100" fill="none">
-        <rect x="15" y="15" width="70" height="70" rx="22" fill="#1F2421" />
-        <rect
-          x="25"
-          y="25"
-          width="50"
-          height="50"
-          rx="16"
-          stroke="#D8C3A5"
-          strokeWidth="2"
-          strokeDasharray="3 3"
-          opacity="0.6"
-        />
-        <circle cx="50" cy="50" r="16" fill="#D8C3A5" />
-        <circle cx="50" cy="50" r="8" fill="#FAF8F4" />
-        <path
-          d="M50 30V36M50 64V70M30 50H36M64 50H70"
-          stroke="#FAF8F4"
-          strokeWidth="2"
-          strokeLinecap="round"
-          opacity="0.8"
-        />
-      </svg>
+      <img src="/logo.svg" alt="Memory Capsule" style={{ width: "55%", height: "55%", objectFit: "contain" }} />
     </div>
   );
 }
@@ -366,8 +344,8 @@ export default function HeroSection() {
               aria-label="Memory Capsule home"
             >
               <div className="inner-navbar-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
-                  <rect
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  {/* <rect
                     x="2"
                     y="2"
                     width="12"
@@ -377,8 +355,8 @@ export default function HeroSection() {
                     fillOpacity="0.2"
                     stroke="#FAF8F4"
                     strokeWidth="1.2"
-                  />
-                  <circle cx="8" cy="8" r="2.5" fill="#D8C3A5" />
+                  /> */}
+                  <image href="/logo.svg" x="1" y="1" width="26" height="26" />
                 </svg>
               </div>
               <span className="inner-navbar-wordmark">Memory Capsule</span>
