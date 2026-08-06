@@ -6,9 +6,7 @@ import {
   X,
   Sparkles,
   Play,
-  Map,
   GitFork,
-  Download,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -84,7 +82,7 @@ export default function Navbar() {
           id="nav-add-to-chrome"
           onClick={() => setIsOpen(false)}
         >
-          <Download size={17} strokeWidth={2} />
+          <img src="/chrome-icon.svg" alt="Chrome" width={18} height={18} />
           <span>Add to Chrome</span>
         </a>
       </div>
