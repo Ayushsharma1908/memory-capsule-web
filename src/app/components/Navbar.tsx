@@ -65,17 +65,6 @@ export default function Navbar() {
           </a>
 
           <a
-            href="#roadmap"
-            className="pill-nav-link"
-            onClick={() => setIsOpen(false)}
-          >
-            <span className="pill-nav-link-icon">
-              <Map size={17} strokeWidth={2} />
-            </span>
-            <span>Roadmap</span>
-          </a>
-
-          <a
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
