@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
   FiMessageCircle,
@@ -13,50 +13,13 @@ import {
   FiFolder,
   FiShield,
   FiLayers,
-  FiCheckCircle,
 } from "react-icons/fi";
 
 const EASE_SMOOTH = [0.4, 0, 0.2, 1] as const;
 
-function floatTransition(duration: number, delay = 0) {
+function floatTransition(duration: number, delay = 0, reducedMotion: boolean | null = false) {
+  if (reducedMotion) return { duration: 0 };
   return { duration, repeat: Infinity, ease: "easeInOut" as const, delay };
-}
-
-/** angle in degrees, 0 = pointing right, clockwise — matches CSS rotate() directly */
-function spokePos(center: number, radius: number, angleDeg: number) {
-  const rad = (angleDeg * Math.PI) / 180;
-  return { x: center + radius * Math.cos(rad), y: center + radius * Math.sin(rad) };
-}
-
-function Spoke({ center, radius, angle }: { center: number; radius: number; angle: number }) {
-  return (
-    <div
-      className="absolute"
-      style={{
-        left: center,
-        top: center,
-        width: radius,
-        height: 1,
-        background: "var(--border-strong)",
-        transformOrigin: "left center",
-        transform: `rotate(${angle}deg)`,
-        opacity: 0.45,
-      }}
-    />
-  );
-}
-
-function Shimmer({ width, height = 8, radius = 5, delay = 0 }: { width: string; height?: number; radius?: number; delay?: number }) {
-  return (
-    <div className="relative overflow-hidden" style={{ width, height, borderRadius: radius, background: "var(--border)" }}>
-      <motion.div
-        className="absolute inset-y-0 left-0"
-        style={{ width: "40%", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)" }}
-        animate={{ x: ["-40%", "220%"] }}
-        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay }}
-      />
-    </div>
-  );
 }
 
 /* ---------------------------------- 1. Universal Capture ---------------------------------- */
@@ -64,61 +27,55 @@ function Shimmer({ width, height = 8, radius = 5, delay = 0 }: { width: string; 
 const SOURCE_ICONS = [FiMessageCircle, FiCode, FiBookOpen, FiTarget];
 
 function CaptureVisual() {
+  const reducedMotion = useReducedMotion();
   return (
     <div
-      className="relative w-full rounded-2xl border overflow-hidden flex flex-col items-center"
-      style={{ background: "var(--bg)", borderColor: "var(--border)", height: 208, padding: "20px 20px 16px" }}
+      className="relative w-full rounded-2xl overflow-hidden flex flex-col items-center justify-center h-full"
+      style={{ background: "transparent", padding: "24px" }}
     >
-      <div className="flex items-center gap-2.5">
-        {SOURCE_ICONS.map((Icon, i) => (
-          <motion.div
-            key={i}
-            className="flex items-center justify-center rounded-full border bg-white"
-            style={{ width: 28, height: 28, borderColor: "var(--border-strong)", boxShadow: "var(--shadow-sm)" }}
-            animate={{ y: [-2, 2, -2] }}
-            transition={floatTransition(2.6 + i * 0.3, i * 0.2)}
-          >
-            <Icon size={12} style={{ color: "var(--primary)" }} />
-          </motion.div>
-        ))}
-      </div>
-
-      <div style={{ width: 1, height: 14, background: "var(--border-strong)" }} />
-
-      <motion.div
-        className="rounded-full px-4 py-1.5 text-xs font-semibold mb-3"
-        style={{ background: "var(--primary)", color: "white" }}
-        animate={{
-          boxShadow: [
-            "0 0 0 0 rgba(216,195,165,0.35)",
-            "0 0 0 8px rgba(216,195,165,0)",
-            "0 0 0 0 rgba(216,195,165,0)",
-          ],
-        }}
-        transition={floatTransition(2.4)}
-      >
-        Connect
-      </motion.div>
-
-      <div
-        className="relative w-full flex-1 rounded-xl"
-        style={{ border: "1.5px dashed var(--border-strong)", background: "white", padding: "12px 14px" }}
-      >
-        <motion.div
-          className="absolute rounded-full px-2 py-0.5 text-[9.5px] font-bold shadow-md"
-          style={{ background: "var(--primary)", color: "var(--accent)", top: -10, right: 10 }}
-          animate={{ scale: [1, 1.07, 1] }}
-          transition={floatTransition(2.6, 0.3)}
-        >
-          +12 today
-        </motion.div>
-        <p className="text-[10.5px] font-medium mb-2" style={{ color: "var(--text-tertiary)" }}>
-          Saved from ChatGPT
-        </p>
-        <div className="space-y-1.5">
-          <Shimmer width="90%" />
-          <Shimmer width="70%" delay={0.2} />
+      <div className="flex flex-col items-center gap-6 w-full max-w-[200px]">
+        {/* Source Icons */}
+        <div className="flex items-center justify-between w-full">
+          {SOURCE_ICONS.map((Icon, i) => (
+            <motion.div
+              key={i}
+              className="flex items-center justify-center rounded-full border bg-white relative z-10"
+              style={{ width: 34, height: 34, borderColor: "var(--border-strong)", boxShadow: "var(--shadow-sm)" }}
+              animate={reducedMotion ? {} : { y: [-1.5, 1.5, -1.5] }}
+              transition={floatTransition(3 + i * 0.4, i * 0.2, reducedMotion)}
+            >
+              <Icon size={14} style={{ color: "var(--text-secondary)" }} />
+            </motion.div>
+          ))}
         </div>
+
+        {/* Connection Line */}
+        <div className="relative w-full flex justify-center h-10">
+          <motion.div
+            className="absolute top-0 w-px h-full"
+            style={{ background: "linear-gradient(to bottom, transparent, var(--border-strong), transparent)" }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, ease: EASE_SMOOTH }}
+          />
+        </div>
+
+        {/* Destination Capsule */}
+        <motion.div
+          className="flex items-center justify-center rounded-2xl border bg-white relative z-10"
+          style={{ width: 52, height: 52, borderColor: "var(--accent)", boxShadow: "var(--shadow-md)" }}
+          animate={reducedMotion ? {} : {
+            boxShadow: [
+              "0 4px 16px rgba(31, 36, 33, 0.08)",
+              "0 4px 24px rgba(216, 195, 165, 0.25)",
+              "0 4px 16px rgba(31, 36, 33, 0.08)"
+            ]
+          }}
+          transition={floatTransition(4, 0, reducedMotion)}
+        >
+          <FiZap size={22} style={{ color: "var(--primary)" }} />
+        </motion.div>
       </div>
     </div>
   );
@@ -126,10 +83,11 @@ function CaptureVisual() {
 
 /* ---------------------------------- 2. Smart Dashboards ---------------------------------- */
 
-function LineChart() {
-  const path = "M0,32 L14,26 L28,29 L42,18 L56,22 L70,10 L84,15 L98,6 L112,12 L126,4 L140,8";
+function DashboardChart() {
+  const reducedMotion = useReducedMotion();
+  const path = "M0,32 L20,28 L40,30 L60,18 L80,22 L100,10 L120,12 L140,4";
   return (
-    <svg viewBox="0 0 140 40" className="w-full" style={{ height: 42, overflow: "visible" }}>
+    <svg viewBox="0 0 140 40" className="w-full mt-5" style={{ height: 42, overflow: "visible" }}>
       <motion.path
         d={path}
         fill="none"
@@ -137,103 +95,46 @@ function LineChart() {
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 2.2, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+        initial={{ pathLength: 0, opacity: 0 }}
+        whileInView={reducedMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, ease: EASE_SMOOTH }}
       />
-      <line x1={112} y1={0} x2={112} y2={40} stroke="var(--border-strong)" strokeWidth={1} strokeDasharray="3 3" />
-      <circle cx={126} cy={4} r={3} fill="var(--primary)" />
+      <circle cx={140} cy={4} r={3} fill="var(--primary)" />
     </svg>
   );
 }
 
 function DashboardVisual() {
-  const [pct, setPct] = useState(68);
-  useEffect(() => {
-    const id = setInterval(() => setPct((p) => (p === 68 ? 74 : 68)), 2400);
-    return () => clearInterval(id);
-  }, []);
-
   return (
     <div
-      className="relative w-full rounded-2xl border overflow-hidden flex flex-col"
-      style={{ background: "var(--bg)", borderColor: "var(--border)", height: 208, padding: 16 }}
+      className="relative w-full rounded-2xl overflow-hidden flex flex-col justify-center h-full"
+      style={{ padding: "32px" }}
     >
-      {/* top bar */}
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-1.5">
-          <div className="rounded-md flex items-center justify-center" style={{ width: 18, height: 18, background: "var(--primary)" }}>
-            <FiZap size={9} style={{ color: "var(--accent)" }} />
-          </div>
-          <span className="text-[11px] font-bold" style={{ color: "var(--primary)" }}>
-            Memory Capsule
+      <div className="flex-1 w-full max-w-[260px] mx-auto flex flex-col gap-4">
+        {/* Main Stat */}
+        <div className="border bg-white rounded-xl p-5 flex flex-col" style={{ borderColor: "var(--border)", boxShadow: "var(--shadow-sm)" }}>
+          <span className="text-[10px] font-medium tracking-[0.15em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>
+            Memories Saved
           </span>
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="rounded-full px-2 py-0.5 text-[9px] font-semibold" style={{ background: "var(--primary)", color: "white" }}>
-            Overview
-          </span>
-          <span className="rounded-full px-2 py-0.5 text-[9px] font-semibold border" style={{ borderColor: "var(--border-strong)", color: "var(--text-tertiary)" }}>
-            Reports
-          </span>
-        </div>
-      </div>
-
-      {/* main grid */}
-      <div className="flex-1 grid grid-cols-3 gap-2">
-        <div className="col-span-2 rounded-xl border bg-white flex flex-col justify-between" style={{ borderColor: "var(--border)", padding: "10px 12px" }}>
-          <div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-bold" style={{ fontSize: 19, color: "var(--primary)" }}>
-                1,284
-              </span>
-              <span className="text-[9.5px] font-bold" style={{ color: "#2E9E5B" }}>
-                +18%
-              </span>
-            </div>
-            <span className="text-[9px] font-medium" style={{ color: "var(--text-tertiary)" }}>
-              Memories saved
+          <div className="flex items-baseline gap-2">
+            <span className="font-semibold" style={{ fontSize: 28, color: "var(--primary)", fontFamily: "var(--font-heading)", letterSpacing: "-0.02em" }}>
+              2,847
             </span>
           </div>
-          <LineChart />
+          <DashboardChart />
         </div>
 
-        <div className="col-span-1 flex flex-col gap-2">
-          <div className="rounded-xl border bg-white flex-1 flex flex-col justify-center" style={{ borderColor: "var(--border)", padding: "8px 10px" }}>
-            <span className="font-bold" style={{ fontSize: 14, color: "var(--primary)" }}>
-              48
-            </span>
-            <span className="text-[8.5px] font-medium" style={{ color: "var(--text-tertiary)" }}>
-              Tags
-            </span>
+        {/* Sub Stats */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="border bg-white rounded-xl p-4 flex flex-col" style={{ borderColor: "var(--border)" }}>
+            <span className="text-[9px] font-medium tracking-[0.15em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>Tags</span>
+            <span className="font-semibold" style={{ fontSize: 18, color: "var(--primary)", fontFamily: "var(--font-heading)" }}>48</span>
           </div>
-          <div className="rounded-xl border bg-white flex-1 flex flex-col justify-center" style={{ borderColor: "var(--border)", padding: "8px 10px" }}>
-            <span className="font-bold" style={{ fontSize: 14, color: "var(--primary)" }}>
-              14
-            </span>
-            <span className="text-[8.5px] font-medium" style={{ color: "var(--text-tertiary)" }}>
-              Collections
-            </span>
+          <div className="border bg-white rounded-xl p-4 flex flex-col" style={{ borderColor: "var(--border)" }}>
+            <span className="text-[9px] font-medium tracking-[0.15em] uppercase mb-2" style={{ color: "var(--text-tertiary)" }}>Collections</span>
+            <span className="font-semibold" style={{ fontSize: 18, color: "var(--primary)", fontFamily: "var(--font-heading)" }}>12</span>
           </div>
-        </div>
-      </div>
-
-      {/* split bar */}
-      <div className="mt-2.5">
-        <div className="flex h-2 w-full rounded-full overflow-hidden" style={{ background: "var(--border)" }}>
-          <motion.div
-            style={{ background: "var(--accent)" }}
-            animate={{ width: [`${pct}%`, `${pct}%`] }}
-            transition={{ duration: 1, ease: EASE_SMOOTH }}
-          />
-        </div>
-        <div className="flex justify-between mt-1">
-          <span className="text-[8.5px] font-medium" style={{ color: "var(--text-tertiary)" }}>
-            Text notes {pct}%
-          </span>
-          <span className="text-[8.5px] font-medium" style={{ color: "var(--text-tertiary)" }}>
-            Code {100 - pct}%
-          </span>
         </div>
       </div>
     </div>
@@ -242,68 +143,88 @@ function DashboardVisual() {
 
 /* ---------------------------------- 3. Connected Knowledge ---------------------------------- */
 
+function spokePos(center: number, radius: number, angleDeg: number) {
+  const rad = (angleDeg * Math.PI) / 180;
+  return { x: center + radius * Math.cos(rad), y: center + radius * Math.sin(rad) };
+}
+
 const TOPIC_NODES = [
-  { icon: FiCode, angle: -90 },
-  { icon: FiMessageCircle, angle: -18 },
-  { icon: FiBookOpen, angle: 54 },
-  { icon: FiTarget, angle: 126 },
-  { icon: FiStar, angle: 198 },
+  { icon: FiCode, angle: -90, label: "Code" },
+  { icon: FiMessageCircle, angle: -18, label: "Chats" },
+  { icon: FiBookOpen, angle: 54, label: "Notes" },
+  { icon: FiTarget, angle: 126, label: "Ideas" },
+  { icon: FiStar, angle: 198, label: "Topics" },
 ];
 
 function KnowledgeVisual() {
-  const CENTER = 78;
-  const RADIUS = 60;
+  const reducedMotion = useReducedMotion();
+  const CENTER = 90;
+  const RADIUS = 65;
 
   return (
     <div
-      className="relative w-full rounded-2xl border overflow-hidden flex items-center justify-center"
-      style={{
-        background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(216,195,165,0.10) 0%, var(--bg) 70%)",
-        borderColor: "var(--border)",
-        height: 180,
-      }}
+      className="relative w-full rounded-2xl overflow-hidden flex items-center justify-center h-full"
+      style={{ padding: "16px" }}
     >
       <div className="relative" style={{ width: CENTER * 2, height: CENTER * 2 }}>
+        {/* Connection Lines */}
         {TOPIC_NODES.map((n, i) => (
-          <Spoke key={i} center={CENTER} radius={RADIUS} angle={n.angle} />
+          <div
+            key={`line-${i}`}
+            className="absolute"
+            style={{
+              left: CENTER,
+              top: CENTER,
+              width: RADIUS,
+              height: 1,
+              background: "var(--border-strong)",
+              transformOrigin: "left center",
+              transform: `rotate(${n.angle}deg)`,
+              opacity: 0.25,
+            }}
+          />
         ))}
 
+        {/* Surrounding Nodes */}
         {TOPIC_NODES.map((n, i) => {
           const pos = spokePos(CENTER, RADIUS, n.angle);
           return (
             <motion.div
-              key={i}
+              key={`node-${i}`}
               className="absolute flex items-center justify-center rounded-full border bg-white"
               style={{
-                width: 30,
-                height: 30,
+                width: 32,
+                height: 32,
                 left: pos.x,
                 top: pos.y,
                 transform: "translate(-50%, -50%)",
-                borderColor: "var(--border-strong)",
+                borderColor: "var(--border)",
                 boxShadow: "var(--shadow-sm)",
               }}
-              animate={{ scale: [1, 1.08, 1] }}
-              transition={floatTransition(3 + i * 0.3, i * 0.25)}
+              animate={reducedMotion ? {} : { scale: [1, 1.02, 1] }}
+              transition={floatTransition(4 + i * 0.5, i * 0.3, reducedMotion)}
             >
-              <n.icon size={12} style={{ color: "var(--primary)" }} />
+              <n.icon size={13} style={{ color: "var(--text-secondary)" }} />
             </motion.div>
           );
         })}
 
+        {/* Central Node */}
         <motion.div
-          className="absolute flex items-center justify-center rounded-full"
-          style={{ width: 48, height: 48, left: CENTER, top: CENTER, transform: "translate(-50%, -50%)", background: "var(--primary)" }}
-          animate={{
-            boxShadow: [
-              "0 0 0 0 rgba(216,195,165,0.35)",
-              "0 0 0 12px rgba(216,195,165,0)",
-              "0 0 0 0 rgba(216,195,165,0)",
-            ],
+          className="absolute flex items-center justify-center rounded-full border bg-white"
+          style={{
+            width: 48,
+            height: 48,
+            left: CENTER,
+            top: CENTER,
+            transform: "translate(-50%, -50%)",
+            borderColor: "var(--accent)",
+            boxShadow: "var(--shadow-md)"
           }}
-          transition={floatTransition(2.2)}
+          animate={reducedMotion ? {} : { scale: [1, 1.015, 1] }}
+          transition={floatTransition(3, 0, reducedMotion)}
         >
-          <FiZap size={18} style={{ color: "var(--accent)" }} />
+          <FiZap size={20} style={{ color: "var(--primary)" }} />
         </motion.div>
       </div>
     </div>
@@ -313,45 +234,45 @@ function KnowledgeVisual() {
 /* ---------------------------------- 4. Advanced Automation ---------------------------------- */
 
 const FLOW_STEPS = [
-  { label: "New save", icon: FiLayers },
+  { label: "Capture", icon: FiLayers },
   { label: "Summarize", icon: FiMessageCircle },
-  { label: "Auto-tag", icon: FiTag },
-  { label: "Store", icon: FiFolder },
+  { label: "Tag", icon: FiTag },
+  { label: "Organize", icon: FiFolder },
+  { label: "Remember", icon: FiStar },
 ];
 
 function AutomationVisual() {
   const [active, setActive] = useState(0);
   useEffect(() => {
-    const id = setInterval(() => setActive((a) => (a + 1) % FLOW_STEPS.length), 900);
+    const id = setInterval(() => setActive((a) => (a + 1) % FLOW_STEPS.length), 1800);
     return () => clearInterval(id);
   }, []);
 
   return (
     <div
-      className="relative w-full rounded-2xl border overflow-hidden flex flex-col items-center justify-center gap-1.5"
-      style={{ background: "var(--bg)", borderColor: "var(--border)", height: 180, padding: "16px 22px" }}
+      className="relative w-full rounded-2xl overflow-hidden flex flex-col items-center justify-center h-full gap-2"
+      style={{ padding: "20px" }}
     >
       {FLOW_STEPS.map((step, i) => (
-        <div key={step.label} className="flex flex-col items-center">
+        <div key={step.label} className="flex flex-col items-center w-full max-w-[160px]">
           <motion.div
-            className="flex items-center gap-2 rounded-lg border bg-white w-full"
-            style={{ padding: "6px 12px", minWidth: 132, borderColor: active === i ? "var(--accent)" : "var(--border)", boxShadow: "var(--shadow-sm)" }}
-            animate={{ scale: active === i ? 1.04 : 1 }}
-            transition={{ duration: 0.3, ease: EASE_SMOOTH }}
+            className="flex items-center gap-3 rounded-lg border bg-white w-full"
+            style={{
+              padding: "10px 14px",
+              borderColor: active === i ? "var(--accent)" : "var(--border)",
+              boxShadow: active === i ? "var(--shadow-sm)" : "none",
+              opacity: active === i ? 1 : 0.5
+            }}
+            animate={{ scale: active === i ? 1.02 : 1 }}
+            transition={{ duration: 0.5, ease: EASE_SMOOTH }}
           >
-            <div
-              className="flex items-center justify-center rounded-md flex-shrink-0"
-              style={{ width: 20, height: 20, background: active === i ? "var(--primary)" : "var(--accent-light)" }}
-            >
-              <step.icon size={10} style={{ color: active === i ? "var(--accent)" : "var(--primary)" }} />
-            </div>
-            <span className="text-[11px] font-semibold" style={{ color: "var(--primary)" }}>
+            <step.icon size={13} style={{ color: active === i ? "var(--primary)" : "var(--text-tertiary)" }} />
+            <span className="text-[12px] font-medium tracking-wide" style={{ color: active === i ? "var(--primary)" : "var(--text-secondary)" }}>
               {step.label}
             </span>
-            {active === i && <FiCheckCircle size={12} style={{ color: "var(--accent)", marginLeft: "auto" }} />}
           </motion.div>
           {i < FLOW_STEPS.length - 1 && (
-            <div style={{ width: 1, height: 10, borderLeft: "1.5px dashed var(--border-strong)" }} />
+            <div style={{ width: 1, height: 14, borderLeft: "1px solid var(--border)", opacity: 0.5 }} />
           )}
         </div>
       ))}
@@ -361,68 +282,85 @@ function AutomationVisual() {
 
 /* ---------------------------------- 5. Private & Secure ---------------------------------- */
 
-const LOCK_NODES = [
-  { angle: -90 },
-  { angle: 30 },
-  { angle: 150 },
+const ORBIT_POINTS = [
+  { angle: 0 },
+  { angle: 120 },
+  { angle: 240 },
 ];
 
 function SecurityVisual() {
-  const CENTER = 78;
-  const RADIUS = 58;
+  const reducedMotion = useReducedMotion();
+  const CENTER = 90;
+  const RADIUS = 50;
 
   return (
     <div
-      className="relative w-full rounded-2xl border overflow-hidden flex items-center justify-center"
-      style={{ background: "var(--bg)", borderColor: "var(--border)", height: 180 }}
+      className="relative w-full rounded-2xl overflow-hidden flex items-center justify-center h-full"
     >
-      {/* faint facet backdrop */}
+      {/* Subtle grid background */}
       <div
-        className="absolute inset-0 opacity-40"
+        className="absolute inset-0 opacity-[0.15]"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(45deg, var(--border) 0, var(--border) 1px, transparent 1px, transparent 18px), repeating-linear-gradient(-45deg, var(--border) 0, var(--border) 1px, transparent 1px, transparent 18px)",
+            "linear-gradient(var(--border-strong) 1px, transparent 1px), linear-gradient(90deg, var(--border-strong) 1px, transparent 1px)",
+          backgroundSize: "24px 24px"
         }}
       />
 
       <div className="relative" style={{ width: CENTER * 2, height: CENTER * 2 }}>
-        {[0, 1].map((i) => (
-          <motion.span
+        {/* Orbit track */}
+        <div
+          className="absolute rounded-full border"
+          style={{
+            width: RADIUS * 2,
+            height: RADIUS * 2,
+            left: CENTER,
+            top: CENTER,
+            transform: "translate(-50%, -50%)",
+            borderColor: "var(--border-strong)",
+            opacity: 0.2
+          }}
+        />
+
+        {/* Orbiting points */}
+        {!reducedMotion && ORBIT_POINTS.map((p, i) => (
+          <motion.div
             key={i}
-            className="absolute rounded-full border"
-            style={{
-              borderColor: "var(--accent)",
-              width: 60,
-              height: 60,
-              left: CENTER,
-              top: CENTER,
-              transform: "translate(-50%, -50%)",
-            }}
-            animate={{ scale: [1, 1.7, 1.7], opacity: [0.5, 0, 0] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut", delay: i * 1.4 }}
-          />
+            className="absolute w-full h-full"
+            style={{ left: 0, top: 0, transformOrigin: "center center" }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 16, repeat: Infinity, ease: "linear", delay: i * -5 }}
+          >
+            <div
+              className="absolute rounded-full"
+              style={{
+                width: 4,
+                height: 4,
+                background: "var(--accent)",
+                left: CENTER + RADIUS,
+                top: CENTER,
+                transform: "translate(-50%, -50%)"
+              }}
+            />
+          </motion.div>
         ))}
 
-        {LOCK_NODES.map((n, i) => {
-          const pos = spokePos(CENTER, RADIUS, n.angle);
-          return (
-            <motion.div
-              key={i}
-              className="absolute rounded-full"
-              style={{ width: 8, height: 8, left: pos.x, top: pos.y, transform: "translate(-50%, -50%)", background: "var(--accent)" }}
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={floatTransition(2.4, i * 0.4)}
-            />
-          );
-        })}
-
+        {/* Central Shield */}
         <motion.div
-          className="absolute flex items-center justify-center rounded-2xl"
-          style={{ width: 56, height: 56, left: CENTER, top: CENTER, transform: "translate(-50%, -50%)", background: "var(--primary)" }}
-          animate={{ y: [-2, 2, -2] }}
-          transition={floatTransition(3.2)}
+          className="absolute flex items-center justify-center rounded-xl bg-white border"
+          style={{
+            width: 52,
+            height: 52,
+            left: CENTER,
+            top: CENTER,
+            transform: "translate(-50%, -50%)",
+            borderColor: "var(--border)",
+            boxShadow: "var(--shadow-sm)"
+          }}
+          animate={reducedMotion ? {} : { scale: [1, 1.02, 1] }}
+          transition={floatTransition(4, 0, reducedMotion)}
         >
-          <FiShield size={22} style={{ color: "var(--accent)" }} />
+          <FiShield size={22} style={{ color: "var(--primary)" }} />
         </motion.div>
       </div>
     </div>
@@ -435,32 +373,47 @@ const CARDS = [
   {
     visual: <CaptureVisual />,
     title: "Universal Capture",
-    body: "Connect every AI chat, note, and workspace you use. Save any conversation in a single click and keep the source close at hand.",
+    body: "Save any AI conversation in one click.",
     span: "md:col-span-3",
+    height: "min-h-[380px] md:h-[440px]",
+    visualHeight: "h-[60%] md:h-[65%]",
+    textHeight: "h-[40%] md:h-[35%]"
   },
   {
     visual: <DashboardVisual />,
     title: "Smart Dashboards",
-    body: "Track how your knowledge base grows with live stats, tag breakdowns, and collection trends — all in one customizable view.",
+    body: "See your entire knowledge base grow at a glance.",
     span: "md:col-span-3",
+    height: "min-h-[380px] md:h-[440px]",
+    visualHeight: "h-[60%] md:h-[65%]",
+    textHeight: "h-[40%] md:h-[35%]"
   },
   {
     visual: <KnowledgeVisual />,
     title: "Connected Knowledge",
-    body: "Every memory links to related topics automatically, so ideas stay discoverable instead of scattered across saves.",
+    body: "Discover relationships between ideas automatically.",
     span: "md:col-span-2",
+    height: "min-h-[320px] md:h-[360px]",
+    visualHeight: "h-[55%] md:h-[60%]",
+    textHeight: "h-[45%] md:h-[40%]"
   },
   {
     visual: <AutomationVisual />,
     title: "Advanced Automation",
-    body: "New saves are summarized, tagged, and filed the moment they land — zero manual sorting required.",
+    body: "Summarize, tag, and organize every new memory.",
     span: "md:col-span-2",
+    height: "min-h-[320px] md:h-[360px]",
+    visualHeight: "h-[55%] md:h-[60%]",
+    textHeight: "h-[45%] md:h-[40%]"
   },
   {
     visual: <SecurityVisual />,
     title: "Private & Secure",
-    body: "Every memory is encrypted end-to-end, aggregated safely from every source you connect.",
+    body: "Keep your memories yours, from capture to recall.",
     span: "md:col-span-2",
+    height: "min-h-[320px] md:h-[360px]",
+    visualHeight: "h-[55%] md:h-[60%]",
+    textHeight: "h-[45%] md:h-[40%]"
   },
 ];
 
@@ -468,64 +421,50 @@ export default function FeaturesSection() {
   return (
     <section
       className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: "var(--bg-outer)", paddingTop: 88, paddingBottom: 104 }}
+      style={{ background: "var(--bg-outer)", paddingTop: 140, paddingBottom: 140 }}
       id="features"
       aria-label="Features"
     >
-      {/* Ambient radial */}
+      {/* Minimal ambient radial for subtle depth */}
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
-          background:
-            "radial-gradient(ellipse 60% 45% at 50% 0%, rgba(216,195,165,0.07) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 85% 100%, rgba(216,195,165,0.04) 0%, transparent 70%)",
+          background: "radial-gradient(circle at 50% 0%, rgba(216,195,165,0.02) 0%, transparent 60%)",
         }}
       />
 
       <div className="relative z-10 w-full max-w-7xl px-6 lg:px-8">
         {/* Section header */}
         <motion.div
-          className="mb-14 md:mb-16 flex flex-col items-center justify-center text-center"
+          className="mb-16 md:mb-24 flex flex-col items-center justify-center text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: EASE_SMOOTH }}
         >
           <span
-            className="inline-flex items-center gap-2 uppercase font-semibold"
-            style={{ fontSize: 10.5, letterSpacing: "0.22em", color: "var(--accent)", fontFamily: "var(--font-body)", marginBottom: 24 }}
+            className="inline-flex items-center gap-2 uppercase font-medium tracking-[0.2em]"
+            style={{ fontSize: 11, color: "var(--accent)", fontFamily: "var(--font-body)", marginBottom: 24 }}
           >
-            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--accent)" }} />
             Everything you need
           </span>
           <h2
-            className="font-bold leading-[1.07]"
+            className="font-bold leading-[1.05]"
             style={{
               fontFamily: "var(--font-heading)",
-              fontSize: "clamp(36px, 5vw, 58px)",
+              fontSize: "clamp(36px, 4.5vw, 56px)",
               color: "#FAF8F4",
-              letterSpacing: "-0.03em",
-              marginBottom: 26,
+              letterSpacing: "-0.02em",
+              marginBottom: 28,
             }}
           >
             Your knowledge,{" "}
-            <span
-              style={{
-                backgroundImage: "linear-gradient(90deg, var(--accent), #F0DFC4, var(--accent))",
-                backgroundSize: "200% auto",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
-                display: "inline-block",
-                animation: "featuresGradientShift 6s ease-in-out infinite",
-              }}
-            >
-              amplified
-            </span>
+            <span style={{ color: "var(--accent)" }}>amplified</span>
           </h2>
           <p
             className="leading-relaxed mx-auto"
-            style={{ fontFamily: "var(--font-body)", fontSize: "clamp(14.5px, 1.5vw, 17px)", color: "rgba(250,248,244,0.5)", maxWidth: 440 }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "clamp(15px, 1.5vw, 17px)", color: "rgba(250,248,244,0.6)", maxWidth: 500 }}
           >
             From capturing to recalling — Memory Capsule handles the entire lifecycle of your knowledge.
           </p>
@@ -537,28 +476,37 @@ export default function FeaturesSection() {
             <motion.div
               key={card.title}
               className={card.span}
-              initial={{ opacity: 0, y: 24, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.12 }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: EASE_SMOOTH }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: EASE_SMOOTH }}
             >
               <motion.div
-                className="relative flex flex-col overflow-hidden bg-white rounded-[22px] p-6 md:p-7 h-full"
-                style={{ border: "1px solid var(--border)" }}
-                whileHover={{ y: -4, borderColor: "var(--border-strong)", boxShadow: "0 14px 30px rgba(31,36,33,0.10)" }}
-                transition={{ duration: 0.25, ease: EASE_SMOOTH }}
+                className={`group relative flex flex-col overflow-hidden bg-white rounded-3xl ${card.height}`}
+                style={{ background: "var(--bg)", border: "1px solid var(--border)" }}
+                whileHover={{ y: -3, borderColor: "var(--border-strong)", boxShadow: "0 12px 40px rgba(0,0,0,0.06)" }}
+                transition={{ duration: 0.3, ease: EASE_SMOOTH }}
               >
-                <div className="mb-5 flex justify-center w-full">{card.visual}</div>
-                <div className="text-center flex flex-col items-center w-full">
+                {/* Visual Area */}
+                <motion.div
+                  className={`w-full flex items-center justify-center pt-8 ${card.visualHeight}`}
+                  whileHover={{ scale: 1.015 }}
+                  transition={{ duration: 0.4, ease: EASE_SMOOTH }}
+                >
+                  {card.visual}
+                </motion.div>
+
+                {/* Text Area */}
+                <div className={`w-full flex flex-col justify-end px-8 pb-10 ${card.textHeight}`}>
                   <h3
-                    className="font-bold mb-2 leading-snug"
-                    style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(16px, 1.6vw, 19px)", color: "var(--primary)" }}
+                    className="font-semibold mb-2"
+                    style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(19px, 2vw, 22px)", color: "var(--primary)", letterSpacing: "-0.01em" }}
                   >
                     {card.title}
                   </h3>
                   <p
                     className="leading-relaxed"
-                    style={{ fontFamily: "var(--font-body)", fontSize: "clamp(12.5px, 1vw, 14px)", color: "var(--text-secondary)" }}
+                    style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-secondary)" }}
                   >
                     {card.body}
                   </p>
@@ -568,20 +516,6 @@ export default function FeaturesSection() {
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes featuresGradientShift {
-          0% {
-            background-position: 0% center;
-          }
-          50% {
-            background-position: 100% center;
-          }
-          100% {
-            background-position: 0% center;
-          }
-        }
-      `}</style>
     </section>
   );
 }
