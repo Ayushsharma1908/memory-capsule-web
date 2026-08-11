@@ -736,6 +736,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 body {
@@ -745,6 +746,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* ============================================================
@@ -755,16 +757,7 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--bg-outer);
-}
-
-/* ============================================================
-   STAGE — where the card lives
-   ============================================================ */
-.hero-stage {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 20px 0 20px;
-  /* Takes up full viewport minus nothing — card floats on dark bg */
+  overflow-x: hidden;
 }
 
 /* ============================================================
@@ -772,12 +765,13 @@ body {
    ============================================================ */
 .hero-stage {
   width: 100%;
-  min-height: calc(100vh - 20px);
-  padding: 20px 20px 140px 20px;
+  min-height: 100vh;
+  padding: 20px 20px 40px 20px;
   background: var(--bg-outer);
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow-x: hidden;
 }
 
 /* Container splitting into two independent main cards */
