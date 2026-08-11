@@ -195,7 +195,29 @@ function PlaceholderIcon() {
       }}
       aria-label="Memory Capsule Logo"
     >
-      <img src="/logo.svg" alt="Memory Capsule" style={{ width: "55%", height: "55%", objectFit: "contain" }} />
+      <svg width="55%" height="55%" viewBox="0 0 100 100" fill="none">
+        <rect x="15" y="15" width="70" height="70" rx="22" fill="#1F2421" />
+        <rect
+          x="25"
+          y="25"
+          width="50"
+          height="50"
+          rx="16"
+          stroke="#D8C3A5"
+          strokeWidth="2"
+          strokeDasharray="3 3"
+          opacity="0.6"
+        />
+        <circle cx="50" cy="50" r="16" fill="#D8C3A5" />
+        <circle cx="50" cy="50" r="8" fill="#FAF8F4" />
+        <path
+          d="M50 30V36M50 64V70M30 50H36M64 50H70"
+          stroke="#FAF8F4"
+          strokeWidth="2"
+          strokeLinecap="round"
+          opacity="0.8"
+        />
+      </svg>
     </div>
   );
 }
@@ -311,7 +333,43 @@ function RightPanel() {
       >
         <a href="#" className="cta-button-primary" id="hero-chrome-cta">
           <span className="cta-icon" aria-hidden="true">
-            <img src="/chrome-icon.svg" alt="Chrome" width={18} height={18} />
+            <svg width="17" height="17" viewBox="0 0 20 20" fill="none">
+              <circle
+                cx="10"
+                cy="10"
+                r="8.5"
+                stroke="#FAF8F4"
+                strokeWidth="1.5"
+              />
+              <circle cx="10" cy="10" r="3.2" fill="#FAF8F4" />
+              <line
+                x1="10"
+                y1="1.5"
+                x2="10"
+                y2="6.8"
+                stroke="#FAF8F4"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="1.5"
+                y1="14"
+                x2="6.1"
+                y2="11.4"
+                stroke="#FAF8F4"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <line
+                x1="18.5"
+                y1="14"
+                x2="13.9"
+                y2="11.4"
+                stroke="#FAF8F4"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
           </span>
           <span>Add to Chrome</span>
         </a>
@@ -344,8 +402,8 @@ export default function HeroSection() {
               aria-label="Memory Capsule home"
             >
               <div className="inner-navbar-icon" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  {/* <rect
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+                  <rect
                     x="2"
                     y="2"
                     width="12"
@@ -355,15 +413,12 @@ export default function HeroSection() {
                     fillOpacity="0.2"
                     stroke="#FAF8F4"
                     strokeWidth="1.2"
-                  /> */}
-                  <image href="/logo.svg" x="1" y="1" width="26" height="26" />
+                  />
+                  <circle cx="8" cy="8" r="2.5" fill="#D8C3A5" />
                 </svg>
               </div>
               <span className="inner-navbar-wordmark">Memory Capsule</span>
             </a>
-            <div className="mobile-navbar-wrapper">
-              <Navbar />
-            </div>
           </div>
           <LeftPanel />
         </motion.div>
@@ -375,10 +430,15 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          <div className="right-card-header">
-            <div className="desktop-navbar-wrapper">
-              <Navbar />
-            </div>
+          <div
+            className="right-card-header"
+            style={{
+              justifyContent: "flex-end",
+
+              padding: "28px 36px 12px 36px",
+            }}
+          >
+            <Navbar />
           </div>
           <RightPanel />
         </motion.div>
@@ -386,16 +446,6 @@ export default function HeroSection() {
         {/* Center icon — floats in the gap, centered by CSS wrapper */}
         <CenterIcon />
       </div>
-
-      {/* Bottom section blend light aura */}
-      <div
-        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-32 opacity-60"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 100%, rgba(216, 195, 165, 0.12) 0%, rgba(216, 195, 165, 0.02) 60%, transparent 80%)",
-        }}
-        aria-hidden="true"
-      />
     </section>
   );
 }

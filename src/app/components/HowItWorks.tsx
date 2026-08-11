@@ -148,7 +148,7 @@ export default function HowItWorks() {
               <div className="hiw-spine-line" />
               <div className="hiw-spine-traveler" />
             </div>
-
+              
             {STEPS.map((step, i) => (
               <div key={step.id} className="hiw-step-row">
                 <motion.button

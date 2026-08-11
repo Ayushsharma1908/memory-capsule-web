@@ -69,6 +69,7 @@ export default function TrustStrip() {
               key={badge.label}
               className="trust-badge"
               role="listitem"
+              
             >
               <span className="trust-badge-icon" aria-hidden="true">
                 {badge.icon}
