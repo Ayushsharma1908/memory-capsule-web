@@ -1,11 +1,6 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
-};
+import Navbar from "./components/Navbar";
 
 export const metadata: Metadata = {
   title: "Memory Capsule — The Memory Layer for AI Conversations",
@@ -34,7 +29,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <nav className="fixed top-0 left-0 right-0 z-50" aria-label="Global navigation">
+          <Navbar />
+        </nav>
+        <main className="pt-[80px]">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }

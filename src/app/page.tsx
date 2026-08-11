@@ -10,7 +10,6 @@ export default function Home() {
         <HeroSection />
         <HowItWorks />
         <FeaturesSection />
-        {/* Bottom black strip matching wireframe */}
         <div className="bottom-strip" aria-hidden="true" />
       </main>
       <TrustStrip />
