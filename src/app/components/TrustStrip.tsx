@@ -61,7 +61,7 @@ export default function TrustStrip() {
   return (
     <footer className="trust-strip" aria-label="Product trust indicators">
       <div className="trust-strip-inner">
-        <p className="trust-eyebrow">What's inside</p>
+        <p className="trust-eyebrow">What&apos;s inside</p>
 
         <div className="trust-badges" role="list">
           {badges.map((badge) => (

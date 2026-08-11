@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import Navbar from "./Navbar";
@@ -10,46 +12,33 @@ import Navbar from "./Navbar";
    ============================================================ */
 
 const slideFromLeft: Variants = {
-  hidden: { x: "-100%", opacity: 0 },
+  hidden: { x: -30, opacity: 0 },
   visible: {
     x: 0,
     opacity: 1,
-    transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const slideFromRight: Variants = {
-  hidden: { x: "100%", opacity: 0 },
+  hidden: { x: 30, opacity: 0 },
   visible: {
     x: 0,
     opacity: 1,
-    transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 /* Entry animation: rises from 60px below, no x/y centering here —
    centering is handled by the static wrapper div in CSS. */
 const logoFloatUp: Variants = {
-  hidden: { y: 60, opacity: 0, scale: 0.94 },
+  hidden: { y: 40, opacity: 0, scale: 0.94 },
   visible: {
     y: 0,
     opacity: 1,
     scale: 1,
-    transition: { delay: 0.75, duration: 0.85, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: 0.4, duration: 0.85, ease: [0.22, 1, 0.36, 1] },
   },
-};
-
-const quoteFadeIn: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 1.1 + i * 0.25,
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
 };
 
 const headlineFade: Variants = {
@@ -57,7 +46,7 @@ const headlineFade: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { delay: 2.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: 0.6, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -66,7 +55,7 @@ const subheadlineAndCtaFade: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { delay: 2.4, duration: 0.6, ease: "easeOut" },
+    transition: { delay: 0.8, duration: 0.6, ease: "easeOut" },
   },
 };
 
@@ -100,7 +89,7 @@ function LeftPanel() {
   return (
     <div className="panel-left" aria-label="Hero message">
       <div className="panel-left-simple">
-        <motion.h1
+        <motion.h2
           className="left-hero-headline"
           initial="hidden"
           animate="visible"
@@ -108,14 +97,14 @@ function LeftPanel() {
         >
           Your best ideas
           <br />
-          shouldn't live
+          shouldn&apos;t live
           <br />
           in forgotten{" "}
           <span className="chat-placeholder">
             chats.
             <span className="chat-cursor" aria-hidden="true" />
           </span>{" "}
-        </motion.h1>
+        </motion.h2>
 
         <motion.p
           className="left-hero-subline"
@@ -133,7 +122,7 @@ function LeftPanel() {
         initial={{ opacity: 0, y: 24, rotate: -1 }}
         animate={{ opacity: 1, y: 0, rotate: -1 }}
         transition={{
-          delay: 2.8,
+          delay: 1.0,
           duration: 0.8,
           ease: [0.22, 1, 0.36, 1],
         }}
@@ -148,22 +137,22 @@ function LeftPanel() {
           <span className="memory-artifact-status">CAPTURED</span>
         </div>
 
-        <h3 className="memory-artifact-title">React Authentication</h3>
+        <h3 className="memory-artifact-title">System Architecture</h3>
 
         <p className="memory-artifact-description">
-          JWT authentication with protected routes, refresh tokens and secure
-          sessions.
+          Decoupled event pipeline with distributed task queues, idempotent
+          handlers, and replay safety.
         </p>
 
         <div className="memory-artifact-tags">
-          <span>React</span>
-          <span>JWT</span>
-          <span>Security</span>
+          <span>Architecture</span>
+          <span>Event-Driven</span>
+          <span>AI Insight</span>
         </div>
 
         <div className="memory-artifact-footer">
           <span className="memory-source-dot" />
-          Captured from conversation
+          Captured from Claude session
         </div>
       </motion.div>
 
@@ -177,6 +166,7 @@ function LeftPanel() {
     </div>
   );
 }
+
 /* ============================================================
    MEMORY CAPSULE LOGO FALLBACK
    ============================================================ */
@@ -254,9 +244,12 @@ function CenterIcon() {
           style={{ width: "100%", height: "100%" }}
         >
           {!imgError ? (
-            <img
+            <Image
               src="/logo.svg"
               alt="Memory Capsule Logo"
+              width={216}
+              height={216}
+              priority
               onError={() => setImgError(true)}
               style={{
                 width: "100%",
@@ -373,7 +366,7 @@ function RightPanel() {
           </span>
           <span>Add to Chrome</span>
         </a>
-        <a href="#demo" className="cta-button-secondary" id="hero-demo-cta">
+        <a href="#how-it-works" className="cta-button-secondary" id="hero-demo-cta">
           <span>Watch Demo</span>
         </a>
       </motion.div>
@@ -386,7 +379,7 @@ function RightPanel() {
    ============================================================ */
 export default function HeroSection() {
   return (
-    <section className="hero-stage" aria-label="Hero section" id="features">
+    <section className="hero-stage" aria-label="Hero section" id="hero">
       <div className="hero-split-container">
         {/* Left Card */}
         <motion.div
@@ -396,7 +389,7 @@ export default function HeroSection() {
           animate="visible"
         >
           <div className="left-card-header">
-            <a
+            <Link
               href="/"
               className="inner-navbar-brand"
               aria-label="Memory Capsule home"
@@ -418,7 +411,10 @@ export default function HeroSection() {
                 </svg>
               </div>
               <span className="inner-navbar-wordmark">Memory Capsule</span>
-            </a>
+            </Link>
+            <div className="mobile-navbar-wrapper">
+              <Navbar />
+            </div>
           </div>
           <LeftPanel />
         </motion.div>
@@ -434,11 +430,12 @@ export default function HeroSection() {
             className="right-card-header"
             style={{
               justifyContent: "flex-end",
-
               padding: "28px 36px 12px 36px",
             }}
           >
-            <Navbar />
+            <div className="desktop-navbar-wrapper">
+              <Navbar />
+            </div>
           </div>
           <RightPanel />
         </motion.div>

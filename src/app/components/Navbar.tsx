@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import {
   Menu,
   X,
@@ -14,6 +15,14 @@ export default function Navbar() {
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleLinkClick = (targetId: string) => {
+    setIsOpen(false);
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -43,7 +52,10 @@ export default function Navbar() {
           <a
             href="#features"
             className="pill-nav-link"
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick("features");
+            }}
           >
             <span className="pill-nav-link-icon">
               <Sparkles size={17} strokeWidth={2} />
@@ -52,9 +64,12 @@ export default function Navbar() {
           </a>
 
           <a
-            href="#demo"
+            href="#how-it-works"
             className="pill-nav-link"
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              handleLinkClick("how-it-works");
+            }}
           >
             <span className="pill-nav-link-icon">
               <Play size={17} strokeWidth={2} />
@@ -77,12 +92,11 @@ export default function Navbar() {
         </div>
 
         <a
-          href="#"
+          href="#hero"
           className="pill-nav-email"
-          id="nav-add-to-chrome"
           onClick={() => setIsOpen(false)}
         >
-          <img src="/chrome-icon.svg" alt="Chrome" width={18} height={18} />
+          <Image src="/chrome-icon.svg" alt="Chrome" width={18} height={18} />
           <span>Add to Chrome</span>
         </a>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import {
   FiMessageCircle,
@@ -22,7 +22,6 @@ function floatTransition(duration: number, delay = 0, reducedMotion: boolean | n
   return { duration, repeat: Infinity, ease: "easeInOut" as const, delay };
 }
 
-/* ---------------------------------- 1. Universal Capture ---------------------------------- */
 
 const SOURCE_ICONS = [FiMessageCircle, FiCode, FiBookOpen, FiTarget];
 
@@ -81,7 +80,6 @@ function CaptureVisual() {
   );
 }
 
-/* ---------------------------------- 2. Smart Dashboards ---------------------------------- */
 
 function DashboardChart() {
   const reducedMotion = useReducedMotion();
@@ -141,7 +139,6 @@ function DashboardVisual() {
   );
 }
 
-/* ---------------------------------- 3. Connected Knowledge ---------------------------------- */
 
 function spokePos(center: number, radius: number, angleDeg: number) {
   const rad = (angleDeg * Math.PI) / 180;
@@ -231,7 +228,6 @@ function KnowledgeVisual() {
   );
 }
 
-/* ---------------------------------- 4. Advanced Automation ---------------------------------- */
 
 const FLOW_STEPS = [
   { label: "Capture", icon: FiLayers },
@@ -280,7 +276,6 @@ function AutomationVisual() {
   );
 }
 
-/* ---------------------------------- 5. Private & Secure ---------------------------------- */
 
 const ORBIT_POINTS = [
   { angle: 0 },
@@ -367,7 +362,6 @@ function SecurityVisual() {
   );
 }
 
-/* ---------------------------------- Cards ---------------------------------- */
 
 const CARDS = [
   {
@@ -375,45 +369,35 @@ const CARDS = [
     title: "Universal Capture",
     body: "Save any AI conversation in one click.",
     span: "md:col-span-3",
-    height: "min-h-[380px] md:h-[440px]",
-    visualHeight: "h-[60%] md:h-[65%]",
-    textHeight: "h-[40%] md:h-[35%]"
+    height: "min-h-[380px]",
   },
   {
     visual: <DashboardVisual />,
     title: "Smart Dashboards",
     body: "See your entire knowledge base grow at a glance.",
     span: "md:col-span-3",
-    height: "min-h-[380px] md:h-[440px]",
-    visualHeight: "h-[60%] md:h-[65%]",
-    textHeight: "h-[40%] md:h-[35%]"
+    height: "min-h-[380px]",
   },
   {
     visual: <KnowledgeVisual />,
     title: "Connected Knowledge",
     body: "Discover relationships between ideas automatically.",
     span: "md:col-span-2",
-    height: "min-h-[320px] md:h-[360px]",
-    visualHeight: "h-[55%] md:h-[60%]",
-    textHeight: "h-[45%] md:h-[40%]"
+    height: "min-h-[340px]",
   },
   {
     visual: <AutomationVisual />,
     title: "Advanced Automation",
     body: "Summarize, tag, and organize every new memory.",
     span: "md:col-span-2",
-    height: "min-h-[320px] md:h-[360px]",
-    visualHeight: "h-[55%] md:h-[60%]",
-    textHeight: "h-[45%] md:h-[40%]"
+    height: "min-h-[340px]",
   },
   {
     visual: <SecurityVisual />,
     title: "Private & Secure",
     body: "Keep your memories yours, from capture to recall.",
     span: "md:col-span-2",
-    height: "min-h-[320px] md:h-[360px]",
-    visualHeight: "h-[55%] md:h-[60%]",
-    textHeight: "h-[45%] md:h-[40%]"
+    height: "min-h-[340px]",
   },
 ];
 
@@ -421,7 +405,7 @@ export default function FeaturesSection() {
   return (
     <section
       className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: "var(--bg-outer)", paddingTop: 140, paddingBottom: 140 }}
+      style={{ background: "var(--bg-outer)", paddingTop: 120, paddingBottom: 120 }}
       id="features"
       aria-label="Features"
     >
@@ -437,7 +421,7 @@ export default function FeaturesSection() {
       <div className="relative z-10 w-full max-w-7xl px-6 lg:px-8">
         {/* Section header */}
         <motion.div
-          className="mb-16 md:mb-24 flex flex-col items-center justify-center text-center"
+          className="mb-14 md:mb-20 flex flex-col items-center justify-center text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -445,7 +429,7 @@ export default function FeaturesSection() {
         >
           <span
             className="inline-flex items-center gap-2 uppercase font-medium tracking-[0.2em]"
-            style={{ fontSize: 11, color: "var(--accent)", fontFamily: "var(--font-body)", marginBottom: 24 }}
+            style={{ fontSize: 11, color: "var(--accent)", fontFamily: "var(--font-body)", marginBottom: 20 }}
           >
             Everything you need
           </span>
@@ -456,7 +440,7 @@ export default function FeaturesSection() {
               fontSize: "clamp(36px, 4.5vw, 56px)",
               color: "#FAF8F4",
               letterSpacing: "-0.02em",
-              marginBottom: 28,
+              marginBottom: 24,
             }}
           >
             Your knowledge,{" "}
@@ -482,31 +466,27 @@ export default function FeaturesSection() {
               transition={{ duration: 0.5, delay: i * 0.1, ease: EASE_SMOOTH }}
             >
               <motion.div
-                className={`group relative flex flex-col overflow-hidden bg-white rounded-3xl ${card.height}`}
+                className={`group relative flex flex-col justify-between overflow-hidden rounded-3xl ${card.height}`}
                 style={{ background: "var(--bg)", border: "1px solid var(--border)" }}
                 whileHover={{ y: -3, borderColor: "var(--border-strong)", boxShadow: "0 12px 40px rgba(0,0,0,0.06)" }}
                 transition={{ duration: 0.3, ease: EASE_SMOOTH }}
               >
                 {/* Visual Area */}
-                <motion.div
-                  className={`w-full flex items-center justify-center pt-8 ${card.visualHeight}`}
-                  whileHover={{ scale: 1.015 }}
-                  transition={{ duration: 0.4, ease: EASE_SMOOTH }}
-                >
+                <div className="w-full flex-1 flex items-center justify-center p-6 min-h-[160px]">
                   {card.visual}
-                </motion.div>
+                </div>
 
                 {/* Text Area */}
-                <div className={`w-full flex flex-col justify-end px-8 pb-10 ${card.textHeight}`}>
+                <div className="w-full flex flex-col px-7 pb-7 pt-2">
                   <h3
-                    className="font-semibold mb-2"
-                    style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(19px, 2vw, 22px)", color: "var(--primary)", letterSpacing: "-0.01em" }}
+                    className="font-semibold mb-1.5"
+                    style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(18px, 1.8vw, 21px)", color: "var(--primary)", letterSpacing: "-0.01em" }}
                   >
                     {card.title}
                   </h3>
                   <p
                     className="leading-relaxed"
-                    style={{ fontFamily: "var(--font-body)", fontSize: "15px", color: "var(--text-secondary)" }}
+                    style={{ fontFamily: "var(--font-body)", fontSize: "14.5px", color: "var(--text-secondary)" }}
                   >
                     {card.body}
                   </p>
