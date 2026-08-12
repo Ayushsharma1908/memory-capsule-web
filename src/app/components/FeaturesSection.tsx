@@ -535,36 +535,31 @@ const CARDS = [
     visual: <CaptureVisual />,
     title: "Universal Capture",
     body: "Save conversations from ChatGPT, Claude, and your favorite tools with a single click.",
-    span: "md:col-span-3",
-    height: "min-h-[360px] md:min-h-[380px]",
+    colClass: "features-col-3",
   },
   {
     visual: <DashboardVisual />,
     title: "Smart Dashboards",
     body: "Monitor your knowledge growth, tracked topics, and active collections in real time.",
-    span: "md:col-span-3",
-    height: "min-h-[360px] md:min-h-[380px]",
+    colClass: "features-col-3",
   },
   {
     visual: <KnowledgeVisual />,
     title: "Connected Knowledge",
     body: "Discover unexpected links and synthesize insights across isolated memories.",
-    span: "md:col-span-2",
-    height: "min-h-[340px] md:min-h-[350px]",
+    colClass: "features-col-2",
   },
   {
     visual: <AutomationVisual />,
     title: "Automated Processing",
     body: "Autonomous summarization and smart indexing happen silently in the background.",
-    span: "md:col-span-2",
-    height: "min-h-[340px] md:min-h-[350px]",
+    colClass: "features-col-2",
   },
   {
     visual: <SecurityVisual />,
     title: "Private & Local-First",
     body: "Your memories stay encrypted and strictly private under your complete ownership.",
-    span: "md:col-span-2",
-    height: "min-h-[340px] md:min-h-[350px]",
+    colClass: "features-col-2",
   },
 ];
 
@@ -573,143 +568,56 @@ const CARDS = [
    ============================================================ */
 export default function FeaturesSection() {
   return (
-    <section
-      className="relative w-full overflow-hidden"
-      style={{
-        background: "var(--bg-outer)",
-        paddingTop: "clamp(72px, 8vw, 100px)",
-        paddingBottom: "clamp(80px, 9vw, 112px)",
-      }}
-      id="features"
-      aria-label="Features"
-    >
+    <section className="features-section" id="features" aria-label="Features">
       {/* Hairline Separator at top edge matching HowItWorks */}
-      <div
-        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[55%] max-w-[640px] h-px"
-        style={{
-          background:
-            "linear-gradient(to right, transparent, rgba(216, 195, 165, 0.12), transparent)",
-        }}
-        aria-hidden="true"
-      />
+      <div className="features-separator" aria-hidden="true" />
 
       {/* Subtle ambient radial glow for soft depth */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 0%, rgba(216, 195, 165, 0.035) 0%, transparent 65%)",
-        }}
-      />
+      <div className="features-ambient-glow" aria-hidden="true" />
 
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-6 sm:px-8 lg:px-10">
+      <div className="features-container">
         {/* Section Header */}
         <motion.div
-          className="mb-12 md:mb-14 flex flex-col items-center justify-center text-center"
+          className="features-header"
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: EASE_SMOOTH }}
         >
-          <span
-            className="inline-flex items-center gap-1.5 uppercase font-semibold tracking-[0.22em] text-[10.5px] px-3.5 py-1 rounded-full border mb-4"
-            style={{
-              color: "var(--accent)",
-              borderColor: "rgba(216, 195, 165, 0.18)",
-              background: "rgba(216, 195, 165, 0.04)",
-              fontFamily: "var(--font-body)",
-            }}
-          >
-            Everything you need
-          </span>
+          <span className="features-eyebrow">Everything you need</span>
 
-          <h2
-            className="font-bold leading-[1.08] mb-3.5"
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(34px, 4.5vw, 56px)",
-              color: "#FAF8F4",
-              letterSpacing: "-0.03em",
-            }}
-          >
-            Your knowledge,{" "}
-            <span style={{ color: "var(--accent)" }}>amplified</span>
+          <h2 className="features-title">
+            Your knowledge, <span style={{ color: "var(--accent)" }}>amplified</span>
           </h2>
 
-          <p
-            className="leading-relaxed mx-auto"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "clamp(14.5px, 1.4vw, 16.5px)",
-              color: "rgba(250, 248, 244, 0.55)",
-              maxWidth: 480,
-            }}
-          >
-            From capturing to recalling — Memory Capsule handles the entire lifecycle of your
-            knowledge seamlessly.
+          <p className="features-subtitle">
+            From capturing to recalling — Memory Capsule handles the entire lifecycle of your knowledge
+            seamlessly.
           </p>
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-5 lg:gap-6">
+        <div className="features-grid">
           {CARDS.map((card, i) => (
             <motion.div
               key={card.title}
-              className={card.span}
+              className={card.colClass}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.5, delay: i * 0.08, ease: EASE_SMOOTH }}
             >
-              <div
-                className={`group relative flex flex-col justify-between overflow-hidden rounded-[22px] ${card.height} transition-all duration-300 hover:-translate-y-1`}
-                style={{
-                  background: "var(--bg)",
-                  border: "1px solid var(--border)",
-                  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.04)",
-                }}
-              >
-                {/* Visual Area with calibrated padding & flex-1 distribution */}
-                <div className="w-full flex-1 flex items-center justify-center p-5 sm:p-6 min-h-[170px]">
-                  {card.visual}
-                </div>
+              <div className="features-card">
+                {/* Visual Area */}
+                <div className="features-card-visual">{card.visual}</div>
 
-                {/* Clear & Cut Divider line separating Visual from Text */}
-                <div
-                  className="w-full h-px"
-                  style={{
-                    background:
-                      "linear-gradient(to right, transparent, rgba(31, 36, 33, 0.06), transparent)",
-                  }}
-                  aria-hidden="true"
-                />
+                {/* Divider Line */}
+                <div className="features-card-divider" aria-hidden="true" />
 
-                {/* Text Area with structured padding and tight typography */}
-                <div className="w-full flex flex-col px-6 pb-6 pt-4">
-                  <h3
-                    className="font-semibold mb-1"
-                    style={{
-                      fontFamily: "var(--font-heading)",
-                      fontSize: "clamp(17.5px, 1.6vw, 19.5px)",
-                      color: "var(--primary)",
-                      letterSpacing: "-0.015em",
-                      lineHeight: 1.25,
-                    }}
-                  >
-                    {card.title}
-                  </h3>
-                  <p
-                    className="leading-relaxed"
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: "13.5px",
-                      color: "var(--text-secondary)",
-                      lineHeight: 1.55,
-                    }}
-                  >
-                    {card.body}
-                  </p>
+                {/* Text Content */}
+                <div className="features-card-content">
+                  <h3 className="features-card-title">{card.title}</h3>
+                  <p className="features-card-desc">{card.body}</p>
                 </div>
               </div>
             </motion.div>
