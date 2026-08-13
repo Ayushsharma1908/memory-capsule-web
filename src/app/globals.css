@@ -2027,115 +2027,341 @@ body {
 }
 
 /* ============================================================
-   TRUST STRIP
+   FOOTER
    ============================================================ */
-.trust-strip {
+
+/* ── Root shell ── */
+.footer-root {
+  position: relative;
   background: var(--primary);
-  padding: 52px 40px;
   overflow: hidden;
 }
 
-.trust-strip-inner {
-  max-width: 1100px;
+/* Ambient radial glow */
+.footer-root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 480px;
+  background: radial-gradient(
+    ellipse at 50% -10%,
+    rgba(216, 195, 165, 0.06) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Top separator line ── */
+.footer-separator {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(216, 195, 165, 0.12) 20%,
+    rgba(216, 195, 165, 0.22) 50%,
+    rgba(216, 195, 165, 0.12) 80%,
+    transparent 100%
+  );
+}
+
+/* ── Main inner ── */
+.footer-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 72px 48px 64px;
+  display: grid;
+  grid-template-columns: 1.6fr repeat(3, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+/* ── Brand column ── */
+.footer-brand-col {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 40px;
+  gap: 0;
 }
 
-.trust-eyebrow {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(216, 195, 165, 0.7);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.trust-badges {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.trust-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(216, 195, 165, 0.15);
-  border-radius: 100px;
-  padding: 10px 20px;
-  transition: background var(--transition-base), border-color var(--transition-base);
-}
-
-.trust-badge:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(216, 195, 165, 0.3);
-}
-
-.trust-badge-icon {
-  width: 16px;
-  height: 16px;
-  color: var(--accent);
+.footer-logo-mark {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 18px;
   flex-shrink: 0;
 }
 
-.trust-badge-label {
+.footer-logo-mark svg {
+  width: 100%;
+  height: 100%;
+}
+
+.footer-brand-name {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: rgba(250, 248, 244, 0.92);
+  margin-bottom: 10px;
+}
+
+.footer-brand-tagline {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: rgba(250, 248, 244, 0.38);
+  margin-bottom: 28px;
+}
+
+/* Social icons */
+.footer-social-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.footer-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(216, 195, 165, 0.12);
+  color: rgba(250, 248, 244, 0.45);
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base),
+    transform var(--transition-fast);
+  text-decoration: none;
+}
+
+.footer-social-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.footer-social-btn:hover {
+  background: rgba(216, 195, 165, 0.1);
+  border-color: rgba(216, 195, 165, 0.28);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Version badge */
+.footer-version-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(216, 195, 165, 0.45);
+  border: 1px solid rgba(216, 195, 165, 0.1);
+  border-radius: 999px;
+  padding: 5px 12px 5px 9px;
+  width: fit-content;
+}
+
+.footer-version-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+  flex-shrink: 0;
+  animation: footer-dot-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes footer-dot-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50%       { opacity: 0.85; transform: scale(1.2); }
+}
+
+/* ── Navigation columns ── */
+.footer-nav-cols {
+  display: contents;
+}
+
+.footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.footer-nav-heading {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(216, 195, 165, 0.55);
+  margin-bottom: 20px;
+}
+
+.footer-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-nav-link {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 400;
+  color: rgba(250, 248, 244, 0.45);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  width: fit-content;
+  position: relative;
+}
+
+.footer-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: rgba(216, 195, 165, 0.5);
+  transition: width var(--transition-base);
+}
+
+.footer-nav-link:hover {
+  color: rgba(250, 248, 244, 0.82);
+}
+
+.footer-nav-link:hover::after {
+  width: 100%;
+}
+
+/* ── Trust badges strip ── */
+.footer-badges-row {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(216, 195, 165, 0.08);
+  padding: 28px 48px;
+}
+
+.footer-badges-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.footer-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(216, 195, 165, 0.1);
+  border-radius: 999px;
+  padding: 8px 18px;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-fast);
+  cursor: default;
+}
+
+.footer-badge:hover {
+  background: rgba(216, 195, 165, 0.07);
+  border-color: rgba(216, 195, 165, 0.22);
+  transform: translateY(-1px);
+}
+
+.footer-badge-icon {
+  width: 15px;
+  height: 15px;
+  color: rgba(216, 195, 165, 0.6);
+  flex-shrink: 0;
+}
+
+.footer-badge-label {
+  font-family: var(--font-body);
+  font-size: 12.5px;
   font-weight: 450;
-  color: rgba(250, 248, 244, 0.85);
+  color: rgba(250, 248, 244, 0.6);
   white-space: nowrap;
 }
 
-.trust-badge-soon {
+.footer-badge-soon {
   font-family: var(--font-body);
-  font-size: 9.5px;
-  font-weight: 600;
-  color: rgba(216, 195, 165, 0.6);
-  letter-spacing: 0.08em;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(216, 195, 165, 0.5);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: rgba(216, 195, 165, 0.1);
+  background: rgba(216, 195, 165, 0.08);
+  border: 1px solid rgba(216, 195, 165, 0.14);
   border-radius: 4px;
   padding: 2px 6px;
 }
 
-.trust-divider {
-  width: 100%;
-  max-width: 600px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(216, 195, 165, 0.2), transparent);
+/* ── Bottom bar ── */
+.footer-bottom-bar {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(216, 195, 165, 0.07);
+  padding: 20px 48px;
 }
 
-.trust-footer {
+.footer-bottom-inner {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.trust-footer-item {
+.footer-copyright {
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 400;
-  color: rgba(250, 248, 244, 0.4);
+  color: rgba(250, 248, 244, 0.28);
+}
+
+.footer-bottom-links {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
 }
 
-.trust-footer-item::before {
-  content: '·';
-  color: rgba(216, 195, 165, 0.3);
+.footer-bottom-link {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(250, 248, 244, 0.28);
+  text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
-.trust-footer-item:first-child::before {
-  display: none;
+.footer-bottom-link:hover {
+  color: rgba(250, 248, 244, 0.6);
+}
+
+.footer-bottom-sep {
+  color: rgba(216, 195, 165, 0.2);
+  font-size: 12px;
+  user-select: none;
 }
 
 /* ============================================================
@@ -2306,13 +2532,27 @@ body {
 
 
 
-  /* Trust strip */
-  .trust-strip {
-    padding: 40px 24px;
+  /* Footer: tablet portrait */
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    padding: 56px 32px 48px;
+    gap: 40px;
   }
 
-  .trust-strip-inner {
-    gap: 28px;
+  .footer-brand-col {
+    grid-column: span 2;
+  }
+
+  .footer-nav-cols {
+    display: contents;
+  }
+
+  .footer-badges-row {
+    padding: 24px 32px;
+  }
+
+  .footer-bottom-bar {
+    padding: 18px 32px;
   }
 }
 
@@ -2446,21 +2686,29 @@ body {
     height: 34px;
   }
 
-  /* Trust strip */
-  .trust-strip {
-    padding: 36px 16px;
+  /* Footer: large mobile */
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    padding: 48px 24px 40px;
+    gap: 32px;
   }
 
-  .trust-badge {
-    padding: 8px 16px;
+  .footer-brand-col {
+    grid-column: span 2;
   }
 
-  .trust-badge-label {
-    font-size: 12px;
+  .footer-badges-row {
+    padding: 20px 24px;
   }
 
-  .trust-footer {
-    gap: 16px;
+  .footer-bottom-bar {
+    padding: 16px 24px;
+  }
+
+  .footer-bottom-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }
 
@@ -2578,29 +2826,35 @@ body {
     border-radius: 12px;
   }
 
-  /* Trust strip */
-  .trust-strip {
-    padding: 28px 12px;
+  /* Footer: small mobile */
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    padding: 40px 16px 32px;
+    gap: 28px;
   }
 
-  .trust-strip-inner {
-    gap: 20px;
+  .footer-brand-col {
+    grid-column: span 2;
   }
 
-  .trust-badges {
-    gap: 8px;
+  .footer-nav-col:nth-child(3) {
+    grid-column: span 2;
   }
 
-  .trust-badge {
-    padding: 7px 12px;
+  .footer-badges-row {
+    padding: 18px 16px;
   }
 
-  .trust-footer {
-    gap: 10px;
+  .footer-badge {
+    padding: 7px 14px;
   }
 
-  .trust-footer-item {
-    font-size: 11px;
+  .footer-badge-label {
+    font-size: 12px;
+  }
+
+  .footer-bottom-bar {
+    padding: 14px 16px;
   }
 }
 
