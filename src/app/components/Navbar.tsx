@@ -78,7 +78,7 @@ export default function Navbar() {
           </a>
 
           <a
-            href="https://github.com"
+            href="https://github.com/Ayushsharma1908/memory-capsule-web"
             target="_blank"
             rel="noopener noreferrer"
             className="pill-nav-link"
