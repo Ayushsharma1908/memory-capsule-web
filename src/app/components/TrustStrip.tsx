@@ -53,28 +53,28 @@ export default function TrustStrip() {
     {
       heading: "Product",
       links: [
-        { label: "Features", href: "#" },
-        { label: "How it Works", href: "#" },
-        { label: "Pricing", href: "#" },
-        { label: "Changelog", href: "#" },
+        { label: "Features", href: "/#features" },
+        { label: "How it Works", href: "/#how-it-works" },
+        { label: "Pricing", href: "/pricing" },
+        { label: "Changelog", href: "/changelog" },
       ],
     },
     {
       heading: "Developers",
       links: [
-        { label: "Documentation", href: "#" },
-        { label: "API Reference", href: "#" },
+        { label: "Documentation", href: "/docs" },
+        { label: "API Reference", href: "/api-reference" },
         { label: "GitHub", href: "https://github.com/Ayushsharma1908/memory-capsule-web" },
-        { label: "Contribute", href: "#" },
+        { label: "Contribute", href: "/contribute" },
       ],
     },
     {
       heading: "Company",
       links: [
-        { label: "About", href: "#" },
-        { label: "Blog", href: "#" },
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms of Service", href: "#" },
+        { label: "About", href: "/about" },
+        { label: "Blog", href: "/blog" },
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Service", href: "/terms" },
       ],
     },
   ];
@@ -183,11 +183,11 @@ export default function TrustStrip() {
             © {new Date().getFullYear()} Memory Capsule. All rights reserved.
           </p>
           <div className="footer-bottom-links">
-            <a href="#" className="footer-bottom-link">Privacy</a>
+            <a href="/privacy" className="footer-bottom-link">Privacy</a>
             <span className="footer-bottom-sep" aria-hidden="true">·</span>
-            <a href="#" className="footer-bottom-link">Terms</a>
+            <a href="/terms" className="footer-bottom-link">Terms</a>
             <span className="footer-bottom-sep" aria-hidden="true">·</span>
-            <a href="#" className="footer-bottom-link">Cookies</a>
+            <a href="/cookies" className="footer-bottom-link">Cookies</a>
           </div>
         </div>
       </div>
