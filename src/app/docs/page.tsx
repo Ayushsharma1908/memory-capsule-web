@@ -12,10 +12,22 @@ const sections = [
     title: "Getting Started",
     icon: "🚀",
     articles: [
-      { title: "Installing the Chrome Extension", href: "#" },
-      { title: "Connecting your first AI chat", href: "#" },
-      { title: "Your first saved memory", href: "#" },
-      { title: "Understanding the dashboard", href: "#" },
+      {
+        title: "Installing the Chrome Extension",
+        href: "/docs/installing-chrome-extension",
+      },
+      {
+        title: "Connecting your first AI chat",
+        href: "/docs/connecting-first-ai-chat",
+      },
+      {
+        title: "Your first saved memory",
+        href: "/docs/first-saved-memory",
+      },
+      {
+        title: "Understanding the dashboard",
+        href: "/docs/understanding-dashboard",
+      },
     ],
   },
   {
@@ -23,10 +35,22 @@ const sections = [
     title: "Core Concepts",
     icon: "🧠",
     articles: [
-      { title: "What is a Memory?", href: "#" },
-      { title: "How AI tagging works", href: "#" },
-      { title: "Memory decay & relevance scoring", href: "#" },
-      { title: "Collections and workspaces", href: "#" },
+      {
+        title: "What is a Memory?",
+        href: "/docs/what-is-a-memory",
+      },
+      {
+        title: "How AI tagging works",
+        href: "/docs/how-ai-tagging-works",
+      },
+      {
+        title: "Memory decay & relevance scoring",
+        href: "/docs/memory-decay-relevance-scoring",
+      },
+      {
+        title: "Collections and workspaces",
+        href: "/docs/collections-workspaces",
+      },
     ],
   },
   {
@@ -34,11 +58,26 @@ const sections = [
     title: "Integrations",
     icon: "🔗",
     articles: [
-      { title: "ChatGPT integration", href: "#" },
-      { title: "Claude integration", href: "#" },
-      { title: "Gemini integration", href: "#" },
-      { title: "Notion export", href: "#" },
-      { title: "Obsidian export", href: "#" },
+      {
+        title: "ChatGPT integration",
+        href: "/docs/chatgpt-integration",
+      },
+      {
+        title: "Claude integration",
+        href: "/docs/claude-integration",
+      },
+      {
+        title: "Gemini integration",
+        href: "/docs/gemini-integration",
+      },
+      {
+        title: "Notion export",
+        href: "/docs/notion-export",
+      },
+      {
+        title: "Obsidian export",
+        href: "/docs/obsidian-export",
+      },
     ],
   },
   {
@@ -46,10 +85,22 @@ const sections = [
     title: "Advanced",
     icon: "⚡",
     articles: [
-      { title: "Using the REST API", href: "/api-reference" },
-      { title: "Webhook events", href: "#" },
-      { title: "Custom AI prompts", href: "#" },
-      { title: "Self-hosting (coming soon)", href: "#" },
+      {
+        title: "Using the REST API",
+        href: "/docs/api-reference",
+      },
+      {
+        title: "Webhook events",
+        href: "/docs/webhook-events",
+      },
+      {
+        title: "Custom AI prompts",
+        href: "/docs/custom-ai-prompts",
+      },
+      {
+        title: "Self-hosting (coming soon)",
+        href: "/docs/self-hosting",
+      },
     ],
   },
 ];
@@ -92,12 +143,12 @@ export default function DocsPage() {
               <ul className="docs-article-list">
                 {section.articles.map((article) => (
                   <li key={article.title}>
-                    <a href={article.href} className="docs-article-link">
+                    <Link href={article.href} className="docs-article-link">
                       {article.title}
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                         <path d="M2.5 9.5l7-7M3.5 2.5h6v6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
