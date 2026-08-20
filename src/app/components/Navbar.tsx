@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Menu,
   X,
   Sparkles,
   Play,
   GitFork,
+  BookOpen,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -76,6 +78,17 @@ export default function Navbar() {
             </span>
             <span>Demo</span>
           </a>
+
+          <Link
+            href="/docs"
+            className="pill-nav-link"
+            onClick={() => setIsOpen(false)}
+          >
+            <span className="pill-nav-link-icon">
+              <BookOpen size={17} strokeWidth={2} />
+            </span>
+            <span>Documentation</span>
+          </Link>
 
           <a
             href="https://github.com/Ayushsharma1908/memory-capsule-web"
