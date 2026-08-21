@@ -12,7 +12,6 @@ const EASE_SMOOTH = [0.4, 0, 0.2, 1] as const;
 const CARDS = [
   {
     index: "01",
-    tagline: "Save knowledge, not just conversations.",
     title: "Universal Capture",
     body: "Save useful conversations and knowledge from the AI tools you already use.",
     visual: <CaptureVisual />,
@@ -20,7 +19,6 @@ const CARDS = [
   },
   {
     index: "02",
-    tagline: "Turn long conversations into something worth remembering.",
     title: "AI Summarization",
     body: "Turn long conversations into concise knowledge you can actually remember.",
     visual: <SummarizationVisual />,
@@ -28,7 +26,6 @@ const CARDS = [
   },
   {
     index: "03",
-    tagline: "Let your knowledge organize itself.",
     title: "Smart Organization",
     body: "Automatically turn saved conversations into structured, discoverable knowledge.",
     visual: <OrganizationVisual />,
@@ -36,7 +33,6 @@ const CARDS = [
   },
   {
     index: "04",
-    tagline: "Find what you learned when you need it.",
     title: "Search & Recall",
     body: "Find the knowledge you've already learned instead of searching through old chats again.",
     visual: <SearchVisual />,
@@ -44,7 +40,6 @@ const CARDS = [
   },
   {
     index: "05",
-    tagline: "Build a personal knowledge base from everything you learn.",
     title: "Knowledge That Stays",
     body: "Your saved conversations become a personal knowledge base that grows with everything you learn.",
     visual: <KnowledgeGraphVisual />,
@@ -103,7 +98,6 @@ export default function FeaturesSection() {
                   <div className="flex items-center justify-between gap-2 mb-1">
                     <span className="features-card-num">{card.index}</span>
                   </div>
-                  <div className="features-card-tagline">{card.tagline}</div>
                   <h3 className="features-card-title">{card.title}</h3>
                   <p className="features-card-desc">{card.body}</p>
                 </div>
