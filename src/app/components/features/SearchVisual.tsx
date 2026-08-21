@@ -1,153 +1,141 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { FiSearch, FiClock, FiCornerDownRight } from "react-icons/fi";
+import { FiSearch, FiClock, FiArrowRight } from "react-icons/fi";
 
-function OpenAiIcon({ className = "w-3.5 h-3.5", style }: { className?: string; style?: React.CSSProperties }) {
+function OpenAIIcon({ size = 13 }: { size?: number }) {
   return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.56a4.512 4.512 0 0 1-2.89-1.045l.142-.08 4.793-2.766a.765.765 0 0 0 .384-.663v-6.757l2.025 1.17a.747.747 0 0 0 .383.104v5.535a4.544 4.544 0 0 1-4.837 4.507zM3.483 17.51a4.512 4.512 0 0 1-.532-3.027l.142.086 4.793 2.766a.763.763 0 0 0 .767 0l5.852-3.38v2.34a.754.754 0 0 0 .384.662l-4.793 2.766A4.544 4.544 0 0 1 3.483 17.51zm-1.12-10.23a4.514 4.514 0 0 1 2.36-1.982v5.694a.753.754 0 0 0 .383.663l5.852 3.378-2.025 1.17a.766.766 0 0 0-.384.103L3.756 13.54a4.544 4.544 0 0 1-1.393-6.26zm16.59 3.956L13.1 7.856l2.025-1.17a.766.766 0 0 0 .384-.103l4.793 2.766a4.536 4.536 0 0 1-.72 8.16v-5.695a.755.755 0 0 0-.383-.663zm1.96-3.195l-.142-.086-4.793-2.766a.764.764 0 0 0-.767 0L9.36 8.569V6.229a.754.754 0 0 0-.384-.662l4.793-2.766a4.544 4.544 0 0 1 6.782 4.439zM8.337 14.615l-2.025-1.17a.747.747 0 0 0-.383-.104V7.806a4.538 4.538 0 0 1 4.837-4.507 4.512 4.512 0 0 1 2.89 1.045l-.142.08-4.793 2.766a.765.765 0 0 0-.384.663v6.757zm1.183-2.58l2.48-1.43 2.48 1.43v2.86l-2.48 1.43-2.48-1.43v-2.86z" />
+    <svg width={size} height={size} viewBox="0 0 41 41" fill="currentColor">
+      <path d="M37.532 16.87a9.963 9.963 0 0 0-.856-8.184 10.078 10.078 0 0 0-10.855-4.835 9.964 9.964 0 0 0-6.675-2.981 10.079 10.079 0 0 0-9.612 6.988 9.967 9.967 0 0 0-6.664 4.834 10.08 10.08 0 0 0 1.24 11.817 9.965 9.965 0 0 0 .856 8.185 10.079 10.079 0 0 0 10.855 4.835 9.965 9.965 0 0 0 6.676 2.98 10.079 10.079 0 0 0 9.617-6.981 9.967 9.967 0 0 0 6.663-4.834 10.079 10.079 0 0 0-1.243-11.82zm-22.061 15.55a7.478 7.478 0 0 1-4.799-1.735l.236-.134 7.964-4.6a1.298 1.298 0 0 0 .655-1.134v-11.23l3.366 1.944a.12.12 0 0 1 .066.092v9.299a7.505 7.505 0 0 1-7.49 7.498zM6.392 22.06a7.479 7.479 0 0 1-.894-5.023l.236.141 7.964 4.6a1.297 1.297 0 0 0 1.308 0l9.724-5.614v3.888a.12.12 0 0 1-.048.103L16.628 25.1a7.505 7.505 0 0 1-10.237-3.04zm-1.055-16.523A7.48 7.48 0 0 1 9.28 2.118l-.005.252-.005 9.201a1.297 1.297 0 0 0 .654 1.132l9.723 5.614-3.366 1.944a.12.12 0 0 1-.114.012L8.105 15.3A7.504 7.504 0 0 1 5.337 5.537zm27.503 6.44l-9.724-5.615 3.367-1.943a.121.121 0 0 1 .114-.012l8.082 4.872a7.5 7.5 0 0 1-1.158 13.528v-9.454a1.297 1.297 0 0 0-.68-1.376zm3.35-5.043-.236-.141-7.965-4.6a1.298 1.298 0 0 0-1.308 0L17.058 7.8V3.912a.12.12 0 0 1 .048-.103l8.078-4.868a7.5 7.5 0 0 1 11.106 7.775zm-21.063 6.929-3.367-1.944a.12.12 0 0 1-.065-.092v-9.299a7.501 7.501 0 0 1 12.293-5.756l-.236.134-7.965 4.6a1.298 1.298 0 0 0-.654 1.132l-.006 11.225zm1.829-3.943 4.33-2.501 4.332 2.5v4.999l-4.331 2.5-4.331-2.5V9.92z" />
     </svg>
   );
 }
 
+const FULL_QUERY = "binary search java";
+const RESULTS = [
+  { title: "Binary Search — Java", sub: "Saved from ChatGPT", Icon: OpenAIIcon, tag: "Algorithms" },
+  { title: "Binary Search Edge Cases", sub: "Saved 3 days ago", Icon: FiClock, tag: "Notes" },
+  { title: "Binary Search vs Linear Search", sub: "Saved from ChatGPT", Icon: OpenAIIcon, tag: "Comparison" },
+];
+
 export default function SearchVisual() {
   const reducedMotion = useReducedMotion();
-  const fullText = "binary search java";
-
-  const [displayedQuery, setDisplayedQuery] = useState(() => (reducedMotion ? fullText : ""));
-  const [showResults, setShowResults] = useState(() => (reducedMotion ? true : false));
-
-  const results = [
-    {
-      title: "Binary Search — Java",
-      sub: "Saved from ChatGPT",
-      icon: OpenAiIcon,
-      tag: "Code & Logic",
-    },
-    {
-      title: "Binary Search Edge Cases",
-      sub: "Saved 3 days ago",
-      icon: FiClock,
-      tag: "Notes",
-    },
-    {
-      title: "Binary Search vs Linear Search",
-      sub: "Saved from ChatGPT",
-      icon: OpenAiIcon,
-      tag: "Comparison",
-    },
-  ];
+  const [query, setQuery] = useState(reducedMotion ? FULL_QUERY : "");
+  const [showResults, setShowResults] = useState(reducedMotion ? true : false);
 
   useEffect(() => {
     if (reducedMotion) return;
 
-    let isSubscribed = true;
+    let alive = true;
 
-    const runLoop = async () => {
-      while (isSubscribed) {
-        // Reset state
-        setDisplayedQuery("");
+    async function loop() {
+      while (alive) {
+        // Clear
+        setQuery("");
         setShowResults(false);
+        await sleep(700);
 
-        // Wait before typing
-        await new Promise((r) => setTimeout(r, 600));
-
-        // Type query character by character
-        for (let i = 1; i <= fullText.length; i++) {
-          if (!isSubscribed) return;
-          setDisplayedQuery(fullText.substring(0, i));
-          await new Promise((r) => setTimeout(r, 70));
+        // Type
+        for (let i = 1; i <= FULL_QUERY.length && alive; i++) {
+          setQuery(FULL_QUERY.slice(0, i));
+          await sleep(65);
         }
 
-        // Delay before revealing search results
-        await new Promise((r) => setTimeout(r, 300));
-        if (!isSubscribed) return;
-        setShowResults(true);
+        // Show results
+        await sleep(280);
+        if (alive) setShowResults(true);
 
-        // Hold results on screen
-        await new Promise((r) => setTimeout(r, 3200));
+        // Hold
+        await sleep(3000);
       }
-    };
+    }
 
-    runLoop();
-
-    return () => {
-      isSubscribed = false;
-    };
+    loop();
+    return () => { alive = false; };
   }, [reducedMotion]);
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center p-3 select-none">
-      <div className="w-full max-w-[420px] flex flex-col gap-2.5">
-        {/* Search Bar Input */}
-        <div className="relative w-full">
-          <div className="flex items-center gap-2 px-3.5 py-2.5 bg-white border border-[var(--border-strong)] rounded-xl shadow-xs">
-            <FiSearch className="w-4 h-4 text-[var(--accent-dark,#8C7A5E)] shrink-0" />
+    <div className="relative w-full h-full flex items-center justify-center px-5 py-4 select-none">
+      <div className="w-full max-w-[400px] flex flex-col gap-3">
 
-            <div className="flex-1 font-mono text-[12px] text-[var(--primary)] font-medium tracking-tight overflow-hidden">
-              {displayedQuery ? (
-                <span>{displayedQuery}</span>
-              ) : (
-                <span className="text-[var(--text-tertiary)] font-sans">
-                  Search your memories...
-                </span>
-              )}
-              <motion.span
-                className="inline-block w-0.5 h-3.5 bg-[var(--primary)] ml-0.5 align-middle"
-                animate={{ opacity: [1, 0, 1] }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-              />
-            </div>
+        {/* Search bar */}
+        <div
+          className="flex items-center gap-2.5 px-4 py-3 rounded-2xl border shadow-sm"
+          style={{ background: "white", borderColor: showResults ? "var(--border-strong)" : "var(--border)" }}
+        >
+          <FiSearch size={15} style={{ color: "var(--text-tertiary)", flexShrink: 0 }} />
 
-            <span className="text-[9.5px] font-medium text-[var(--text-tertiary)] bg-[#FAF8F4] px-1.5 py-0.5 rounded border border-[var(--border)] font-mono">
-              ⌘K
-            </span>
+          <div className="flex-1 flex items-center text-[12.5px] font-medium overflow-hidden" style={{ fontFamily: "var(--font-body)" }}>
+            {query ? (
+              <span style={{ color: "var(--primary)" }}>{query}</span>
+            ) : (
+              <span style={{ color: "var(--text-tertiary)" }}>Search your memories...</span>
+            )}
+            <motion.span
+              className="inline-block ml-px"
+              style={{ width: 2, height: 14, background: "var(--primary)", borderRadius: 1 }}
+              animate={{ opacity: [1, 0, 1] }}
+              transition={{ duration: 0.9, repeat: Infinity }}
+            />
           </div>
+
+          <kbd className="text-[10px] font-medium px-1.5 py-0.5 rounded"
+            style={{ background: "#F3F0EB", color: "var(--text-secondary)", border: "1px solid var(--border)", fontFamily: "monospace" }}>
+            ⌘K
+          </kbd>
         </div>
 
-        {/* Search Results List */}
-        <div className="flex flex-col gap-1.5 min-h-[145px]">
-          {results.map((item, idx) => {
-            const IconComp = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                className="flex items-center justify-between p-2.5 rounded-lg bg-white border border-[var(--border)] shadow-2xs hover:border-[var(--border-strong)] transition-all cursor-pointer"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{
-                  opacity: showResults ? 1 : 0,
-                  y: showResults ? 0 : 10,
-                }}
-                transition={{ duration: 0.3, delay: idx * 0.08 }}
-              >
-                <div className="flex items-center gap-2.5 overflow-hidden">
-                  <div className="w-6 h-6 rounded-md bg-[#FAF8F4] border border-[var(--border)] flex items-center justify-center shrink-0">
-                    <IconComp className="w-3.5 h-3.5 text-[var(--primary)]" />
+        {/* Results list */}
+        <div className="flex flex-col gap-1.5" style={{ minHeight: 138 }}>
+          <AnimatePresence>
+            {showResults && RESULTS.map((item, idx) => {
+              const { Icon } = item;
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.3, delay: idx * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex items-center justify-between rounded-xl px-3 py-2.5 border cursor-pointer"
+                  style={{ background: "white", borderColor: "var(--border)" }}
+                >
+                  {/* Left: icon + text */}
+                  <div className="flex items-center gap-2.5 overflow-hidden">
+                    <div
+                      className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+                      style={{ background: "#FAF8F4", border: "1px solid var(--border)" }}
+                    >
+                      <Icon size={13} style={{ color: "var(--primary)" }} />
+                    </div>
+                    <div className="flex flex-col overflow-hidden">
+                      <span className="text-[12px] font-semibold truncate" style={{ color: "var(--primary)", fontFamily: "var(--font-heading)" }}>
+                        {item.title}
+                      </span>
+                      <span className="text-[10.5px] truncate" style={{ color: "var(--text-secondary)" }}>
+                        {item.sub}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col overflow-hidden">
-                    <span className="text-[11.5px] font-semibold text-[var(--primary)] truncate font-heading">
-                      {item.title}
+                  {/* Right: tag + arrow */}
+                  <div className="flex items-center gap-2 shrink-0 ml-3">
+                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-lg"
+                      style={{ background: "#F3F0EB", color: "var(--text-secondary)", border: "1px solid var(--border)" }}>
+                      {item.tag}
                     </span>
-                    <span className="text-[10px] text-[var(--text-secondary)] truncate">
-                      {item.sub}
-                    </span>
+                    <FiArrowRight size={13} style={{ color: "var(--text-tertiary)" }} />
                   </div>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0 ml-2">
-                  <span className="text-[9px] font-medium px-2 py-0.5 rounded-md bg-[#FAF8F4] border border-[var(--border)] text-[var(--text-secondary)]">
-                    {item.tag}
-                  </span>
-                  <FiCornerDownRight className="w-3 h-3 text-[var(--text-tertiary)]" />
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </div>
+
       </div>
     </div>
   );
 }
+
+function sleep(ms: number) { return new Promise(r => setTimeout(r, ms)); }

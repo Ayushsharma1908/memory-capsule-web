@@ -1,142 +1,195 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { FiCpu, FiCheckCircle, FiFileText } from "react-icons/fi";
+import { FiFileText, FiCheckCircle, FiHash } from "react-icons/fi";
+
+type Stage = "raw" | "processing" | "summary";
+
+const STAGE_DURATION = 2600;
 
 export default function SummarizationVisual() {
   const reducedMotion = useReducedMotion();
-  const [stage, setStage] = useState<"raw" | "processing" | "summary">(() =>
-    reducedMotion ? "summary" : "raw"
-  );
+  const [stage, setStage] = useState<Stage>(() => (reducedMotion ? "summary" : "raw"));
+  const [dots, setDots] = useState(1);
 
   useEffect(() => {
     if (reducedMotion) return;
-
-    const interval = setInterval(() => {
+    const id = setInterval(() => {
       setStage((prev) => {
         if (prev === "raw") return "processing";
         if (prev === "processing") return "summary";
         return "raw";
       });
-    }, 2800);
-
-    return () => clearInterval(interval);
+    }, STAGE_DURATION);
+    return () => clearInterval(id);
   }, [reducedMotion]);
 
+  // Animated ellipsis dots during processing
+  useEffect(() => {
+    if (stage !== "processing") return;
+    const id = setInterval(() => setDots((d) => (d % 3) + 1), 500);
+    return () => clearInterval(id);
+  }, [stage]);
+
+  const rawLines = [
+    { user: true, text: "How does binary search work in Java?" },
+    { user: false, text: "Binary search halves the sorted array each step — O(log n) time." },
+    { user: true, text: "What about handling mid-point overflow?" },
+    { user: false, text: "Use mid = low + (high - low) / 2 to avoid int overflow." },
+  ];
+
+  const tags = ["Binary Search", "DSA", "Java", "Algorithms"];
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 10, scale: 0.97 },
+    visible: { opacity: 1, y: 0, scale: 1 },
+    exit: { opacity: 0, y: -10, scale: 0.97 },
+  };
+
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center p-3 select-none">
-      <div className="w-full max-w-[340px] relative min-h-[175px] flex items-center justify-center">
-        {/* Stage 1: Raw Conversation */}
-        <motion.div
-          className="absolute inset-0 bg-white border border-[var(--border)] rounded-xl p-3.5 shadow-2xs flex flex-col justify-between"
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{
-            opacity: stage === "raw" ? 1 : 0,
-            scale: stage === "raw" ? 1 : 0.96,
-            y: stage === "raw" ? 0 : -8,
-            pointerEvents: stage === "raw" ? "auto" : "none",
-          }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="flex items-center justify-between border-b border-[var(--border)] pb-2 mb-2">
-            <div className="flex items-center gap-1.5">
-              <FiFileText className="w-3.5 h-3.5 text-[var(--text-tertiary)]" />
-              <span className="text-[10.5px] font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
-                Raw Conversation
-              </span>
-            </div>
-            <span className="text-[9.5px] text-[var(--text-tertiary)]">chat.openai.com</span>
-          </div>
+    <div className="relative w-full h-full flex items-center justify-center px-5 py-4 select-none overflow-hidden">
+      <div className="w-full max-w-[340px]" style={{ minHeight: 200 }}>
+        <AnimatePresence mode="wait">
 
-          <div className="space-y-1.5 text-[11px] text-[var(--text-secondary)] font-mono leading-tight">
-            <p className="line-clamp-1 opacity-90">&gt; &quot;How does binary search work in Java?&quot;</p>
-            <p className="line-clamp-1 text-[var(--primary)] font-sans font-medium">
-              &quot;Time complexity is O(log n) with pointers...&quot;
-            </p>
-            <p className="line-clamp-1 opacity-70">&gt; &quot;Implementation with low &amp; high...&quot;</p>
-            <p className="line-clamp-1 opacity-60">&gt; &quot;Handling edge cases &amp; mid overflow...&quot;</p>
-          </div>
+          {/* ── Stage 1: Raw chat conversation ── */}
+          {stage === "raw" && (
+            <motion.div
+              key="raw"
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-2xl border overflow-hidden shadow-sm"
+              style={{ background: "white", borderColor: "var(--border)" }}
+            >
+              {/* Card header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: "var(--border)" }}>
+                <div className="flex items-center gap-2">
+                  <FiFileText size={13} style={{ color: "var(--text-tertiary)" }} />
+                  <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: "var(--text-secondary)" }}>
+                    ChatGPT Conversation
+                  </span>
+                </div>
+                <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>4 messages</span>
+              </div>
 
-          <div className="mt-2.5 pt-2 border-t border-[var(--border)] flex items-center justify-between text-[10px] text-[var(--text-tertiary)]">
-            <span>4 exchanges</span>
-            <span className="font-medium text-[var(--primary)]">Unprocessed</span>
-          </div>
-        </motion.div>
+              {/* Chat messages */}
+              <div className="px-4 py-3 flex flex-col gap-2">
+                {rawLines.map((line, i) => (
+                  <div key={i} className={`flex ${line.user ? "justify-end" : "justify-start"}`}>
+                    <div
+                      className="text-[10.5px] leading-[1.5] px-3 py-1.5 rounded-xl max-w-[85%]"
+                      style={{
+                        background: line.user ? "var(--primary)" : "#F3F0EB",
+                        color: line.user ? "#FAF8F4" : "var(--primary)",
+                        fontFamily: "var(--font-body)",
+                      }}
+                    >
+                      {line.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-        {/* Stage 2: AI Processing Pulse Indicator */}
-        <motion.div
-          className="absolute inset-0 bg-[#FAF7F2] border border-[var(--accent)] rounded-xl p-4 shadow-sm flex flex-col items-center justify-center gap-2.5 text-center"
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{
-            opacity: stage === "processing" ? 1 : 0,
-            scale: stage === "processing" ? 1 : 0.96,
-            pointerEvents: stage === "processing" ? "auto" : "none",
-          }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.div
-            className="w-9 h-9 rounded-full bg-[var(--primary)] text-[var(--accent)] flex items-center justify-center shadow-md"
-            animate={{ scale: [1, 1.12, 1], rotate: [0, 180, 360] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <FiCpu className="w-5 h-5" />
-          </motion.div>
-          <div className="flex flex-col items-center">
-            <span className="text-[12px] font-semibold text-[var(--primary)] font-heading">
-              Extracting Core Insights...
-            </span>
-            <span className="text-[10px] text-[var(--text-secondary)] mt-0.5">
-              Converting 480 lines into structured knowledge
-            </span>
-          </div>
-        </motion.div>
+          {/* ── Stage 2: AI summarizing ── */}
+          {stage === "processing" && (
+            <motion.div
+              key="processing"
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-2xl border flex flex-col items-center justify-center gap-4 py-10 shadow-sm"
+              style={{ background: "#FAF7F2", borderColor: "var(--accent)" }}
+            >
+              {/* Pulsing ring */}
+              <div className="relative flex items-center justify-center" style={{ width: 48, height: 48 }}>
+                <motion.div
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: "rgba(216,195,165,0.25)" }}
+                  animate={{ scale: [1, 1.5, 1], opacity: [0.6, 0, 0.6] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center shadow-md z-10"
+                  style={{ background: "var(--primary)" }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2L12 6M12 18L12 22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12L6 12M18 12L22 12M4.93 19.07L7.76 16.24M16.24 7.76L19.07 4.93" />
+                  </svg>
+                </div>
+              </div>
 
-        {/* Stage 3: Structured Memory Card */}
-        <motion.div
-          className="absolute inset-0 bg-white border border-[var(--border-strong)] rounded-xl p-3.5 shadow-md flex flex-col justify-between"
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{
-            opacity: stage === "summary" ? 1 : 0,
-            scale: stage === "summary" ? 1 : 0.96,
-            y: stage === "summary" ? 0 : 8,
-            pointerEvents: stage === "summary" ? "auto" : "none",
-          }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="flex items-center justify-between mb-1.5">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--accent-dark,#8C7A5E)]">
-                Structured Memory
-              </span>
-            </div>
-            <span className="inline-flex items-center gap-1 text-[10px] text-emerald-700 bg-emerald-50 font-medium px-2 py-0.5 rounded-full border border-emerald-200">
-              <FiCheckCircle className="w-3 h-3" /> Ready
-            </span>
-          </div>
+              {/* Status text */}
+              <div className="text-center">
+                <p className="text-[13px] font-semibold" style={{ color: "var(--primary)", fontFamily: "var(--font-heading)" }}>
+                  Summarizing{".".repeat(dots)}
+                </p>
+                <p className="text-[11px] mt-1" style={{ color: "var(--text-secondary)" }}>
+                  Extracting key insights from the conversation
+                </p>
+              </div>
+            </motion.div>
+          )}
 
-          <div>
-            <h4 className="text-[13px] font-bold text-[var(--primary)] font-heading tracking-tight leading-snug">
-              Binary Search
-            </h4>
-            <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed mt-1 line-clamp-2">
-              Binary search finds an element in a sorted collection by repeatedly dividing the search space in half.
-            </p>
-          </div>
+          {/* ── Stage 3: Structured memory card ── */}
+          {stage === "summary" && (
+            <motion.div
+              key="summary"
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-2xl border overflow-hidden shadow-sm"
+              style={{ background: "white", borderColor: "var(--border-strong)" }}
+            >
+              {/* Card header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: "var(--border)" }}>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full" style={{ background: "#22c55e" }} />
+                  <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: "#16a34a" }}>
+                    Memory Saved
+                  </span>
+                </div>
+                <span className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full"
+                  style={{ background: "#dcfce7", color: "#15803d", border: "1px solid #bbf7d0" }}>
+                  <FiCheckCircle size={10} /> Ready
+                </span>
+              </div>
 
-          <div className="flex items-center gap-1.5 pt-2 border-t border-[var(--border)] mt-2">
-            <span className="text-[9.5px] font-medium px-2 py-0.5 rounded-md bg-[#FAF8F4] border border-[var(--border-strong)] text-[var(--primary)]">
-              DSA
-            </span>
-            <span className="text-[9.5px] font-medium px-2 py-0.5 rounded-md bg-[#FAF8F4] border border-[var(--border-strong)] text-[var(--primary)]">
-              Algorithms
-            </span>
-            <span className="text-[9.5px] font-medium px-2 py-0.5 rounded-md bg-[#FAF8F4] border border-[var(--border-strong)] text-[var(--primary)]">
-              Java
-            </span>
-          </div>
-        </motion.div>
+              {/* Content */}
+              <div className="px-4 py-3 flex flex-col gap-3">
+                <div>
+                  <h4 className="text-[14px] font-bold tracking-tight leading-snug" style={{ color: "var(--primary)", fontFamily: "var(--font-heading)" }}>
+                    Binary Search in Java
+                  </h4>
+                  <p className="text-[11px] leading-relaxed mt-1.5" style={{ color: "var(--text-secondary)" }}>
+                    Binary search finds an element in sorted arrays by halving the search space each step. Use <code className="font-mono text-[10.5px] px-1 rounded" style={{ background: "#F3F0EB" }}>mid = low + (high - low) / 2</code> to avoid overflow.
+                  </p>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5 pt-2 border-t" style={{ borderColor: "var(--border)" }}>
+                  {tags.map((tag) => (
+                    <span key={tag}
+                      className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-lg"
+                      style={{ background: "#FAF8F4", color: "var(--primary)", border: "1px solid var(--border-strong)" }}>
+                      <FiHash size={9} />
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+        </AnimatePresence>
       </div>
     </div>
   );
