@@ -122,7 +122,7 @@ export default function CaptureVisual() {
 
         {/* Central Memory Capsule hub */}
         <motion.div
-          className="flex items-center gap-3 pl-3 pr-5 py-2.5 rounded-2xl border"
+          className="flex items-center gap-6 pl-5 pr-3 py-2.5 rounded-2xl border"
           style={{
             background: "white",
             borderColor: "var(--accent)",
@@ -144,7 +144,7 @@ export default function CaptureVisual() {
               Memory Capsule
             </span>
             <span className="text-[10.5px] text-[var(--text-secondary)] font-medium" style={{ lineHeight: 1.3 }}>
-              All your knowledge, one place
+              All knowledge, one place
             </span>
           </div>
         </motion.div>
