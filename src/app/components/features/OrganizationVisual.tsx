@@ -73,7 +73,7 @@ export default function OrganizationVisual() {
         </div>
 
         {/* Rows */}
-        <div className="px-4 py-2 flex flex-col divide-y" style={{ divideColor: "var(--border)" }}>
+        <div className="px-4 py-2 flex flex-col divide-y divide-[var(--border)]">
 
           {/* Topic row */}
           <div className="flex items-center justify-between py-2.5">
