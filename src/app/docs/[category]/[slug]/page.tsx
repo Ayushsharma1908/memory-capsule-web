@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDocArticle, ALL_DOCS } from "@/lib/docs";
-import DocsArticle from "../../components/DocsArticle";
+import DocsArticle from "@/app/components/docs/DocsArticle";
 
 // ── Static params ───────────────────────────────────────────
 // Pre-generate all [category]/[slug] combinations at build time.

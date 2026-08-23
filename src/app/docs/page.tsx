@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DOC_CATEGORIES } from "@/lib/docs";
-import DocsSearch from "./components/DocsSearch";
+import DocsSearch from "@/app/components/docs/DocsSearch";
 import {
   Rocket,
   Lightbulb,

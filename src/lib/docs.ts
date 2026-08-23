@@ -1,8 +1,3 @@
-// ============================================================
-// MEMORY CAPSULE — Documentation Data
-// Single source of truth for all docs structure.
-// Used by: sidebar, search, breadcrumbs, prev/next, index.
-// ============================================================
 
 export type CalloutType = "note" | "warning" | "tip";
 
@@ -38,12 +33,7 @@ export interface DocCategory {
   articles: DocArticle[];
 }
 
-// ============================================================
-// CONTENT
-// ============================================================
-
 const DOCS: DocArticle[] = [
-  // ── GETTING STARTED ────────────────────────────────────────
 
   {
     category: "Getting Started",
