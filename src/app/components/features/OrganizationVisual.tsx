@@ -147,7 +147,7 @@ export default function OrganizationVisual() {
               animate={{ opacity: organized ? 1 : 0.2 }}
               transition={{ duration: 0.4, delay: organized ? 0.4 : 0 }}
             >
-              <ChatGPTIcon size={14} showBg />
+              <ChatGPTIcon size={14} />
               ChatGPT
             </motion.span>
           </div>

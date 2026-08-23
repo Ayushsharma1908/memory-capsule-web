@@ -12,14 +12,14 @@ export default function CaptureVisual() {
       id: "chatgpt",
       name: "ChatGPT",
       sub: "Supported",
-      renderIcon: (size: number) => <ChatGPTIcon size={size} showBg />,
+      renderIcon: (size: number) => <ChatGPTIcon size={size} />,
       active: true,
     },
     {
       id: "claude",
       name: "Claude",
       sub: "Coming Soon",
-      renderIcon: (size: number) => <ClaudeIcon size={size} showBg />,
+      renderIcon: (size: number) => <ClaudeIcon size={size} />,
       active: false,
     },
     {
@@ -33,7 +33,7 @@ export default function CaptureVisual() {
 
   return (
     <div className="relative w-full h-full flex items-center justify-center select-none overflow-hidden px-4 py-3">
-      <div className="flex flex-col items-center gap-3 w-full max-w-[320px]">
+      <div className="flex flex-col items-center gap-2.5 w-full max-w-[340px]">
 
         {/* Source node row */}
         <div className="grid grid-cols-3 w-full gap-2 items-center">
@@ -77,25 +77,25 @@ export default function CaptureVisual() {
         </div>
 
         {/* Flow SVG — convergence lines with moving particles */}
-        <div className="w-full h-9 pointer-events-none relative my-0.5">
-          <svg className="w-full h-full overflow-visible" viewBox="0 0 320 36" fill="none">
+        <div className="w-full h-8 pointer-events-none relative my-0.5">
+          <svg className="w-full h-full overflow-visible" viewBox="0 0 340 32" fill="none">
             {/* Three curved dotted paths meeting center */}
             <path
-              d="M 53.3 0 C 53.3 18, 160 12, 160 36"
+              d="M 56.6 0 C 56.6 16, 170 10, 170 32"
               stroke="var(--border-strong)"
               strokeWidth="1.3"
               strokeDasharray="3.5 3.5"
               opacity="0.65"
             />
             <path
-              d="M 160 0 L 160 36"
+              d="M 170 0 L 170 32"
               stroke="var(--border-strong)"
               strokeWidth="1.3"
               strokeDasharray="3.5 3.5"
               opacity="0.65"
             />
             <path
-              d="M 266.7 0 C 266.7 18, 160 12, 160 36"
+              d="M 283.3 0 C 283.3 16, 170 10, 170 32"
               stroke="var(--border-strong)"
               strokeWidth="1.3"
               strokeDasharray="3.5 3.5"
@@ -108,19 +108,19 @@ export default function CaptureVisual() {
                 <motion.circle
                   r="3"
                   fill="var(--accent)"
-                  animate={{ cx: [53.3, 106.6, 160], cy: [0, 18, 36], opacity: [0, 1, 0] }}
+                  animate={{ cx: [56.6, 113.3, 170], cy: [0, 16, 32], opacity: [0, 1, 0] }}
                   transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0 }}
                 />
                 <motion.circle
                   r="3"
                   fill="var(--accent)"
-                  animate={{ cx: [160, 160, 160], cy: [0, 18, 36], opacity: [0, 1, 0] }}
+                  animate={{ cx: [170, 170, 170], cy: [0, 16, 32], opacity: [0, 1, 0] }}
                   transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.73 }}
                 />
                 <motion.circle
                   r="3"
                   fill="var(--accent)"
-                  animate={{ cx: [266.7, 213.3, 160], cy: [0, 18, 36], opacity: [0, 1, 0] }}
+                  animate={{ cx: [283.3, 226.6, 170], cy: [0, 16, 32], opacity: [0, 1, 0] }}
                   transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 1.46 }}
                 />
               </>
@@ -130,7 +130,7 @@ export default function CaptureVisual() {
 
         {/* Central Memory Capsule hub */}
         <motion.div
-          className="flex items-center gap-3.5 px-4 py-2.5 rounded-2xl border shadow-sm"
+          className="flex items-center gap-2.5 px-4 py-2 rounded-full border shadow-sm shrink-0"
           style={{
             background: "white",
             borderColor: "var(--accent)",
@@ -148,27 +148,22 @@ export default function CaptureVisual() {
           }
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div
-            className="w-8 h-8 rounded-xl bg-[var(--primary)] flex items-center justify-center shrink-0"
-            style={{ padding: 4.5 }}
-          >
-            <Image
-              src="/logo.svg"
-              alt="Memory Capsule"
-              width={20}
-              height={20}
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div className="flex flex-col">
+          <Image
+            src="/logo.svg"
+            alt="Memory Capsule"
+            width={26}
+            height={26}
+            className="w-6.5 h-6.5 object-contain shrink-0"
+          />
+          <div className="flex flex-col shrink-0">
             <span
-              className="text-[12.5px] font-bold text-[var(--primary)] tracking-tight"
+              className="text-[12px] font-bold text-[var(--primary)] tracking-tight whitespace-nowrap"
               style={{ fontFamily: "var(--font-heading)", lineHeight: 1.2 }}
             >
               Memory Capsule
             </span>
             <span
-              className="text-[10px] text-[var(--text-secondary)] font-medium"
+              className="text-[9.5px] text-[var(--text-secondary)] font-medium whitespace-nowrap"
               style={{ lineHeight: 1.3 }}
             >
               All knowledge, one place

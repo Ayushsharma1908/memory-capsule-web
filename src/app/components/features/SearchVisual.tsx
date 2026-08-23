@@ -11,13 +11,13 @@ const RESULTS = [
   {
     title: "Binary Search — Java",
     sub: "Saved from ChatGPT",
-    renderIcon: (size: number) => <ChatGPTIcon size={size} showBg />,
+    renderIcon: (size: number) => <ChatGPTIcon size={size} />,
     tag: "Algorithms",
   },
   {
     title: "System Architecture Notes",
     sub: "Saved from Claude",
-    renderIcon: (size: number) => <ClaudeIcon size={size} showBg />,
+    renderIcon: (size: number) => <ClaudeIcon size={size} />,
     tag: "Design",
   },
   {

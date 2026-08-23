@@ -71,7 +71,7 @@ export default function SummarizationVisual() {
                 style={{ borderColor: "var(--border)" }}
               >
                 <div className="flex items-center gap-2">
-                  <ChatGPTIcon size={16} showBg />
+                  <ChatGPTIcon size={16} />
                   <span
                     className="text-[11px] font-semibold tracking-wide"
                     style={{ color: "var(--primary)" }}
