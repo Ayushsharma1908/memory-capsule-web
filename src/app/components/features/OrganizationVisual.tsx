@@ -31,7 +31,6 @@ export default function OrganizationVisual() {
           maxWidth: 290,
         }}
       >
-        {/* Card header */}
         <div
           className="flex items-center justify-between px-3.5 py-2.5 border-b"
           style={{ borderColor: "var(--border)" }}
@@ -74,10 +73,8 @@ export default function OrganizationVisual() {
           </motion.span>
         </div>
 
-        {/* Rows */}
         <div className="px-3.5 py-1.5 flex flex-col divide-y divide-[var(--border)]">
 
-          {/* Topic row */}
           <div className="flex items-center justify-between py-2">
             <span
               className="flex items-center gap-1.5 text-[11px] font-medium shrink-0"
@@ -100,7 +97,6 @@ export default function OrganizationVisual() {
             </motion.span>
           </div>
 
-          {/* Tags row */}
           <div className="py-2 flex flex-col gap-1.5">
             <span
               className="flex items-center gap-1.5 text-[11px] font-medium"
@@ -132,7 +128,6 @@ export default function OrganizationVisual() {
             </motion.div>
           </div>
 
-          {/* Source row */}
           <div className="flex items-center justify-between py-2">
             <span
               className="flex items-center gap-1.5 text-[11px] font-medium shrink-0"

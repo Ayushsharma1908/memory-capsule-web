@@ -51,12 +51,10 @@ export default function DocsSidebar() {
 
   return (
     <>
-      {/* Desktop sidebar */}
       <aside className="docs-sidebar" aria-label="Documentation sidebar">
         {sidebar}
       </aside>
 
-      {/* Mobile toggle button */}
       <div className="docs-mobile-header">
         <Link href="/docs" className="docs-mobile-brand">
           <BookOpen size={15} strokeWidth={2} />
@@ -73,7 +71,6 @@ export default function DocsSidebar() {
         </button>
       </div>
 
-      {/* Mobile drawer */}
       {mobileOpen && (
         <div
           className="docs-mobile-overlay"

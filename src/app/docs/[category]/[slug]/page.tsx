@@ -3,17 +3,12 @@ import { notFound } from "next/navigation";
 import { getDocArticle, ALL_DOCS } from "@/lib/docs";
 import DocsArticle from "@/app/components/docs/DocsArticle";
 
-// ── Static params ───────────────────────────────────────────
-// Pre-generate all [category]/[slug] combinations at build time.
-
 export function generateStaticParams() {
   return ALL_DOCS.map((doc) => ({
     category: doc.categorySlug,
     slug: doc.slug,
   }));
 }
-
-// ── Per-page metadata ───────────────────────────────────────
 
 export async function generateMetadata({
   params,
@@ -39,8 +34,6 @@ export async function generateMetadata({
     },
   };
 }
-
-// ── Page component ──────────────────────────────────────────
 
 export default async function DocArticlePage({
   params,

@@ -33,7 +33,6 @@ export default function Navbar() {
       role="navigation"
       aria-label="Site navigation"
     >
-      {/* Menu / Close button */}
       <button
         type="button"
         className="pill-nav-icon"
@@ -48,7 +47,6 @@ export default function Navbar() {
         )}
       </button>
 
-      {/* Navigation */}
       <div className="pill-nav-collapsible">
         <div className="pill-nav-links">
           <a

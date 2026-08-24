@@ -3,9 +3,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* ============================================================
-   STEPS DATA
-   ============================================================ */
 const STEPS = [
   {
     id: 1,
@@ -35,9 +32,6 @@ const STEPS = [
 
 const CYCLE_MS = 3000;
 
-/* ============================================================
-   COMPONENT
-   ============================================================ */
 export default function HowItWorks() {
   const [active, setActive] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -63,11 +57,9 @@ export default function HowItWorks() {
 
   return (
     <section className="hiw-section" id="how-it-works" aria-label="How it works">
-      {/* Ambient hairline separator at top of section */}
       <div className="hiw-separator" aria-hidden="true" />
 
       <div className="hiw-container">
-        {/* Section heading */}
         <motion.div
           className="hiw-heading"
           initial={{ opacity: 0, y: 20 }}
@@ -82,9 +74,7 @@ export default function HowItWorks() {
           </p>
         </motion.div>
 
-        {/* Journey layout */}
         <div className="hiw-journey">
-          {/* LEFT: Illustration column */}
           <motion.div
             className="hiw-illus-col"
             initial={{ opacity: 0, x: -20 }}
@@ -92,7 +82,6 @@ export default function HowItWorks() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            {/* Animated step badge chip */}
             <div className="hiw-chip-wrap" aria-live="polite" aria-atomic="true">
               <AnimatePresence mode="wait">
                 <motion.span
@@ -109,7 +98,6 @@ export default function HowItWorks() {
               </AnimatePresence>
             </div>
 
-            {/* Illustration stage — NO card, NO white background */}
             <div className="hiw-illus-stage rounded-[28px]">
               <div className="hiw-illus-glow" aria-hidden="true" />
               <AnimatePresence mode="wait">
@@ -126,7 +114,6 @@ export default function HowItWorks() {
               </AnimatePresence>
             </div>
 
-            {/* Step dot indicators */}
             <div className="hiw-dots" role="tablist" aria-label="Navigate steps">
               {STEPS.map((step, i) => (
                 <button
@@ -141,9 +128,7 @@ export default function HowItWorks() {
             </div>
           </motion.div>
 
-          {/* RIGHT: Steps column */}
           <div className="hiw-steps-col">
-            {/* Vertical spine — desktop only */}
             <div className="hiw-spine-wrap" aria-hidden="true">
               <div className="hiw-spine-line" />
               <div className="hiw-spine-traveler" />
@@ -161,7 +146,6 @@ export default function HowItWorks() {
                   transition={{ duration: 0.55, delay: 0.1 * i, ease: "easeOut" }}
                   aria-pressed={active === i}
                 >
-                  {/* Number badge */}
                   <div className="hiw-badge-wrap">
                     <div className="hiw-badge-num">{step.num}</div>
                     {active === i && (
@@ -187,14 +171,12 @@ export default function HowItWorks() {
                     )}
                   </div>
 
-                  {/* Step copy */}
                   <div className="hiw-step-text">
                     <h3 className="hiw-step-title">{step.title}</h3>
                     <p className="hiw-step-desc">{step.desc}</p>
                   </div>
                 </motion.button>
 
-                {/* Mobile connector between steps */}
                 {i < STEPS.length - 1 && (
                   <div className="hiw-mobile-connector" aria-hidden="true">
                     <div className="hiw-mobile-line" />

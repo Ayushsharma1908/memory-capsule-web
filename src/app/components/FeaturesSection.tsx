@@ -50,14 +50,11 @@ const CARDS = [
 export default function FeaturesSection() {
   return (
     <section className="features-section" id="features" aria-label="Features">
-      {/* Hairline Separator at top edge matching design system */}
       <div className="features-separator" aria-hidden="true" />
 
-      {/* Subtle ambient radial glow for soft depth */}
       <div className="features-ambient-glow" aria-hidden="true" />
 
       <div className="features-container">
-        {/* Section Header */}
         <motion.div
           className="features-header"
           initial={{ opacity: 0, y: 18 }}
@@ -75,7 +72,6 @@ export default function FeaturesSection() {
           </p>
         </motion.div>
 
-        {/* Asymmetric Editorial Grid */}
         <div className="features-grid">
           {CARDS.map((card, i) => (
             <motion.div
@@ -87,13 +83,10 @@ export default function FeaturesSection() {
               transition={{ duration: 0.5, delay: i * 0.08, ease: EASE_SMOOTH }}
             >
               <div className="features-card">
-                {/* Visual Area (approx 55-65% height) */}
                 <div className="features-card-visual">{card.visual}</div>
 
-                {/* Divider Line */}
                 <div className="features-card-divider" aria-hidden="true" />
 
-                {/* Text Content Area */}
                 <div className="features-card-content">
                   <div className="flex items-center justify-between gap-2 mb-1">
                     <span className="features-card-num">{card.index}</span>

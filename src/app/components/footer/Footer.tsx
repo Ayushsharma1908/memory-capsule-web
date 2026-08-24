@@ -93,14 +93,11 @@ export function Footer() {
 
   return (
     <footer className="footer-root" aria-label="Site footer">
-      {/* Top ambient separator */}
       <div className="footer-separator" aria-hidden="true" />
 
       <div className="footer-inner">
 
-        {/* ── Brand column ── */}
         <div className="footer-brand-col">
-          {/* Logo mark */}
           <div className="footer-logo-mark">
             <Image
               src="/logo.svg"
@@ -116,7 +113,6 @@ export function Footer() {
             The memory layer for your<br />AI conversations.
           </p>
 
-          {/* Social links */}
           <div className="footer-social-row" aria-label="Social links">
             {socialLinks.map((s) => (
               <a
@@ -132,14 +128,12 @@ export function Footer() {
             ))}
           </div>
 
-          {/* Version badge */}
           <div className="footer-version-badge">
             <span className="footer-version-dot" aria-hidden="true" />
             <span>v0.1 — Built in public</span>
           </div>
         </div>
 
-        {/* ── Navigation columns ── */}
         <nav className="footer-nav-cols" aria-label="Footer navigation">
           {footerLinks.map((col) => (
             <div key={col.heading} className="footer-nav-col">
@@ -159,7 +153,6 @@ export function Footer() {
 
       </div>
 
-      {/* ── Trust badges row ── */}
       <div className="footer-badges-row" aria-label="Product trust indicators">
         <div className="footer-badges-inner">
           {badges.map((badge) => (
@@ -176,7 +169,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* ── Bottom bar ── */}
       <div className="footer-bottom-bar">
         <div className="footer-bottom-inner">
           <p className="footer-copyright">

@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-// Each concept node surrounding the central brain hub
 const NODES = [
   { id: "react", label: "React", x: 0.15, y: 0.18 },
   { id: "hooks", label: "Hooks", x: 0.12, y: 0.48 },
@@ -16,10 +15,8 @@ const NODES = [
   { id: "sysdesign", label: "System Design", x: 0.62, y: 0.86 },
 ];
 
-// Central Knowledge Hub coordinate
 const HUB = { x: 0.50, y: 0.50 };
 
-// ALL nodes point directly to the central brain hub
 const EDGES = NODES.map((node) => ({
   from: node.id,
   to: "hub",
@@ -43,14 +40,12 @@ export default function KnowledgeGraphVisual() {
       className="relative w-full h-full flex items-center justify-center select-none overflow-hidden"
       style={{ minHeight: 230 }}
     >
-      {/* Full-bleed SVG canvas */}
       <svg
         className="absolute inset-0 w-full h-full"
         viewBox={`0 0 ${W} ${H}`}
         fill="none"
         preserveAspectRatio="xMidYMid meet"
       >
-        {/* Radial Edge lines connecting all nodes directly to the central brain hub */}
         {EDGES.map((edge, i) => {
           const from = nodePos(edge.from, W, H);
           const to = nodePos(edge.to, W, H);
@@ -69,7 +64,6 @@ export default function KnowledgeGraphVisual() {
           );
         })}
 
-        {/* Animated flow pulses moving inward along all radial edges toward the center brain hub */}
         {!reducedMotion &&
           EDGES.map((edge, i) => {
             const from = nodePos(edge.from, W, H);
@@ -95,7 +89,6 @@ export default function KnowledgeGraphVisual() {
           })}
       </svg>
 
-      {/* Concept node pills */}
       {NODES.map((node, i) => (
         <motion.div
           key={node.id}
@@ -127,7 +120,6 @@ export default function KnowledgeGraphVisual() {
         </motion.div>
       ))}
 
-      {/* Central Knowledge Brain Hub */}
       <motion.div
         className="absolute z-20 flex items-center gap-2.5 rounded-2xl"
         style={{
@@ -151,7 +143,6 @@ export default function KnowledgeGraphVisual() {
         }
         transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
       >
-        {/* Brain-like memory icon */}
         <div
           className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
           style={{ background: "rgba(216,195,165,0.22)" }}

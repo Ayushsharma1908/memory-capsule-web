@@ -627,8 +627,6 @@ const DOCS: DocArticle[] = [
     ],
   },
 
-  // ── CORE CONCEPTS ──────────────────────────────────────────
-
   {
     category: "Core Concepts",
     categorySlug: "core-concepts",
@@ -1051,8 +1049,6 @@ const DOCS: DocArticle[] = [
     ],
   },
 
-  // ── INTEGRATIONS ──────────────────────────────────────────
-
   {
     category: "Integrations",
     categorySlug: "integrations",
@@ -1415,8 +1411,6 @@ const DOCS: DocArticle[] = [
     ],
   },
 
-  // ── ADVANCED ───────────────────────────────────────────────
-
   {
     category: "Advanced",
     categorySlug: "advanced",
@@ -1709,14 +1703,8 @@ const DOCS: DocArticle[] = [
   },
 ];
 
-// ============================================================
-// DERIVED STRUCTURES
-// ============================================================
-
-/** Ordered flat list of all articles for prev/next computation */
 export const ALL_DOCS: DocArticle[] = DOCS;
 
-/** Categories in display order */
 export const DOC_CATEGORIES: DocCategory[] = [
   {
     id: "getting-started",
@@ -1740,7 +1728,6 @@ export const DOC_CATEGORIES: DocCategory[] = [
   },
 ];
 
-/** Lookup by category + slug */
 export function getDocArticle(
   category: string,
   slug: string
@@ -1748,7 +1735,6 @@ export function getDocArticle(
   return DOCS.find((d) => d.categorySlug === category && d.slug === slug);
 }
 
-/** Get previous article in the ordered list */
 export function getPrevArticle(article: DocArticle): DocArticle | undefined {
   const idx = DOCS.findIndex(
     (d) => d.categorySlug === article.categorySlug && d.slug === article.slug
@@ -1756,7 +1742,6 @@ export function getPrevArticle(article: DocArticle): DocArticle | undefined {
   return idx > 0 ? DOCS[idx - 1] : undefined;
 }
 
-/** Get next article in the ordered list */
 export function getNextArticle(article: DocArticle): DocArticle | undefined {
   const idx = DOCS.findIndex(
     (d) => d.categorySlug === article.categorySlug && d.slug === article.slug
@@ -1764,7 +1749,6 @@ export function getNextArticle(article: DocArticle): DocArticle | undefined {
   return idx < DOCS.length - 1 ? DOCS[idx + 1] : undefined;
 }
 
-/** Search across all docs — returns matching articles */
 export function searchDocs(query: string): DocArticle[] {
   if (!query.trim()) return [];
   const q = query.toLowerCase().trim();

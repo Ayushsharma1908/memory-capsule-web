@@ -25,7 +25,6 @@ const CATEGORY_ICONS = {
 export default function DocsPage() {
   return (
     <div className="docs-index-page">
-      {/* Page hero */}
       <header className="docs-index-hero">
         <p className="docs-index-eyebrow">Documentation</p>
         <h1 className="docs-index-title">Everything you need to know</h1>
@@ -35,10 +34,8 @@ export default function DocsPage() {
         </p>
       </header>
 
-      {/* Search */}
       <DocsSearch />
 
-      {/* Category grid */}
       <div className="docs-index-grid">
         {DOC_CATEGORIES.map((cat) => {
           const Icon =
@@ -73,7 +70,6 @@ export default function DocsPage() {
         })}
       </div>
 
-      {/* CTA strip */}
       <div className="docs-cta-strip">
         <p className="docs-cta-text">
           Can&apos;t find what you&apos;re looking for?

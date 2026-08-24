@@ -26,7 +26,6 @@ export default function SummarizationVisual() {
     return () => clearInterval(id);
   }, [reducedMotion]);
 
-  // Animated ellipsis dots during processing
   useEffect(() => {
     if (stage !== "processing") return;
     const id = setInterval(() => setDots((d) => (d % 3) + 1), 500);
@@ -53,7 +52,6 @@ export default function SummarizationVisual() {
       <div className="w-full max-w-[340px]" style={{ minHeight: 200 }}>
         <AnimatePresence mode="wait">
 
-          {/* ── Stage 1: Raw chat conversation ── */}
           {stage === "raw" && (
             <motion.div
               key="raw"
@@ -65,7 +63,6 @@ export default function SummarizationVisual() {
               className="rounded-2xl border overflow-hidden shadow-sm"
               style={{ background: "white", borderColor: "var(--border)" }}
             >
-              {/* Card header */}
               <div
                 className="flex items-center justify-between px-3.5 py-2.5 border-b"
                 style={{ borderColor: "var(--border)" }}
@@ -84,7 +81,6 @@ export default function SummarizationVisual() {
                 </span>
               </div>
 
-              {/* Chat messages */}
               <div className="px-3.5 py-2.5 flex flex-col gap-2">
                 {rawLines.map((line, i) => (
                   <div key={i} className={`flex ${line.user ? "justify-end" : "justify-start"}`}>
@@ -104,7 +100,6 @@ export default function SummarizationVisual() {
             </motion.div>
           )}
 
-          {/* ── Stage 2: AI summarizing ── */}
           {stage === "processing" && (
             <motion.div
               key="processing"
@@ -116,7 +111,6 @@ export default function SummarizationVisual() {
               className="rounded-2xl border flex flex-col items-center justify-center gap-3.5 py-9 shadow-sm"
               style={{ background: "#FAF7F2", borderColor: "var(--accent)" }}
             >
-              {/* Pulsing ring */}
               <div className="relative flex items-center justify-center" style={{ width: 44, height: 44 }}>
                 <motion.div
                   className="absolute inset-0 rounded-full"
@@ -143,7 +137,6 @@ export default function SummarizationVisual() {
                 </div>
               </div>
 
-              {/* Status text */}
               <div className="text-center px-4">
                 <p
                   className="text-[12.5px] font-semibold"
@@ -158,7 +151,6 @@ export default function SummarizationVisual() {
             </motion.div>
           )}
 
-          {/* ── Stage 3: Structured memory card ── */}
           {stage === "summary" && (
             <motion.div
               key="summary"
@@ -170,7 +162,6 @@ export default function SummarizationVisual() {
               className="rounded-2xl border overflow-hidden shadow-sm"
               style={{ background: "white", borderColor: "var(--border-strong)" }}
             >
-              {/* Card header */}
               <div
                 className="flex items-center justify-between px-3.5 py-2.5 border-b"
                 style={{ borderColor: "var(--border)" }}
@@ -189,7 +180,6 @@ export default function SummarizationVisual() {
                 </span>
               </div>
 
-              {/* Content */}
               <div className="px-3.5 py-2.5 flex flex-col gap-2.5">
                 <div>
                   <h4
@@ -207,7 +197,6 @@ export default function SummarizationVisual() {
                   </p>
                 </div>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-1.5 pt-2 border-t" style={{ borderColor: "var(--border)" }}>
                   {tags.map((tag) => (
                     <span

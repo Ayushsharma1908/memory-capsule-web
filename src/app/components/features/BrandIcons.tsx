@@ -8,9 +8,6 @@ interface IconProps {
   showBg?: boolean;
 }
 
-/**
- * Google / Chrome Icon — Uses the exact same /chrome-icon.svg as the hover navbar
- */
 export function GoogleChromeIcon({ size = 20, className = "" }: IconProps) {
   return (
     <div
@@ -28,9 +25,6 @@ export function GoogleChromeIcon({ size = 20, className = "" }: IconProps) {
   );
 }
 
-/**
- * Authentic OpenAI ChatGPT Icon — Uses /chatgpt-icon.svg from public folder
- */
 export function ChatGPTIcon({ size = 20, className = "" }: IconProps) {
   return (
     <div
@@ -48,9 +42,6 @@ export function ChatGPTIcon({ size = 20, className = "" }: IconProps) {
   );
 }
 
-/**
- * Authentic Anthropic Claude Icon (Terracotta spark mark)
- */
 export function ClaudeIcon({ size = 20, className = "" }: IconProps) {
   return (
     <div

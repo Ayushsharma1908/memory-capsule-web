@@ -40,22 +40,18 @@ export default function SearchVisual() {
 
     async function loop() {
       while (alive) {
-        // Clear
         setQuery("");
         setShowResults(false);
         await sleep(700);
 
-        // Type
         for (let i = 1; i <= FULL_QUERY.length && alive; i++) {
           setQuery(FULL_QUERY.slice(0, i));
           await sleep(65);
         }
 
-        // Show results
         await sleep(280);
         if (alive) setShowResults(true);
 
-        // Hold
         await sleep(3200);
       }
     }
@@ -70,7 +66,6 @@ export default function SearchVisual() {
     <div className="relative w-full h-full flex items-center justify-center px-4 py-3 select-none">
       <div className="w-full max-w-[400px] flex flex-col gap-2.5">
 
-        {/* Search bar */}
         <div
           className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl border shadow-sm transition-colors duration-300"
           style={{
@@ -110,7 +105,6 @@ export default function SearchVisual() {
           </kbd>
         </div>
 
-        {/* Results list */}
         <div className="flex flex-col gap-1.5" style={{ minHeight: 140 }}>
           <AnimatePresence>
             {showResults &&
@@ -124,7 +118,6 @@ export default function SearchVisual() {
                   className="flex items-center justify-between rounded-xl px-3 py-2 border cursor-pointer hover:border-[var(--border-strong)] transition-colors"
                   style={{ background: "white", borderColor: "var(--border)" }}
                 >
-                  {/* Left: icon + text */}
                   <div className="flex items-center gap-2.5 overflow-hidden">
                     <div className="flex items-center justify-center shrink-0">
                       {item.renderIcon(18)}
@@ -142,7 +135,6 @@ export default function SearchVisual() {
                     </div>
                   </div>
 
-                  {/* Right: tag + arrow */}
                   <div className="flex items-center gap-2 shrink-0 ml-2">
                     <span
                       className="text-[9.5px] font-medium px-2 py-0.5 rounded-lg"

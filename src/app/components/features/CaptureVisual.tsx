@@ -35,7 +35,6 @@ export default function CaptureVisual() {
     <div className="relative w-full h-full flex items-center justify-center select-none overflow-hidden px-4 py-3">
       <div className="flex flex-col items-center gap-2.5 w-full max-w-[340px]">
 
-        {/* Source node row */}
         <div className="grid grid-cols-3 w-full gap-2 items-center">
           {sources.map((item, i) => (
             <motion.div
@@ -45,7 +44,6 @@ export default function CaptureVisual() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Icon badge */}
               <div
                 className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm border transition-transform duration-200 hover:scale-105"
                 style={{
@@ -57,7 +55,6 @@ export default function CaptureVisual() {
                 {item.renderIcon(22)}
               </div>
 
-              {/* Label */}
               <div className="flex flex-col items-center gap-0.5 text-center">
                 <span className="text-[11px] font-semibold text-[var(--primary)] tracking-tight">
                   {item.name}
@@ -76,10 +73,8 @@ export default function CaptureVisual() {
           ))}
         </div>
 
-        {/* Flow SVG — convergence lines with moving particles */}
         <div className="w-full h-8 pointer-events-none relative my-0.5">
           <svg className="w-full h-full overflow-visible" viewBox="0 0 340 32" fill="none">
-            {/* Three curved dotted paths meeting center */}
             <path
               d="M 56.6 0 C 56.6 16, 170 10, 170 32"
               stroke="var(--border-strong)"
@@ -102,7 +97,6 @@ export default function CaptureVisual() {
               opacity="0.65"
             />
 
-            {/* Animated flow dots */}
             {!reducedMotion && (
               <>
                 <motion.circle
@@ -128,7 +122,6 @@ export default function CaptureVisual() {
           </svg>
         </div>
 
-        {/* Central Memory Capsule hub */}
         <motion.div
           className="flex items-center gap-2.5 px-4 py-2 rounded-full border shadow-sm shrink-0"
           style={{

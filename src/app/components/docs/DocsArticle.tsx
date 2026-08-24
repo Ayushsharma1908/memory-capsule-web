@@ -7,8 +7,6 @@ import {
 } from "@/lib/docs";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-// ── Callout components ──────────────────────────────────────
-
 function DocsNote({
   title,
   children,
@@ -53,8 +51,6 @@ function DocsTip({
     </aside>
   );
 }
-
-// ── Content block renderer ──────────────────────────────────
 
 function renderBlock(block: ContentBlock, i: number) {
   switch (block.kind) {
@@ -159,15 +155,12 @@ function renderBlock(block: ContentBlock, i: number) {
   }
 }
 
-// ── Main DocsArticle component ──────────────────────────────
-
 export default function DocsArticle({ article }: { article: DocArticle }) {
   const prev = getPrevArticle(article);
   const next = getNextArticle(article);
 
   return (
     <article className="docs-article-main">
-      {/* Breadcrumb */}
       <nav className="docs-breadcrumb" aria-label="Breadcrumb">
         <Link href="/docs" className="docs-breadcrumb-item">
           Documentation
@@ -189,7 +182,6 @@ export default function DocsArticle({ article }: { article: DocArticle }) {
         </span>
       </nav>
 
-      {/* Article header */}
       <header className="docs-article-head">
         <p className="docs-article-category">{article.category}</p>
         <h1 className="docs-article-title">{article.title}</h1>
@@ -199,12 +191,10 @@ export default function DocsArticle({ article }: { article: DocArticle }) {
         </p>
       </header>
 
-      {/* Article body */}
       <div className="docs-article-body">
         {article.content.map((block, i) => renderBlock(block, i))}
       </div>
 
-      {/* Previous / Next navigation */}
       <nav className="docs-prevnext" aria-label="Previous and next articles">
         <div className="docs-prevnext-prev">
           {prev && (

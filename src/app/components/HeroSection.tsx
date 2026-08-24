@@ -7,10 +7,6 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import Navbar from "./Navbar";
 
-/* ============================================================
-   ANIMATION VARIANTS
-   ============================================================ */
-
 const slideFromLeft: Variants = {
   hidden: { x: -30, opacity: 0 },
   visible: {
@@ -29,8 +25,6 @@ const slideFromRight: Variants = {
   },
 };
 
-/* Entry animation: rises from 60px below, no x/y centering here —
-   centering is handled by the static wrapper div in CSS. */
 const logoFloatUp: Variants = {
   hidden: { y: 40, opacity: 0, scale: 0.94 },
   visible: {
@@ -59,9 +53,6 @@ const subheadlineAndCtaFade: Variants = {
   },
 };
 
-/* ============================================================
-   SPARKLE SVG
-   ============================================================ */
 function StarSparkle({
   size = 14,
   color = "#1F2421",
@@ -116,7 +107,6 @@ function LeftPanel() {
         </motion.p>
       </div>
 
-      {/* Knowledge artifact */}
       <motion.div
         className="memory-artifact"
         initial={{ opacity: 0, y: 24, rotate: -1 }}
@@ -156,7 +146,6 @@ function LeftPanel() {
         </div>
       </motion.div>
 
-      {/* Decorative path toward capsule */}
       <div className="memory-flow" aria-hidden="true">
         <span className="memory-flow-line" />
         <span className="memory-flow-dot memory-flow-dot-1" />
@@ -167,9 +156,6 @@ function LeftPanel() {
   );
 }
 
-/* ============================================================
-   MEMORY CAPSULE LOGO FALLBACK
-   ============================================================ */
 function PlaceholderIcon() {
   return (
     <div
@@ -224,7 +210,6 @@ function CenterIcon() {
   const iconSize = "25.3vh";
 
   return (
-    /* Static positioner — CSS handles centering, framer-motion stays out */
     <div className="center-icon-wrap" aria-hidden="true">
       <motion.div
         className="center-icon-motion"
@@ -233,10 +218,8 @@ function CenterIcon() {
         variants={logoFloatUp}
         style={{ width: iconSize, height: iconSize, position: "relative" }}
       >
-        {/* Soft ambient glow */}
         <div className="center-icon-glow" />
 
-        {/* Floating logo */}
         <motion.div
           className="center-icon-img"
           animate={{ y: [0, -8, 0] }}
@@ -263,7 +246,6 @@ function CenterIcon() {
           )}
         </motion.div>
 
-        {/* Sparkles */}
         {sparklePositions.map((sp, i) => {
           const { delay, size, color, ...posStyle } = sp;
           return (
@@ -288,9 +270,6 @@ function CenterIcon() {
   );
 }
 
-/* ============================================================
-   RIGHT PANEL — Headline, Subheadline & CTAs
-   ============================================================ */
 function RightPanel() {
   return (
     <div className="panel-right">
@@ -374,14 +353,10 @@ function RightPanel() {
   );
 }
 
-/* ============================================================
-   EXPORTED HERO SECTION
-   ============================================================ */
 export default function HeroSection() {
   return (
     <section className="hero-stage" aria-label="Hero section" id="hero">
       <div className="hero-split-container">
-        {/* Left Card */}
         <motion.div
           className="hero-left-card"
           variants={slideFromLeft}
@@ -412,7 +387,6 @@ export default function HeroSection() {
           <LeftPanel />
         </motion.div>
 
-        {/* Right Card */}
         <motion.div
           className="hero-right-card"
           variants={slideFromRight}
@@ -433,7 +407,6 @@ export default function HeroSection() {
           <RightPanel />
         </motion.div>
 
-        {/* Center icon — floats in the gap, centered by CSS wrapper */}
         <CenterIcon />
       </div>
     </section>
