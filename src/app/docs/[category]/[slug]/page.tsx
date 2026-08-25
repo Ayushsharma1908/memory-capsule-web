@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDocArticle, ALL_DOCS } from "@/lib/docs";
-import DocsArticle from "@/app/components/docs/DocsArticle";
+import DocsArticle from "@/components/docs/DocsArticle";
 
 export function generateStaticParams() {
   return ALL_DOCS.map((doc) => ({

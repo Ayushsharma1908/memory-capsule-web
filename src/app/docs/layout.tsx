@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import DocsSidebar from "@/app/components/docs/DocsSidebar";
+import DocsSidebar from "@/components/docs/DocsSidebar";
 
 export const metadata: Metadata = {
   title: "Documentation — Memory Capsule",

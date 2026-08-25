@@ -1,7 +1,4 @@
-import HeroSection from "./components/HeroSection";
-import FeaturesSection from "./components/FeaturesSection";
-import HowItWorks from "./components/HowItWorks";
-import Footer from "./components/footer/Footer";
+import { HeroSection, FeaturesSection, HowItWorks, Footer } from "@/components";
 
 export default function Home() {
   return (
