@@ -134,7 +134,7 @@ export default function OrganizationVisual() {
               style={{ color: "var(--text-secondary)" }}
             >
               <FiShare2 size={12} style={{ color: "var(--text-tertiary)" }} />
-              Source
+              Open Source
             </span>
             <motion.span
               className="flex items-center gap-1.5 text-[10.5px] font-semibold"
