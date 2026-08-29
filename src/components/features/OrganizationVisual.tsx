@@ -22,27 +22,27 @@ export default function OrganizationVisual() {
   }, [reducedMotion]);
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center px-4 py-3 select-none">
+    <div className="relative w-full h-full flex items-center justify-center px-2 py-1 select-none">
       <div
-        className="w-full rounded-2xl border overflow-hidden shadow-sm"
+        className="w-full rounded-xl border overflow-hidden shadow-sm"
         style={{
           background: "white",
           borderColor: organized ? "var(--border-strong)" : "var(--border)",
-          maxWidth: 290,
+          maxWidth: 280,
         }}
       >
         <div
-          className="flex items-center justify-between px-3.5 py-2.5 border-b"
+          className="flex items-center justify-between px-2.5 py-1.5 border-b"
           style={{ borderColor: "var(--border)" }}
         >
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-1.5 min-w-0">
             <div
-              className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
+              className="w-5 h-5 rounded flex items-center justify-center shrink-0"
               style={{ background: "var(--primary)" }}
             >
               <svg
-                width="12"
-                height="12"
+                width="10"
+                height="10"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="var(--accent)"
@@ -54,7 +54,7 @@ export default function OrganizationVisual() {
               </svg>
             </div>
             <span
-              className="text-[12px] font-bold truncate"
+              className="text-[11px] font-bold truncate"
               style={{ color: "var(--primary)", fontFamily: "var(--font-heading)" }}
             >
               Binary Search
@@ -62,7 +62,7 @@ export default function OrganizationVisual() {
           </div>
 
           <motion.span
-            className="text-[9.5px] font-semibold px-2 py-0.5 rounded-full shrink-0 ml-2"
+            className="text-[8.5px] font-semibold px-1.5 py-0.2 rounded-full shrink-0 ml-1.5"
             animate={{
               background: organized ? "rgba(216,195,165,0.25)" : "rgba(0,0,0,0.05)",
               color: organized ? "var(--primary)" : "var(--text-tertiary)",
@@ -73,18 +73,18 @@ export default function OrganizationVisual() {
           </motion.span>
         </div>
 
-        <div className="px-3.5 py-1.5 flex flex-col divide-y divide-[var(--border)]">
+        <div className="px-2.5 py-1 flex flex-col divide-y divide-[var(--border)]">
 
-          <div className="flex items-center justify-between py-2">
+          <div className="flex items-center justify-between py-1">
             <span
-              className="flex items-center gap-1.5 text-[11px] font-medium shrink-0"
+              className="flex items-center gap-1 text-[10px] font-medium shrink-0"
               style={{ color: "var(--text-secondary)" }}
             >
-              <FiFolder size={12} style={{ color: "var(--text-tertiary)" }} />
+              <FiFolder size={11} style={{ color: "var(--text-tertiary)" }} />
               Topic
             </span>
             <motion.span
-              className="text-[10.5px] font-semibold px-2 py-0.5 rounded-lg"
+              className="text-[9.5px] font-semibold px-1.5 py-0.2 rounded"
               style={{
                 background: "#FAF8F4",
                 border: "1px solid var(--border-strong)",
@@ -97,12 +97,12 @@ export default function OrganizationVisual() {
             </motion.span>
           </div>
 
-          <div className="py-2 flex flex-col gap-1.5">
+          <div className="py-1 flex flex-col gap-1">
             <span
-              className="flex items-center gap-1.5 text-[11px] font-medium"
+              className="flex items-center gap-1 text-[10px] font-medium"
               style={{ color: "var(--text-secondary)" }}
             >
-              <FiTag size={12} style={{ color: "var(--text-tertiary)" }} />
+              <FiTag size={11} style={{ color: "var(--text-tertiary)" }} />
               Tags
             </span>
             <motion.div
@@ -113,7 +113,7 @@ export default function OrganizationVisual() {
               {["Binary Search", "Algorithms", "Java"].map((tag, idx) => (
                 <motion.span
                   key={tag}
-                  className="text-[9.5px] font-medium px-2 py-0.5 rounded-lg"
+                  className="text-[8.5px] font-medium px-1.5 py-0.2 rounded"
                   style={{
                     background: "#FAF8F4",
                     color: "var(--primary)",
@@ -128,21 +128,21 @@ export default function OrganizationVisual() {
             </motion.div>
           </div>
 
-          <div className="flex items-center justify-between py-2">
+          <div className="flex items-center justify-between py-1">
             <span
-              className="flex items-center gap-1.5 text-[11px] font-medium shrink-0"
+              className="flex items-center gap-1 text-[10px] font-medium shrink-0"
               style={{ color: "var(--text-secondary)" }}
             >
-              <FiShare2 size={12} style={{ color: "var(--text-tertiary)" }} />
+              <FiShare2 size={11} style={{ color: "var(--text-tertiary)" }} />
               Open Source
             </span>
             <motion.span
-              className="flex items-center gap-1.5 text-[10.5px] font-semibold"
+              className="flex items-center gap-1 text-[9.5px] font-semibold"
               style={{ color: "var(--primary)" }}
               animate={{ opacity: organized ? 1 : 0.2 }}
               transition={{ duration: 0.4, delay: organized ? 0.4 : 0 }}
             >
-              <ChatGPTIcon size={14} />
+              <ChatGPTIcon size={12} />
               ChatGPT
             </motion.span>
           </div>

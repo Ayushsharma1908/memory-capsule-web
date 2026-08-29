@@ -63,20 +63,20 @@ export default function SearchVisual() {
   }, [reducedMotion]);
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center px-4 py-3 select-none">
-      <div className="w-full max-w-[400px] flex flex-col gap-2.5">
+    <div className="relative w-full h-full flex items-center justify-center px-2 py-1 select-none">
+      <div className="w-full max-w-[380px] flex flex-col gap-1.5">
 
         <div
-          className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl border shadow-sm transition-colors duration-300"
+          className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl border shadow-sm transition-colors duration-300"
           style={{
             background: "white",
             borderColor: showResults ? "var(--border-strong)" : "var(--border)",
           }}
         >
-          <FiSearch size={15} style={{ color: "var(--text-tertiary)", flexShrink: 0 }} />
+          <FiSearch size={13} style={{ color: "var(--text-tertiary)", flexShrink: 0 }} />
 
           <div
-            className="flex-1 flex items-center text-[12px] font-medium overflow-hidden"
+            className="flex-1 flex items-center text-[11px] font-medium overflow-hidden"
             style={{ fontFamily: "var(--font-body)" }}
           >
             {query ? (
@@ -86,14 +86,14 @@ export default function SearchVisual() {
             )}
             <motion.span
               className="inline-block ml-px"
-              style={{ width: 2, height: 14, background: "var(--primary)", borderRadius: 1 }}
+              style={{ width: 2, height: 12, background: "var(--primary)", borderRadius: 1 }}
               animate={{ opacity: [1, 0, 1] }}
               transition={{ duration: 0.9, repeat: Infinity }}
             />
           </div>
 
           <kbd
-            className="text-[9.5px] font-medium px-1.5 py-0.5 rounded"
+            className="text-[8.5px] font-medium px-1.5 py-0.2 rounded"
             style={{
               background: "#F3F0EB",
               color: "var(--text-secondary)",
@@ -105,7 +105,7 @@ export default function SearchVisual() {
           </kbd>
         </div>
 
-        <div className="flex flex-col gap-1.5" style={{ minHeight: 140 }}>
+        <div className="flex flex-col gap-1" style={{ minHeight: 105 }}>
           <AnimatePresence>
             {showResults &&
               RESULTS.map((item, idx) => (
@@ -115,29 +115,29 @@ export default function SearchVisual() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.28, delay: idx * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex items-center justify-between rounded-xl px-3 py-2 border cursor-pointer hover:border-[var(--border-strong)] transition-colors"
+                  className="flex items-center justify-between rounded-lg px-2.5 py-1.5 border cursor-pointer hover:border-[var(--border-strong)] transition-colors"
                   style={{ background: "white", borderColor: "var(--border)" }}
                 >
-                  <div className="flex items-center gap-2.5 overflow-hidden">
+                  <div className="flex items-center gap-2 overflow-hidden">
                     <div className="flex items-center justify-center shrink-0">
-                      {item.renderIcon(18)}
+                      {item.renderIcon(15)}
                     </div>
                     <div className="flex flex-col overflow-hidden">
                       <span
-                        className="text-[11.5px] font-semibold truncate"
+                        className="text-[10.5px] font-semibold truncate"
                         style={{ color: "var(--primary)", fontFamily: "var(--font-heading)" }}
                       >
                         {item.title}
                       </span>
-                      <span className="text-[10px] truncate" style={{ color: "var(--text-secondary)" }}>
+                      <span className="text-[9px] truncate" style={{ color: "var(--text-secondary)" }}>
                         {item.sub}
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0 ml-2">
+                  <div className="flex items-center gap-1.5 shrink-0 ml-1.5">
                     <span
-                      className="text-[9.5px] font-medium px-2 py-0.5 rounded-lg"
+                      className="text-[8.5px] font-medium px-1.5 py-0.2 rounded"
                       style={{
                         background: "#F3F0EB",
                         color: "var(--text-secondary)",
@@ -146,7 +146,7 @@ export default function SearchVisual() {
                     >
                       {item.tag}
                     </span>
-                    <FiArrowRight size={12} style={{ color: "var(--text-tertiary)" }} />
+                    <FiArrowRight size={11} style={{ color: "var(--text-tertiary)" }} />
                   </div>
                 </motion.div>
               ))}

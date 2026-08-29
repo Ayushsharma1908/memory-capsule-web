@@ -30,7 +30,7 @@ function nodePos(id: string, W: number, H: number) {
 }
 
 const W = 440;
-const H = 230;
+const H = 175;
 
 export default function KnowledgeGraphVisual() {
   const reducedMotion = useReducedMotion();
@@ -38,7 +38,7 @@ export default function KnowledgeGraphVisual() {
   return (
     <div
       className="relative w-full h-full flex items-center justify-center select-none overflow-hidden"
-      style={{ minHeight: 230 }}
+      style={{ minHeight: 175 }}
     >
       <svg
         className="absolute inset-0 w-full h-full"
@@ -99,7 +99,7 @@ export default function KnowledgeGraphVisual() {
             transform: "translate(-50%, -50%)",
             background: "white",
             border: "1px solid var(--border-strong)",
-            padding: "3.5px 11px",
+            padding: "2px 8px",
             boxShadow: "0 1.5px 6px rgba(0,0,0,0.06)",
             zIndex: 10,
           }}
@@ -112,7 +112,7 @@ export default function KnowledgeGraphVisual() {
           }}
         >
           <span
-            className="text-[10px] font-semibold whitespace-nowrap"
+            className="text-[9.5px] font-semibold whitespace-nowrap"
             style={{ color: "var(--primary)", fontFamily: "var(--font-body)" }}
           >
             {node.label}
@@ -121,14 +121,14 @@ export default function KnowledgeGraphVisual() {
       ))}
 
       <motion.div
-        className="absolute z-20 flex items-center gap-2.5 rounded-2xl"
+        className="absolute z-20 flex items-center gap-1.5 rounded-xl"
         style={{
           left: `${HUB.x * 100}%`,
           top: `${HUB.y * 100}%`,
           transform: "translate(-50%, -50%)",
           background: "var(--primary)",
           border: "1.5px solid var(--accent)",
-          padding: "7.5px 15px 7.5px 11px",
+          padding: "4px 10px 4px 7px",
         }}
         animate={
           reducedMotion
@@ -144,12 +144,12 @@ export default function KnowledgeGraphVisual() {
         transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
       >
         <div
-          className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
+          className="w-5.5 h-5.5 rounded-lg flex items-center justify-center shrink-0"
           style={{ background: "rgba(216,195,165,0.22)" }}
         >
           <svg
-            width="15"
-            height="15"
+            width="12"
+            height="12"
             viewBox="0 0 24 24"
             fill="none"
             stroke="var(--accent)"
@@ -164,14 +164,14 @@ export default function KnowledgeGraphVisual() {
 
         <div className="flex flex-col">
           <span
-            className="text-[12px] font-bold tracking-tight"
-            style={{ color: "#FAF8F4", fontFamily: "var(--font-heading)", lineHeight: 1.2 }}
+            className="text-[11px] font-bold tracking-tight"
+            style={{ color: "#FAF8F4", fontFamily: "var(--font-heading)", lineHeight: 1.15 }}
           >
             Your Knowledge
           </span>
           <span
-            className="text-[9.5px] font-medium"
-            style={{ color: "var(--accent)", lineHeight: 1.3 }}
+            className="text-[8.5px] font-medium"
+            style={{ color: "var(--accent)", lineHeight: 1.2 }}
           >
             Brain Hub
           </span>

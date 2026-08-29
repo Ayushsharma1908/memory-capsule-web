@@ -2748,7 +2748,7 @@ body {
 }
 
 .features-header {
-  margin-bottom: 56px;
+  margin-bottom: 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2794,7 +2794,7 @@ body {
 .features-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 24px;
+  gap: 16px;
 }
 
 .features-col-3 {
@@ -2820,10 +2820,10 @@ body {
   justify-content: space-between;
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 22px;
+  border-radius: 20px;
   overflow: hidden;
   height: 100%;
-  min-height: 380px;
+  min-height: 300px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -2839,9 +2839,9 @@ body {
   background: rgba(216, 195, 165, 0.18);
   border: 1px solid rgba(216, 195, 165, 0.3);
   border-radius: 6px;
-  padding: 2px 7px;
+  padding: 1.5px 6px;
   display: inline-block;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .features-card-tagline {
@@ -2865,8 +2865,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 16px 12px;
-  min-height: 240px;
+  padding: 10px 12px 6px;
+  min-height: 170px;
   position: relative;
   overflow: hidden;
 }
@@ -2878,7 +2878,7 @@ body {
 }
 
 .features-card-content {
-  padding: 20px 24px 24px;
+  padding: 14px 18px 18px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -2887,12 +2887,12 @@ body {
 
 .features-card-title {
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 600;
   color: var(--primary);
   letter-spacing: -0.015em;
   line-height: 1.25;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .features-card-desc {

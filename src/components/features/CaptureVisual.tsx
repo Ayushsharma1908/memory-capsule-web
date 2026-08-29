@@ -32,35 +32,35 @@ export default function CaptureVisual() {
   ];
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center select-none overflow-hidden px-4 py-3">
-      <div className="flex flex-col items-center gap-2.5 w-full max-w-[340px]">
+    <div className="relative w-full h-full flex items-center justify-center select-none overflow-hidden px-2 py-1">
+      <div className="flex flex-col items-center gap-1.5 w-full max-w-[320px]">
 
-        <div className="grid grid-cols-3 w-full gap-2 items-center">
+        <div className="grid grid-cols-3 w-full gap-1.5 items-center">
           {sources.map((item, i) => (
             <motion.div
               key={item.id}
-              className="flex flex-col items-center gap-1.5"
+              className="flex flex-col items-center gap-1"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
             >
               <div
-                className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm border transition-transform duration-200 hover:scale-105"
+                className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm border transition-transform duration-200 hover:scale-105"
                 style={{
                   background: item.active ? "white" : "#F5F2EE",
                   borderColor: item.active ? "var(--border-strong)" : "var(--border)",
                   opacity: item.active ? 1 : 0.65,
                 }}
               >
-                {item.renderIcon(22)}
+                {item.renderIcon(19)}
               </div>
 
               <div className="flex flex-col items-center gap-0.5 text-center">
-                <span className="text-[11px] font-semibold text-[var(--primary)] tracking-tight">
+                <span className="text-[10.5px] font-semibold text-[var(--primary)] tracking-tight">
                   {item.name}
                 </span>
                 <span
-                  className="text-[9px] font-medium px-2 py-0.5 rounded-full whitespace-nowrap"
+                  className="text-[8.5px] font-medium px-1.5 py-0.2 rounded-full whitespace-nowrap"
                   style={{
                     background: item.active ? "rgba(31,36,33,0.07)" : "rgba(216,195,165,0.25)",
                     color: item.active ? "var(--primary)" : "var(--text-tertiary)",
@@ -73,7 +73,7 @@ export default function CaptureVisual() {
           ))}
         </div>
 
-        <div className="w-full h-8 pointer-events-none relative my-0.5">
+        <div className="w-full h-5 pointer-events-none relative my-0">
           <svg className="w-full h-full overflow-visible" viewBox="0 0 340 32" fill="none">
             <path
               d="M 56.6 0 C 56.6 16, 170 10, 170 32"
@@ -123,7 +123,7 @@ export default function CaptureVisual() {
         </div>
 
         <motion.div
-          className="flex items-center gap-2.5 px-4 py-2 rounded-full border shadow-sm shrink-0"
+          className="flex items-center gap-2 px-3 py-1 rounded-full border shadow-sm shrink-0"
           style={{
             background: "white",
             borderColor: "var(--accent)",
@@ -144,20 +144,20 @@ export default function CaptureVisual() {
           <Image
             src="/logo.svg"
             alt="Memory Capsule"
-            width={26}
-            height={26}
-            className="w-6.5 h-6.5 object-contain shrink-0"
+            width={22}
+            height={22}
+            className="w-5 h-5 object-contain shrink-0"
           />
           <div className="flex flex-col shrink-0">
             <span
-              className="text-[12px] font-bold text-[var(--primary)] tracking-tight whitespace-nowrap"
+              className="text-[11px] font-bold text-[var(--primary)] tracking-tight whitespace-nowrap"
               style={{ fontFamily: "var(--font-heading)", lineHeight: 1.2 }}
             >
               Memory Capsule
             </span>
             <span
-              className="text-[9.5px] text-[var(--text-secondary)] font-medium whitespace-nowrap"
-              style={{ lineHeight: 1.3 }}
+              className="text-[8.5px] text-[var(--text-secondary)] font-medium whitespace-nowrap"
+              style={{ lineHeight: 1.2 }}
             >
               All knowledge, one place
             </span>
