@@ -63,20 +63,6 @@ export default function Navbar() {
             <span>Features</span>
           </a>
 
-          <a
-            href="#how-it-works"
-            className="pill-nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLinkClick("how-it-works");
-            }}
-          >
-            <span className="pill-nav-link-icon">
-              <Play size={17} strokeWidth={2} />
-            </span>
-            <span>Demo</span>
-          </a>
-
           <Link
             href="/docs"
             className="pill-nav-link"
