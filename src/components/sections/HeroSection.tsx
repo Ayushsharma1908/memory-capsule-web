@@ -304,44 +304,14 @@ function RightPanel() {
         variants={subheadlineAndCtaFade}
       >
         <a href="#" className="cta-button-primary" id="hero-chrome-cta">
-          <span className="cta-icon" aria-hidden="true">
-            <svg width="17" height="17" viewBox="0 0 20 20" fill="none">
-              <circle
-                cx="10"
-                cy="10"
-                r="8.5"
-                stroke="#FAF8F4"
-                strokeWidth="1.5"
-              />
-              <circle cx="10" cy="10" r="3.2" fill="#FAF8F4" />
-              <line
-                x1="10"
-                y1="1.5"
-                x2="10"
-                y2="6.8"
-                stroke="#FAF8F4"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <line
-                x1="1.5"
-                y1="14"
-                x2="6.1"
-                y2="11.4"
-                stroke="#FAF8F4"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <line
-                x1="18.5"
-                y1="14"
-                x2="13.9"
-                y2="11.4"
-                stroke="#FAF8F4"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
+          <span className="cta-icon" aria-hidden="true" style={{ display: "inline-flex", alignItems: "center" }}>
+            <Image
+              src="/chrome-icon.svg"
+              alt="Chrome"
+              width={20}
+              height={20}
+              style={{ width: "20px", height: "20px" }}
+            />
           </span>
           <span>Add to Chrome</span>
         </a>
