@@ -19,6 +19,14 @@ export const metadata: Metadata = {
     "AI assistant",
     "Chrome extension",
   ],
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "Memory Capsule — The Memory Layer for AI Conversations",
     description:
