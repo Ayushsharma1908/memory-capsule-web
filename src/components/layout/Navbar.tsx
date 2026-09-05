@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   Menu,
@@ -10,6 +9,7 @@ import {
   Play,
   GitFork,
   BookOpen,
+  Download,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -89,12 +89,14 @@ export default function Navbar() {
         </div>
 
         <a
-          href="#hero"
+          href="https://github.com/Ayushsharma1908/memory-capsule/releases/latest"
+          target="_blank"
+          rel="noopener noreferrer"
           className="pill-nav-email"
           onClick={() => setIsOpen(false)}
         >
-          <Image src="/chrome-icon.svg" alt="Chrome" width={18} height={18} />
-          <span>Add to Chrome</span>
+          <Download size={18} />
+          <span>Download Extension</span>
         </a>
       </div>
     </div>

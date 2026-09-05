@@ -11,7 +11,7 @@ const FOOTER_COLUMNS = [
     links: [
       { label: "Features", href: "/#features" },
       { label: "How it Works", href: "/#how-it-works" },
-      { label: "Chrome Extension", href: "#" },
+      { label: "Download Extension", href: "https://github.com/Ayushsharma1908/memory-capsule/releases/latest" },
     ],
   },
   {

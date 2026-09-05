@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Download } from "lucide-react";
 import type { Variants } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 
@@ -303,17 +304,17 @@ function RightPanel() {
         animate="visible"
         variants={subheadlineAndCtaFade}
       >
-        <a href="#" className="cta-button-primary" id="hero-chrome-cta">
+        <a
+          href="https://github.com/Ayushsharma1908/memory-capsule/releases/latest"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-button-primary"
+          id="hero-chrome-cta"
+        >
           <span className="cta-icon" aria-hidden="true" style={{ display: "inline-flex", alignItems: "center" }}>
-            <Image
-              src="/chrome-icon.svg"
-              alt="Chrome"
-              width={20}
-              height={20}
-              style={{ width: "20px", height: "20px" }}
-            />
+            <Download size={20} />
           </span>
-          <span>Add to Chrome</span>
+          <span>Download Extension</span>
         </a>
         <a href="#how-it-works" className="cta-button-secondary" id="hero-demo-cta">
           <span>Watch Demo</span>
